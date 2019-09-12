@@ -1,10 +1,13 @@
 package com.creative.share.apps.wash_squad_driver.activities_fragments.activity_sign_in;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,11 +21,18 @@ import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.models.LoginModel;
 import com.creative.share.apps.wash_squad_driver.models.UserModel;
 import com.creative.share.apps.wash_squad_driver.preferences.Preferences;
+import com.creative.share.apps.wash_squad_driver.remote.Api;
+import com.creative.share.apps.wash_squad_driver.share.Common;
+import com.creative.share.apps.wash_squad_driver.tags.Tags;
 import com.mukesh.countrypicker.CountryPicker;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_Sign_In extends Fragment implements Listeners.LoginListener {
     private FragmentSignInBinding binding;
@@ -74,83 +84,94 @@ public class Fragment_Sign_In extends Fragment implements Listeners.LoginListene
         {
             login(user_name,password);
         }
+
     }
 
     private void login(String user_name,String password)
     {
 
-        Intent intent = new Intent(activity, HomeActivity.class);
+      /*  Intent intent = new Intent(activity, HomeActivity.class);
         startActivity(intent);
-        activity.finish();
+        activity.finish();*/
+//Log.e("llll","kkkkkk");
+        final  ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        try {
+            Api.getService(lang,Tags.base_url)
+                    .login(user_name,password)
+                    .enqueue(new Callback<UserModel>() {
+                        @Override
+                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful()&&response.body()!=null)
+                            {
+                                Log.e("token",response.body().getName());
+                                preferences.create_update_userData(activity,response.body());
+                                preferences.createSession(activity, Tags.session_login);
+                                Intent intent = new Intent(activity,HomeActivity.class);
+                                startActivity(intent);
+                                activity.finish();
 
-//        ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
-//        dialog.setCancelable(false);
-//        dialog.show();
-//        try {
-//
-//            Api.getService(lang)
-//                    .login(phone_code,phone,"1",password)
-//                    .enqueue(new Callback<UserModel>() {
-//                        @Override
-//                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-//                            dialog.dismiss();
-//                            if (response.isSuccessful()&&response.body()!=null)
-//                            {
-//                                Log.e("token",response.body().getToken());
-//                                preferences.create_update_userData(activity,response.body());
-//                                preferences.createSession(activity, Tags.session_login);
-//                                Intent intent = new Intent(activity,HomeActivity.class);
-//                                startActivity(intent);
-//                                activity.finish();
-//
-//                            }else
-//                            {
-//                                if (response.code() == 422) {
-//                                    Toast.makeText(activity, getString(R.string.em_exist), Toast.LENGTH_SHORT).show();
-//                                } else if (response.code() == 500) {
-//                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
-//
-//
-//                                }else if (response.code()==401)
-//                                {
-//                                    Toast.makeText(activity, R.string.inc_phone_pas, Toast.LENGTH_SHORT).show();
-//
-//                                }else
-//                                {
-//                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-//
-//                                    try {
-//
-//                                        Log.e("error",response.code()+"_"+response.errorBody().string());
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                }
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<UserModel> call, Throwable t) {
-//                            try {
-//                                dialog.dismiss();
-//                                if (t.getMessage()!=null)
-//                                {
-//                                    Log.e("error",t.getMessage());
-//                                    if (t.getMessage().toLowerCase().contains("failed to connect")||t.getMessage().toLowerCase().contains("unable to resolve host"))
-//                                    {
-//                                        Toast.makeText(activity,R.string.something, Toast.LENGTH_SHORT).show();
-//                                    }else
-//                                    {
-//                                        Toast.makeText(activity,t.getMessage(), Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//
-//                            }catch (Exception e){}
-//                        }
-//                    });
-//        }catch (Exception e){
-//            dialog.dismiss();
-//
-//        }
+                            }else
+                            {
+                                Log.e("llll","kkkkkk");
+
+                               /* if (response.code() == 422) {
+                                    Toast.makeText(activity, getString(R.string.em_exist), Toast.LENGTH_SHORT).show();
+                                } else*/ if (response.code() == 500) {
+                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                }else if (response.code()==404)
+                                {
+                                    Toast.makeText(activity, R.string.inc_phone_pas, Toast.LENGTH_SHORT).show();
+
+                                }
+                                else if(response.code()==402){
+                                    Toast.makeText(activity, R.string.Not_Driver, Toast.LENGTH_SHORT).show();
+
+                                }
+                                else if(response.code()==403){
+                                Toast.makeText(activity, R.string.User_Not_Active, Toast.LENGTH_SHORT).show();
+
+                            }
+                                else
+                                {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                    try {
+
+                                        Log.e("error",response.code()+"_"+response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserModel> call, Throwable t) {
+                            try {
+                                dialog.dismiss();
+                                if (t.getMessage()!=null)
+                                {
+                                    Log.e("error",t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect")||t.getMessage().toLowerCase().contains("unable to resolve host"))
+                                    {
+                                        Toast.makeText(activity,R.string.something, Toast.LENGTH_SHORT).show();
+                                    }else
+                                    {
+                                        Toast.makeText(activity,t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            }catch (Exception e){}
+                        }
+                    });
+        }catch (Exception e){
+            dialog.dismiss();
+Log.e("lll",e.getMessage().toString());
+        }
     }
 }

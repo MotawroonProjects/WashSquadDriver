@@ -80,7 +80,7 @@
     <string name="ch_city">Choose city</string>
     <string name="ch_image">Choose image</string>
     <string name="ch_bank">Choose bank</string>
-    <string name="inc_phone_pas">Incorrect phone number or password</string>
+    <string name="inc_phone_pas">Incorrect user name or password</string>
     <string name="ver_code_sent">Verification code is sent</string>
     <string name="order_sent_suc">Order sent successfully.the order number is</string>
     <string name="order_state">Order state</string>
@@ -103,7 +103,7 @@
     <string name="less_details">Less Details</string>
     <string name="location_on_map">Location on map</string>
     <string name="date">Date</string>
-    <string name="time">Time</string>
+    <string name="time">Time :</string>
     <string name="order_now">Order now</string>
     <string name="select_location_on_map">Select location on map</string>
     <string name="select_location">Select Location</string>
@@ -117,7 +117,7 @@
     <string name="canceled">Canceled</string>
     <string name="client_location">Client Location</string>
     <string name="order_details">Order details</string>
-    <string name="number">Number</string>
+    <string name="number">Number : </string>
     <string name="arrival">Arrival</string>
     <string name="driver_login">Driver Login</string>
     <string name="cancel_order">Cancel Order</string>
@@ -143,6 +143,8 @@
     <string name="add_outside_images_before_work">Add outside images before work</string>
     <string name="add_inside_images_after_work">Add inside images after work</string>
     <string name="add_outside_images_after_work">Add outside images after work</string>
+    <string name="Not_Driver">Not Driver</string>
+    <string name="User_Not_Active">User Not Active</string>
 
 
 </resources>

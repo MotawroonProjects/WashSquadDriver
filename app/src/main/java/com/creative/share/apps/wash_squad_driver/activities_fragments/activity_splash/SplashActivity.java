@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.creative.share.apps.wash_squad_driver.R;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_map.MapActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_sign_in.SignInActivity;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivitySplashBinding;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
 import com.creative.share.apps.wash_squad_driver.preferences.Preferences;
@@ -51,12 +53,12 @@ public class SplashActivity extends AppCompatActivity {
                 String session = preferences.getSession(SplashActivity.this);
                 if (session.equals(Tags.session_login))
                 {
-                    /*Intent intent=new Intent(SplashActivity.this, HomeActivity.class);
+                    Intent intent=new Intent(SplashActivity.this, HomeActivity.class);
                     startActivity(intent);
-                    finish();*/
+                    finish();
                 }else
                 {
-                    Intent intent=new Intent(SplashActivity.this, MapActivity.class);
+                    Intent intent=new Intent(SplashActivity.this, SignInActivity.class);
                     startActivity(intent);
                     finish();
                 }

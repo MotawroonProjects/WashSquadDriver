@@ -1,11 +1,19 @@
 package com.creative.share.apps.wash_squad_driver.services;
 
 
+import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.PlaceGeocodeData;
 import com.creative.share.apps.wash_squad_driver.models.PlaceMapDetailsData;
+import com.creative.share.apps.wash_squad_driver.models.UserModel;
 
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+
 import retrofit2.http.Query;
 
 public interface Service {
@@ -25,6 +33,24 @@ public interface Service {
                                       @Query(value = "language") String language,
                                       @Query(value = "key") String key);
 
+    @FormUrlEncoded
+    @POST("api/driver/login")
+    Call<UserModel> login(
+            @Field("username") String username,
+            @Field("password")String password
+    );
+    @FormUrlEncoded
+    @POST("api/driver/logout")
+    Call<ResponseBody> logout(
+            @Field("user_id") int user_id
+    );
+    @FormUrlEncoded
+    @POST("api/orders")
+    Call<Order_Model> MyOrder(
+            @Field("page")int page,
+            @Field("user_id") int user_id,
+            @Field("status")int status
+    );
 
 }
 

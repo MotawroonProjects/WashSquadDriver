@@ -2,6 +2,7 @@ package com.creative.share.apps.wash_squad_driver.models;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -28,6 +29,7 @@ public class LoginModel extends BaseObservable {
         notifyPropertyChanged(BR.username);
         this.password = password;
         notifyPropertyChanged(BR.password);
+        
 
 
     }
@@ -64,7 +66,7 @@ public class LoginModel extends BaseObservable {
         {
             error_user_name.set(null);
             error_password.set(null);
-
+           // Log.e("lll","lllll");
             return true;
         }else
             {
