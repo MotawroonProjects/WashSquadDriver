@@ -24,6 +24,7 @@ import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_o
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityMapBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
+import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -64,18 +65,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private LocationCallback locationCallback;
     private final String fineLocPerm = Manifest.permission.ACCESS_FINE_LOCATION;
     private final int loc_req = 1225;
+    private Order_Model.Data data;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(LanguageHelper.updateResources(newBase,"en"));
+        super.attachBaseContext(LanguageHelper.updateResources(newBase, "en"));
 
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_map);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_map);
         initView();
     }
 
@@ -83,28 +85,35 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
+
+        data = (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
+        binding.setLang(lang);
+        binding.setOrderModel(data);
         binding.btnCancel.setOnClickListener(view -> {
             Intent intent = new Intent(this, CancelOrderActivity.class);
-            startActivityForResult(intent,1001);
+            intent.putExtra("detials", data);
+            startActivityForResult(intent, 1001);
         });
 
         binding.btnArrival.setOnClickListener(view -> {
             Intent intent = new Intent(this, OrderDetailsActivity.class);
-            startActivityForResult(intent,1002);
+            intent.putExtra("detials", data);
+
+            startActivityForResult(intent, 1002);
         });
         updateUI();
         //CheckPermission();
     }
 
-    private void CheckPermission()
-    {
-        if (ActivityCompat.checkSelfPermission(this,fineLocPerm) != PackageManager.PERMISSION_GRANTED) {
+    private void CheckPermission() {
+        if (ActivityCompat.checkSelfPermission(this, fineLocPerm) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{fineLocPerm}, loc_req);
         } else {
 
             initGoogleApi();
         }
     }
+
     private void initGoogleApi() {
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -115,14 +124,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void cancelOrder(int reason) {
-
+        finish();
     }
 
     private void updateUI() {
 
         SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         fragment.getMapAsync(this);
-
 
 
     }
@@ -137,7 +145,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setBuildingsEnabled(false);
             mMap.setIndoorEnabled(true);
             mMap.setMaxZoomPreference(8.0f);
-            
+            AddMarker(data.getLatitude(), data.getLongitude());
         }
     }
 
@@ -184,7 +192,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         try {
-                            status.startResolutionForResult(MapActivity.this,100);
+                            status.startResolutionForResult(MapActivity.this, 100);
                         } catch (IntentSender.SendIntentException e) {
                             e.printStackTrace();
                         }
@@ -198,8 +206,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onConnectionSuspended(int i) {
-        if (googleApiClient!=null)
-        {
+        if (googleApiClient != null) {
             googleApiClient.connect();
         }
     }
@@ -211,17 +218,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     @SuppressLint("MissingPermission")
-    private void startLocationUpdate()
-    {
-        locationCallback = new LocationCallback()
-        {
+    private void startLocationUpdate() {
+        locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 onLocationChanged(locationResult.getLastLocation());
             }
         };
         LocationServices.getFusedLocationProviderClient(this)
-                .requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper());
+                .requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
     @Override
@@ -249,13 +254,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == loc_req)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == loc_req) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initGoogleApi();
-            }else
-            {
+            } else {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
@@ -265,18 +267,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100&&resultCode== Activity.RESULT_OK)
-        {
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
 
             startLocationUpdate();
-        }else if (requestCode==1001&&resultCode==RESULT_OK&&data!=null)
-        {
-            int reason = data.getIntExtra("reason",0);
+        } else if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
+            int reason = data.getIntExtra("reason", 0);
             cancelOrder(reason);
         }
 
     }
-
 
 
     @Override

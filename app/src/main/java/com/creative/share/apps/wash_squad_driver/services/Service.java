@@ -4,6 +4,7 @@ package com.creative.share.apps.wash_squad_driver.services;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.PlaceGeocodeData;
 import com.creative.share.apps.wash_squad_driver.models.PlaceMapDetailsData;
+import com.creative.share.apps.wash_squad_driver.models.Resson_Model;
 import com.creative.share.apps.wash_squad_driver.models.UserModel;
 
 
@@ -51,7 +52,14 @@ public interface Service {
             @Field("user_id") int user_id,
             @Field("status")int status
     );
-
+    @GET("api/cancelReasons")
+    Call<Resson_Model> getreasson();
+    @FormUrlEncoded
+    @POST("api/driver/order/cancel")
+    Call<ResponseBody> Csncel_order(
+            @Field("order_id") int order_id,
+            @Field("cancel_reason_id")int cancel_reason_id
+    );
 }
 
 

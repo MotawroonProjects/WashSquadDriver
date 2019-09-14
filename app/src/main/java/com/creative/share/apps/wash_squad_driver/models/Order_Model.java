@@ -32,7 +32,7 @@ private List<Data> data;
                 private int order_time_id;
                 private String addons;
                 private String number_of_cars;
-                private int payment_method;
+                private String payment_method;
                 private int driver_id;
                 private String feedback;
                 private long start_time_work;
@@ -128,7 +128,7 @@ private List<Data> data;
             return number_of_cars;
         }
 
-        public int getPayment_method() {
+        public String getPayment_method() {
             return payment_method;
         }
 

@@ -67,7 +67,7 @@ public class Fragment_Canceled_Order extends Fragment {
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         preferences = Preferences.newInstance();
         userModel = preferences.getUserData(activity);
-        myOrdrrAdapter = new MyOrdrrAdapter(oDataList, activity);
+        myOrdrrAdapter = new MyOrdrrAdapter(oDataList, activity,this);
         binding.recView.setItemViewCacheSize(25);
         binding.recView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recView.setDrawingCacheEnabled(true);

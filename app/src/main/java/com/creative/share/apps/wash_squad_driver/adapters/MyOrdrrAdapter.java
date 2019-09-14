@@ -1,18 +1,24 @@
 package com.creative.share.apps.wash_squad_driver.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments.Fragment_Canceled_Order;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments.Fragment_Current_Order;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments.Fragment_Previous_Order;
 import com.creative.share.apps.wash_squad_driver.databinding.LoadMoreBinding;
 import com.creative.share.apps.wash_squad_driver.databinding.OrderRowBinding;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
@@ -30,14 +36,15 @@ public class MyOrdrrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private LayoutInflater inflater;
     private String lang;
     private HomeActivity activity;
-
-    public MyOrdrrAdapter(List<Order_Model.Data> orderlist, Context context) {
+private Fragment fragment;
+    public MyOrdrrAdapter(List<Order_Model.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         this.activity = (HomeActivity) context;
+        this.fragment=fragment;
     }
 
     @NonNull
@@ -67,7 +74,11 @@ public class MyOrdrrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
             eventHolder.binding.start.setOnClickListener(view -> {
-
+                if(fragment instanceof Fragment_Current_Order){
+                activity.Show_Detials(orderlist.get(holder.getLayoutPosition()));}
+                else if(fragment instanceof Fragment_Previous_Order){
+                    activity.Show_Detialsdata(orderlist.get(holder.getLayoutPosition()));
+                }
             });
 
 
@@ -88,6 +99,12 @@ public class MyOrdrrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public EventHolder(@NonNull OrderRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            if(fragment instanceof Fragment_Canceled_Order){
+                this.binding.start.setVisibility(View.GONE);
+            }
+            if(fragment instanceof Fragment_Previous_Order){
+                this.binding.start.setText(activity.getResources().getString(R.string.details));
+            }
         }
     }
 

@@ -18,10 +18,13 @@ import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments.Fragment_Canceled_Order;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments.Fragment_Current_Order;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments.Fragment_Previous_Order;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_map.MapActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_order_details.OrderDetailsActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_sign_in.SignInActivity;
 import com.creative.share.apps.wash_squad_driver.adapters.MyPagerAdapter;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityHomeBinding;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
+import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.UserModel;
 import com.creative.share.apps.wash_squad_driver.preferences.Preferences;
 import com.creative.share.apps.wash_squad_driver.remote.Api;
@@ -263,5 +266,17 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
             dialog.dismiss();
             Log.e("lll",e.getMessage().toString());
         }
+    }
+
+    public void Show_Detials(Order_Model.Data data) {
+        Intent intent=new Intent(HomeActivity.this, MapActivity.class);
+        intent.putExtra("detials",data);
+        startActivity(intent);
+    }
+
+    public void Show_Detialsdata(Order_Model.Data data) {
+        Intent intent=new Intent(HomeActivity.this, OrderDetailsActivity.class);
+        intent.putExtra("detials",data);
+        startActivity(intent);
     }
 }
