@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -16,6 +17,8 @@ import com.creative.share.apps.wash_squad_driver.databinding.ActivityOrderDetail
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
+
+import org.androidannotations.annotations.OnActivityResult;
 
 import java.util.Locale;
 
@@ -48,8 +51,11 @@ private Order_Model.Data data;
         data= (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
 binding.setLang(lang);
 binding.setOrderModel(data);
-if(data.getStatus()!=2){
+if(data.getStatus()!=1){
     binding.btShow.setVisibility(View.GONE);
+}
+else {
+    binding.lll.setVisibility(View.GONE);
 }
 binding.btShow.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -67,4 +73,17 @@ binding.btShow.setOnClickListener(new View.OnClickListener() {
         finish();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+         if (requestCode == 1002 && resultCode == RESULT_OK && data != null) {
+             Intent intent = getIntent();
+             if (intent!=null)
+             {
+                 intent.putExtra("reason",1);
+                 setResult(RESULT_OK,intent);
+             }
+           finish();
+        }
+    }
 }

@@ -274,6 +274,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             int reason = data.getIntExtra("reason", 0);
             cancelOrder(reason);
         }
+        else if (requestCode == 1002 && resultCode == RESULT_OK && data != null) {
+           finish();
+        }
 
     }
 

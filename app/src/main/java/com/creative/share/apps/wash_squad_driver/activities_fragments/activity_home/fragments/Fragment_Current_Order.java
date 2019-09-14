@@ -110,7 +110,7 @@ public class Fragment_Current_Order extends Fragment {
         binding.progBar.setVisibility(View.VISIBLE);
         // rec_sent.setVisibility(View.GONE);
         Api.getService(lang, Tags.base_url)
-                .MyOrder(1, userModel.getId(), 2)
+                .MyOrder(1, userModel.getId(), 1)
                 .enqueue(new Callback<Order_Model>() {
                     @Override
                     public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {
@@ -158,7 +158,7 @@ public class Fragment_Current_Order extends Fragment {
 
     private void loadMore(int page) {
         Api.getService(lang, Tags.base_url)
-                .MyOrder(page, userModel.getId(), 2)
+                .MyOrder(page, userModel.getId(), 1)
                 .enqueue(new Callback<Order_Model>() {
                     @Override
                     public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {

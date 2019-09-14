@@ -2,6 +2,7 @@ package com.creative.share.apps.wash_squad_driver.activities_fragments.activity_
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,17 +27,32 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.creative.share.apps.wash_squad_driver.R;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityWork2Binding;
 import com.creative.share.apps.wash_squad_driver.databinding.DialogSelectImageBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
+import com.creative.share.apps.wash_squad_driver.models.Order_Model;
+import com.creative.share.apps.wash_squad_driver.remote.Api;
+import com.creative.share.apps.wash_squad_driver.share.Common;
+import com.creative.share.apps.wash_squad_driver.tags.Tags;
 import com.squareup.picasso.Picasso;
+
+import org.stringtemplate.v4.ST;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Work2Activity extends AppCompatActivity implements Listeners.BackListener {
 
@@ -49,8 +67,9 @@ public class Work2Activity extends AppCompatActivity implements Listeners.BackLi
     private final String camera_permission = Manifest.permission.CAMERA;
     private SparseArray<Uri> imageInsideMap, imageOutsideMap;
     private boolean isImg1 =false,isImg2=false,isImg3=false,isImg4=false,isImg5=false,isImg6=false,isImg7=false,isImg8=false;
+    private String lang;
 
-
+private Order_Model.Data data;
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -66,7 +85,10 @@ public class Work2Activity extends AppCompatActivity implements Listeners.BackLi
     }
 
     private void initView() {
+        Paper.init(this);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
+        data= (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
         imageInsideMap = new SparseArray<>();
         imageOutsideMap = new SparseArray<>();
 
@@ -87,13 +109,13 @@ public class Work2Activity extends AppCompatActivity implements Listeners.BackLi
 
 
         binding.btnDone.setOnClickListener(view -> {
-
-            if (isImg1&&isImg2&&isImg3&&isImg4&&isImg5&&isImg6&&isImg7&&isImg8)
+            String feedback=binding.edtFeedback.getText().toString();
+            if (isImg1&&isImg2&&isImg3&&isImg4&&isImg5&&isImg6&&isImg7&&isImg8&&!TextUtils.isEmpty(feedback))
             {
+                binding.edtFeedback.setError(null);
                 addImageInside();
                 addImageOutside();
-                Intent intent = new Intent(this, Work2Activity.class);
-                startActivityForResult(intent, 1003);
+               step2(feedback);
             }else
             {
                 if (!isImg1)
@@ -129,6 +151,9 @@ public class Work2Activity extends AppCompatActivity implements Listeners.BackLi
                 {
                     Toast.makeText(this, "Choose trunk image", Toast.LENGTH_SHORT).show();
                 }
+                if(TextUtils.isEmpty(feedback)){
+                    binding.edtFeedback.setError(getResources().getString(R.string.field_req));
+                }
             }
 
 
@@ -137,7 +162,69 @@ public class Work2Activity extends AppCompatActivity implements Listeners.BackLi
 
 
     }
+    private List<MultipartBody.Part> getMultipartBodyList(List<Uri> uriList, String image_cv) {
+        List<MultipartBody.Part> partList = new ArrayList<>();
+        for (Uri uri : uriList) {
+            MultipartBody.Part part = Common.getMultiPart(Work2Activity.this, uri, image_cv);
+            partList.add(part);
+        }
+        return partList;
+    }
+    private void step2(String feedback) {
+        final Dialog dialog = Common.createProgressDialog(Work2Activity.this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        RequestBody id_part = Common.getRequestBodyText(data.getId()+"");
+        RequestBody feed_part = Common.getRequestBodyText(feedback);
 
+
+        RequestBody time_part=Common.getRequestBodyText((Calendar.getInstance().getTimeInMillis()/1000)+"");
+
+        List<MultipartBody.Part> partimageInsideList = getMultipartBodyList(imageInsideList, "order_images_in[]");
+        List<MultipartBody.Part> partimageOutsideList = getMultipartBodyList(imageOutsideList, "order_images_out[]");
+
+        Api.getService(lang, Tags.base_url)
+                .Step2(id_part,time_part,feed_part,partimageInsideList,partimageOutsideList).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+                    Toast.makeText(Work2Activity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+
+                    //  adsActivity.finish(response.body().getId_advertisement());
+                    Intent intent = getIntent();
+                    if (intent!=null)
+                    {
+                        intent.putExtra("reason",1);
+                        setResult(RESULT_OK,intent);
+                    }
+                    finish();
+                } else {
+                    try {
+
+                        Toast.makeText(Work2Activity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                        Log.e("Error", response.code() + "" + response.errorBody() + response.raw() + response.body() + response.headers());
+                    }catch (Exception e){
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dialog.dismiss();
+                try {
+                    Toast.makeText(Work2Activity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    Log.e("Error", t.getMessage());
+                }
+                catch (Exception e){
+
+                }
+            }
+        });
+    }
     private void addImageInside()
     {
         for (int i=0;i<imageInsideMap.size();i++)

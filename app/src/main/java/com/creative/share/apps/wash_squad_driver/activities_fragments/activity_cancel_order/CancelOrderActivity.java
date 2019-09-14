@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
 import com.creative.share.apps.wash_squad_driver.adapters.MyOrdrrAdapter;
 import com.creative.share.apps.wash_squad_driver.adapters.ReassonAdapter;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityCancelOrderBinding;
@@ -148,6 +149,8 @@ public class CancelOrderActivity extends AppCompatActivity implements Listeners.
                             dialog.dismiss();
                             if (response.isSuccessful()&&response.body()!=null)
                             {
+                                Toast.makeText(CancelOrderActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+
                                 Intent intent = getIntent();
                                 if (intent!=null)
                                 {

@@ -251,5 +251,34 @@ private List<Data> data;
         public String getWork_time_ar_title() {
             return work_time_ar_title;
         }
+        private List<order_images> order_images;
+
+        public List<Data.order_images> getOrder_images() {
+            return order_images;
+        }
+
+        public class order_images implements Serializable
+        {
+            private int id;
+                private int order_id;
+               private String image;
+                private String type;
+
+            public int getId() {
+                return id;
+            }
+
+            public int getOrder_id() {
+                return order_id;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public String getType() {
+                return type;
+            }
+        }
     }
 }

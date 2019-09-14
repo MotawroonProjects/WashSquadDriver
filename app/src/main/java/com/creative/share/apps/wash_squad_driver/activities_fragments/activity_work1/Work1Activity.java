@@ -2,6 +2,7 @@ package com.creative.share.apps.wash_squad_driver.activities_fragments.activity_
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +31,25 @@ import com.creative.share.apps.wash_squad_driver.databinding.ActivityWork1Bindin
 import com.creative.share.apps.wash_squad_driver.databinding.DialogSelectImageBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
+import com.creative.share.apps.wash_squad_driver.models.Order_Model;
+import com.creative.share.apps.wash_squad_driver.remote.Api;
+import com.creative.share.apps.wash_squad_driver.share.Common;
+import com.creative.share.apps.wash_squad_driver.tags.Tags;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Work1Activity extends AppCompatActivity implements Listeners.BackListener {
 
@@ -49,7 +63,9 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
     private SparseArray<Uri> imageInsideMap, imageOutsideMap;
-    private boolean isImg1 =false,isImg2=false,isImg3=false,isImg4=false,isImg5=false,isImg6=false,isImg7=false,isImg8=false;
+    private boolean isImg1 = false, isImg2 = false, isImg3 = false, isImg4 = false, isImg5 = false, isImg6 = false, isImg7 = false, isImg8 = false;
+    private Order_Model.Data data;
+    private String lang;
 
 
     @Override
@@ -67,6 +83,9 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
     }
 
     private void initView() {
+        data = (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
+        Paper.init(this);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
         imageInsideMap = new SparseArray<>();
         imageOutsideMap = new SparseArray<>();
@@ -89,49 +108,38 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
 
         binding.btnStep2.setOnClickListener(view -> {
 
-            if (isImg1&&isImg2&&isImg3&&isImg4&&isImg5&&isImg6&&isImg7&&isImg8)
-            {
+            if (isImg1 && isImg2 && isImg3 && isImg4 && isImg5 && isImg6 && isImg7 && isImg8) {
                 addImageInside();
                 addImageOutside();
-                Intent intent = new Intent(this, Work2Activity.class);
-                startActivityForResult(intent, 1003);
-            }else
-                {
-                    if (!isImg1)
-                    {
-                        Toast.makeText(this, "Choose tire image", Toast.LENGTH_SHORT).show();
-                    }
+                step1();
 
-                    if (!isImg2)
-                    {
-                        Toast.makeText(this, "Choose front image", Toast.LENGTH_SHORT).show();
-                    }
-                    if (!isImg3)
-                    {
-                        Toast.makeText(this, "Choose back image", Toast.LENGTH_SHORT).show();
-                    }
-                    if (!isImg4)
-                    {
-                        Toast.makeText(this, "Choose trunk image", Toast.LENGTH_SHORT).show();
-                    }
-                    if (!isImg5)
-                    {
-                        Toast.makeText(this, "Choose roof image", Toast.LENGTH_SHORT).show();
-                    }
-                    if (!isImg6)
-                    {
-                        Toast.makeText(this, "Choose front seats image", Toast.LENGTH_SHORT).show();
-                    }
-                    if (!isImg7)
-                    {
-                        Toast.makeText(this, "Choose back seats image", Toast.LENGTH_SHORT).show();
-                    }
-                    if (!isImg8)
-                    {
-                        Toast.makeText(this, "Choose trunk image", Toast.LENGTH_SHORT).show();
-                    }
+            } else {
+                if (!isImg1) {
+                    Toast.makeText(this, "Choose tire image", Toast.LENGTH_SHORT).show();
                 }
 
+                if (!isImg2) {
+                    Toast.makeText(this, "Choose front image", Toast.LENGTH_SHORT).show();
+                }
+                if (!isImg3) {
+                    Toast.makeText(this, "Choose back image", Toast.LENGTH_SHORT).show();
+                }
+                if (!isImg4) {
+                    Toast.makeText(this, "Choose trunk image", Toast.LENGTH_SHORT).show();
+                }
+                if (!isImg5) {
+                    Toast.makeText(this, "Choose roof image", Toast.LENGTH_SHORT).show();
+                }
+                if (!isImg6) {
+                    Toast.makeText(this, "Choose front seats image", Toast.LENGTH_SHORT).show();
+                }
+                if (!isImg7) {
+                    Toast.makeText(this, "Choose back seats image", Toast.LENGTH_SHORT).show();
+                }
+                if (!isImg8) {
+                    Toast.makeText(this, "Choose trunk image", Toast.LENGTH_SHORT).show();
+                }
+            }
 
 
         });
@@ -139,20 +147,81 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
 
     }
 
-    private void addImageInside()
-    {
-        for (int i=0;i<imageInsideMap.size();i++)
-        {
+    private List<MultipartBody.Part> getMultipartBodyList(List<Uri> uriList, String image_cv) {
+        List<MultipartBody.Part> partList = new ArrayList<>();
+        for (Uri uri : uriList) {
+            MultipartBody.Part part = Common.getMultiPart(Work1Activity.this, uri, image_cv);
+            partList.add(part);
+        }
+        return partList;
+    }
+
+    private void step1() {
+        final Dialog dialog = Common.createProgressDialog(Work1Activity.this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        RequestBody id_part = Common.getRequestBodyText(data.getId() + "");
+
+        RequestBody time_part = Common.getRequestBodyText((Calendar.getInstance().getTimeInMillis() / 1000) + "");
+Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId());
+        List<MultipartBody.Part> partimageInsideList = getMultipartBodyList(imageInsideList, "order_images_in[]");
+        List<MultipartBody.Part> partimageOutsideList = getMultipartBodyList(imageOutsideList, "order_images_out[]");
+        try {
+            Api.getService(lang, Tags.base_url)
+                    .Step1(id_part, time_part, partimageInsideList, partimageOutsideList).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    dialog.dismiss();
+                    if (response.isSuccessful()) {
+                        // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+                        Toast.makeText(Work1Activity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+
+                        //  adsActivity.finish(response.body().getId_advertisement());
+                        Intent intent = new Intent(Work1Activity.this, Work2Activity.class);
+                        intent.putExtra("detials",data);
+
+                        startActivityForResult(intent, 1003);
+                    } else {
+                        try {
+
+                            Toast.makeText(Work1Activity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            Log.e("Error", response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers());
+                        } catch (Exception e) {
+
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    dialog.dismiss();
+                    try {
+                        Toast.makeText(Work1Activity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                        Log.e("Error", t.getMessage());
+                    } catch (Exception e) {
+
+                    }
+                }
+            });
+        } catch (Exception e) {
+            dialog.dismiss();
+            Log.e("error", e.getMessage().toString());
+        }
+    }
+
+    private void addImageInside() {
+        for (int i = 0; i < imageInsideMap.size(); i++) {
             imageInsideList.add(imageInsideMap.get(i));
         }
     }
-    private void addImageOutside()
-    {
-        for (int i=0;i<imageOutsideMap.size();i++)
-        {
+
+    private void addImageOutside() {
+        for (int i = 0; i < imageOutsideMap.size(); i++) {
             imageOutsideList.add(imageOutsideMap.get(i));
         }
     }
+
     private void CreateImageAlertDialog(int img_req) {
 
         final AlertDialog dialog = new AlertDialog.Builder(this)
@@ -247,7 +316,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageInsideMap.put(0,uri);
+                imageInsideMap.put(0, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image1);
 
@@ -255,7 +324,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             } else if (image_type == 2) {
 
                 uri = data.getData();
-                imageInsideMap.put(0,uri);
+                imageInsideMap.put(0, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image1);
 
@@ -271,14 +340,14 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageInsideMap.put(1,uri);
+                imageInsideMap.put(1, uri);
 
 
                 Picasso.with(this).load(uri).fit().into(binding.image2);
 
             } else if (image_type == 2) {
                 uri = data.getData();
-                imageInsideMap.put(1,uri);
+                imageInsideMap.put(1, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image2);
 
@@ -294,7 +363,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageInsideMap.put(2,uri);
+                imageInsideMap.put(2, uri);
 
 
                 Picasso.with(this).load(uri).fit().into(binding.image3);
@@ -304,7 +373,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
 
 
                 uri = data.getData();
-                imageInsideMap.put(2,uri);
+                imageInsideMap.put(2, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image3);
 
@@ -318,7 +387,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageInsideMap.put(3,uri);
+                imageInsideMap.put(3, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image4);
 
@@ -326,7 +395,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             } else if (image_type == 2) {
 
                 uri = data.getData();
-                imageInsideMap.put(3,uri);
+                imageInsideMap.put(3, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image4);
 
@@ -341,7 +410,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageOutsideMap.put(0,uri);
+                imageOutsideMap.put(0, uri);
                 Picasso.with(this).load(uri).fit().into(binding.image11);
 
 
@@ -349,7 +418,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
 
 
                 uri = data.getData();
-                imageOutsideMap.put(0,uri);
+                imageOutsideMap.put(0, uri);
                 Picasso.with(this).load(uri).fit().into(binding.image11);
 
             }
@@ -362,7 +431,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageOutsideMap.put(1,uri);
+                imageOutsideMap.put(1, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image22);
 
@@ -370,7 +439,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             } else if (image_type == 2) {
 
                 uri = data.getData();
-                imageOutsideMap.put(1,uri);
+                imageOutsideMap.put(1, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image22);
 
@@ -385,7 +454,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageOutsideMap.put(2,uri);
+                imageOutsideMap.put(2, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image33);
 
@@ -394,7 +463,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
 
 
                 uri = data.getData();
-                imageOutsideMap.put(2,uri);
+                imageOutsideMap.put(2, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image33);
 
@@ -408,7 +477,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageOutsideMap.put(3,uri);
+                imageOutsideMap.put(3, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image44);
 
@@ -416,12 +485,22 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
             } else if (image_type == 2) {
 
                 uri = data.getData();
-                imageOutsideMap.put(3,uri);
+                imageOutsideMap.put(3, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image44);
 
             }
 
+        } else if (requestCode == 1003 && resultCode == RESULT_OK && data != null) {
+            int reason = data.getIntExtra("reason", 0);
+            Intent intent = getIntent();
+            if (intent != null) {
+                intent.putExtra("reason", 1);
+                setResult(RESULT_OK, intent);
+            }
+            if (reason == 1) {
+                finish();
+            }
         }
     }
 

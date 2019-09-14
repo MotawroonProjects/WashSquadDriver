@@ -145,6 +145,8 @@
     <string name="add_outside_images_after_work">Add outside images after work</string>
     <string name="Not_Driver">Not Driver</string>
     <string name="User_Not_Active">User Not Active</string>
+    <string name="image_before_work">Image Before Work</string>
+    <string name="image_after">Image After Work</string>
 
 
 </resources>
