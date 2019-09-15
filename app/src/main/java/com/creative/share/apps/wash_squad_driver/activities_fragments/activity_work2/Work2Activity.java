@@ -174,6 +174,9 @@ private Order_Model.Data data;
         final Dialog dialog = Common.createProgressDialog(Work2Activity.this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
+        try {
+
+
         RequestBody id_part = Common.getRequestBodyText(data.getId()+"");
         RequestBody feed_part = Common.getRequestBodyText(feedback);
 
@@ -223,7 +226,9 @@ private Order_Model.Data data;
 
                 }
             }
-        });
+        });}catch (Exception e){
+            dialog.dismiss();
+        }
     }
     private void addImageInside()
     {

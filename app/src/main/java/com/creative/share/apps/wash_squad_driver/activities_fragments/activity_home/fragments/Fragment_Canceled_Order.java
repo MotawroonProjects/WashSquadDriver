@@ -109,6 +109,9 @@ public class Fragment_Canceled_Order extends Fragment {
 
     public void getOrders() {
         //   Common.CloseKeyBoard(homeActivity, edt_name);
+        try {
+
+
         binding.progBar.setVisibility(View.VISIBLE);
         // rec_sent.setVisibility(View.GONE);
         Api.getService(lang, Tags.base_url)
@@ -147,6 +150,8 @@ public class Fragment_Canceled_Order extends Fragment {
                     @Override
                     public void onFailure(Call<Order_Model> call, Throwable t) {
                         try {
+                            binding.progBar.setVisibility(View.GONE);
+                            binding.llNoOrders.setVisibility(View.VISIBLE);
 
 
                             Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
@@ -154,11 +159,18 @@ public class Fragment_Canceled_Order extends Fragment {
                         } catch (Exception e) {
                         }
                     }
-                });
+                });}catch (Exception e){
+            binding.progBar.setVisibility(View.GONE);
+            binding.llNoOrders.setVisibility(View.VISIBLE);
+
+        }
 
     }
 
     private void loadMore(int page) {
+        try {
+
+
         Api.getService(lang, Tags.base_url)
                 .MyOrder(page, userModel.getId(), 5)
                 .enqueue(new Callback<Order_Model>() {
@@ -195,6 +207,11 @@ public class Fragment_Canceled_Order extends Fragment {
                         } catch (Exception e) {
                         }
                     }
-                });
+                });}
+        catch (Exception e){
+            oDataList.remove(oDataList.size() - 1);
+            myOrdrrAdapter.notifyItemRemoved(oDataList.size() - 1);
+            isLoading = false;
+        }
     }
 }

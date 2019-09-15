@@ -110,54 +110,66 @@ public class Fragment_Previous_Order extends Fragment {
         //   Common.CloseKeyBoard(homeActivity, edt_name);
         binding.progBar.setVisibility(View.VISIBLE);
         // rec_sent.setVisibility(View.GONE);
-        Api.getService(lang, Tags.base_url)
-                .MyOrder(1, userModel.getId(), 3)
-                .enqueue(new Callback<Order_Model>() {
-                    @Override
-                    public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {
-                        binding.progBar.setVisibility(View.GONE);
-                        if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
-                            oDataList.clear();
-                            oDataList.addAll(response.body().getData());
-                            if (response.body().getData().size() > 0) {
-                                // rec_sent.setVisibility(View.VISIBLE);
-                                //  Log.e("data",response.body().getData().get(0).getAr_title());
+        try {
 
-                                binding.llNoOrders.setVisibility(View.GONE);
-                                myOrdrrAdapter.notifyDataSetChanged();
-                                //   total_page = response.body().getMeta().getLast_page();
 
+            Api.getService(lang, Tags.base_url)
+                    .MyOrder(1, userModel.getId(), 3)
+                    .enqueue(new Callback<Order_Model>() {
+                        @Override
+                        public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {
+                            binding.progBar.setVisibility(View.GONE);
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                                oDataList.clear();
+                                oDataList.addAll(response.body().getData());
+                                if (response.body().getData().size() > 0) {
+                                    // rec_sent.setVisibility(View.VISIBLE);
+                                    //  Log.e("data",response.body().getData().get(0).getAr_title());
+
+                                    binding.llNoOrders.setVisibility(View.GONE);
+                                    myOrdrrAdapter.notifyDataSetChanged();
+                                    //   total_page = response.body().getMeta().getLast_page();
+
+                                } else {
+                                    binding.llNoOrders.setVisibility(View.VISIBLE);
+
+                                }
                             } else {
                                 binding.llNoOrders.setVisibility(View.VISIBLE);
 
+                                Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                try {
+                                    Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } else {
-                            binding.llNoOrders.setVisibility(View.VISIBLE);
+                        }
 
-                            Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<Order_Model> call, Throwable t) {
                             try {
-                                Log.e("Error_code", response.code() + "_" + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                binding.progBar.setVisibility(View.GONE);
+                                binding.llNoOrders.setVisibility(View.VISIBLE);
+
+
+                                Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                Log.e("error", t.getMessage());
+                            } catch (Exception e) {
                             }
                         }
-                    }
+                    });
+        }catch (Exception e){
+            binding.progBar.setVisibility(View.GONE);
+            binding.llNoOrders.setVisibility(View.VISIBLE);
 
-                    @Override
-                    public void onFailure(Call<Order_Model> call, Throwable t) {
-                        try {
-
-
-                            Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                            Log.e("error", t.getMessage());
-                        } catch (Exception e) {
-                        }
-                    }
-                });
-
+        }
     }
 
     private void loadMore(int page) {
+        try {
+
+
         Api.getService(lang, Tags.base_url)
                 .MyOrder(page, userModel.getId(), 3)
                 .enqueue(new Callback<Order_Model>() {
@@ -194,7 +206,12 @@ public class Fragment_Previous_Order extends Fragment {
                         } catch (Exception e) {
                         }
                     }
-                });
+                });}
+        catch (Exception e){
+            oDataList.remove(oDataList.size() - 1);
+            myOrdrrAdapter.notifyItemRemoved(oDataList.size() - 1);
+            isLoading = false;
+        }
     }
 
     public static Fragment_Previous_Order newInstance() {

@@ -65,6 +65,9 @@ public class CancelOrderActivity extends AppCompatActivity implements Listeners.
         //   Common.CloseKeyBoard(homeActivity, edt_name);
         binding.progBar.setVisibility(View.VISIBLE);
         // rec_sent.setVisibility(View.GONE);
+        try {
+
+
         Api.getService(lang, Tags.base_url)
                 .getreasson()
                 .enqueue(new Callback<Resson_Model>() {
@@ -102,14 +105,18 @@ public class CancelOrderActivity extends AppCompatActivity implements Listeners.
                     @Override
                     public void onFailure(Call<Resson_Model> call, Throwable t) {
                         try {
-
+                            binding.progBar.setVisibility(View.GONE);
+                            binding.llNoOrders.setVisibility(View.VISIBLE);
 
                             Toast.makeText(CancelOrderActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
                             Log.e("error", t.getMessage());
                         } catch (Exception e) {
                         }
                     }
-                });
+                });}catch (Exception e){
+            binding.progBar.setVisibility(View.GONE);
+            binding.llNoOrders.setVisibility(View.VISIBLE);
+        }
 
     }
 
