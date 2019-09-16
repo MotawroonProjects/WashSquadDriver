@@ -138,7 +138,7 @@ public class Fragment_Canceled_Order extends Fragment {
                         } else {
                             binding.llNoOrders.setVisibility(View.VISIBLE);
 
-                            Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                             try {
                                 Log.e("Error_code", response.code() + "_" + response.errorBody().string());
                             } catch (IOException e) {
@@ -187,7 +187,7 @@ public class Fragment_Canceled_Order extends Fragment {
                             myOrdrrAdapter.notifyDataSetChanged();
 
                         } else {
-                            Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                         //   Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                             try {
                                 Log.e("Error_code", response.code() + "_" + response.errorBody().string());
                             } catch (IOException e) {
