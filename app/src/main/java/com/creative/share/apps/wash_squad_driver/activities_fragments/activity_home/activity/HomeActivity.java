@@ -19,6 +19,7 @@ import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_h
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments.Fragment_Current_Order;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments.Fragment_Previous_Order;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_map.MapActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_order_details.Finish_OrderDetailsActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_order_details.OrderDetailsActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_sign_in.SignInActivity;
 import com.creative.share.apps.wash_squad_driver.adapters.MyPagerAdapter;
@@ -281,7 +282,7 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
     }
 
     public void Show_Detialsdata(Order_Model.Data data) {
-        Intent intent=new Intent(HomeActivity.this, OrderDetailsActivity.class);
+        Intent intent=new Intent(HomeActivity.this, Finish_OrderDetailsActivity.class);
         intent.putExtra("detials",data);
         startActivity(intent);
     }

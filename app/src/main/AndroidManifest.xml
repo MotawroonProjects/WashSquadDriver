@@ -36,6 +36,10 @@
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:name=".activities_fragments.activity_order_details.Finish_OrderDetailsActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
             android:name=".activities_fragments.activity_cancel_order.CancelOrderActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden" />
