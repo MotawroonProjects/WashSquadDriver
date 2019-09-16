@@ -13,6 +13,7 @@ import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_map.MapActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityOrderDetailsBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
@@ -60,10 +61,19 @@ else {
 binding.btShow.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
+        if(data.getStatus()==1){
         Intent intent = new Intent(OrderDetailsActivity.this, Work1Activity.class);
         intent.putExtra("detials",data);
 
         startActivityForResult(intent,1002);
+
+        }
+        else if(data.getStatus()==2){
+            Intent intent = new Intent(OrderDetailsActivity.this, Work2Activity.class);
+            intent.putExtra("detials",data);
+
+            startActivityForResult(intent,1003);
+        }
     }
 });
     }

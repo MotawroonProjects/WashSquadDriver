@@ -58,6 +58,13 @@ public interface Service {
             @Field("user_id") int user_id,
             @Field("status")int status
     );
+    @FormUrlEncoded
+    @POST("api/current-orders")
+    Call<Order_Model> MyOrder(
+            @Field("page")int page,
+            @Field("user_id") int user_id
+
+    );
     @GET("api/cancelReasons")
     Call<Resson_Model> getreasson();
     @FormUrlEncoded

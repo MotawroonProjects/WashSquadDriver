@@ -110,7 +110,7 @@ public class Fragment_Current_Order extends Fragment {
 
 
             Api.getService(lang, Tags.base_url)
-                    .MyOrder(1, userModel.getId(), 1)
+                    .MyOrder(1, userModel.getId())
                     .enqueue(new Callback<Order_Model>() {
                         @Override
                         public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {
@@ -166,7 +166,7 @@ public class Fragment_Current_Order extends Fragment {
 
 
             Api.getService(lang, Tags.base_url)
-                    .MyOrder(page, userModel.getId(), 1)
+                    .MyOrder(page, userModel.getId())
                     .enqueue(new Callback<Order_Model>() {
                         @Override
                         public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {

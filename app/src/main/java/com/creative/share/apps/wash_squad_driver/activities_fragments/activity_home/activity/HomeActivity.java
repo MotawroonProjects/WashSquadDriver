@@ -184,7 +184,11 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if (requestCode == 1002 && resultCode == RESULT_OK && data != null) {
+            Intent intent = getIntent();
+           startActivity(intent);
+            finish();
+        }
     }
 
     private void navigateToSinInActivity() {
@@ -271,7 +275,9 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
     public void Show_Detials(Order_Model.Data data) {
         Intent intent=new Intent(HomeActivity.this, MapActivity.class);
         intent.putExtra("detials",data);
-        startActivity(intent);
+        startActivityForResult(intent,1002);
+
+
     }
 
     public void Show_Detialsdata(Order_Model.Data data) {
@@ -279,4 +285,5 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
         intent.putExtra("detials",data);
         startActivity(intent);
     }
+
 }

@@ -181,6 +181,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
                         intent.putExtra("detials",data);
 
                         startActivityForResult(intent, 1003);
+                        finish();
                     } else {
                         try {
 
