@@ -52,9 +52,10 @@ public class Finish_OrderDetailsActivity extends AppCompatActivity implements Li
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_finish_order_details);
+
+        initView();
         getOrders(1);
         getOrders(2);
-        initView();
     }
 
     private void initView() {

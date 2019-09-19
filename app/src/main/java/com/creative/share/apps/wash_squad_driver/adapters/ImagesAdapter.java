@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_cancel_order.CancelOrderActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_order_details.Finish_OrderDetailsActivity;
 import com.creative.share.apps.wash_squad_driver.databinding.ImageRowBinding;
 import com.creative.share.apps.wash_squad_driver.databinding.ResonRowBinding;
 import com.creative.share.apps.wash_squad_driver.models.Order_Images_Model;
@@ -30,7 +31,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Context context;
     private LayoutInflater inflater;
     private String lang;
-    private CancelOrderActivity activity;
+    private Finish_OrderDetailsActivity activity;
 private int i=0;
     public ImagesAdapter(List<Order_Images_Model.Data> orderlist, Context context) {
         this.orderlist = orderlist;
@@ -38,7 +39,7 @@ private int i=0;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-        this.activity = (CancelOrderActivity) context;
+        this.activity = (Finish_OrderDetailsActivity) context;
     }
 
     @NonNull
