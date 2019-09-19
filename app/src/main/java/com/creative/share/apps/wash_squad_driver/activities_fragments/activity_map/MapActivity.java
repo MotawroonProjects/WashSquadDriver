@@ -11,6 +11,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -222,7 +224,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     String uri = String.format(Locale.ENGLISH, "geo:%f,%f", data.getLatitude(), data.getLongitude());
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                     startActivity(intent);
-                    return false;
+                    return true;
                 }
             });
         }
@@ -243,6 +245,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         }
+/*
+        ImageView im = findViewById(R.id.);
+        im.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            }
+        });*/
     }
 
 
