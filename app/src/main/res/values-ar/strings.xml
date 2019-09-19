@@ -117,7 +117,7 @@
     <string name="canceled">Canceled</string>
     <string name="client_location">Client Location</string>
     <string name="order_details">Order details</string>
-    <string name="number">Number : </string>
+    <string name="number">Car No : </string>
     <string name="arrival">Arrival</string>
     <string name="driver_login">Driver Login</string>
     <string name="cancel_order">Cancel Order</string>
@@ -147,6 +147,33 @@
     <string name="User_Not_Active">User Not Active</string>
     <string name="image_before_work">Image Before Work</string>
     <string name="image_after">Image After Work</string>
-
+    <string name="next">Next</string>
+    <string name="piece_1">Piece 1</string>
+    <string name="piece_2">Piece 2</string>
+    <string name="piece_3">Piece 3</string>
+    <string name="piece_4">Piece 4</string>
+    <string name="add_tire_images_before_work">Add tire images before work</string>
+    <string name="add_door_images_before_work">add door images before work</string>
+    <string name="add_roof_images_before_work">Add roof images before work</string>
+    <string name="add_tablon_images_before_work">Add tablon images before work</string>
+    <string name="add_steas_images_before_work">Add steas images before work</string>
+    <string name="add_glass_images_before_work">Add glass images before work</string>
+    <string name="add_floor_images_before_work">Add floor images before work</string>
+    <string name="add_tire_images_after_work">Add tire images After work</string>
+    <string name="add_door_images_after_work">add door images After work</string>
+    <string name="add_roof_images_after_work">Add roof images After work</string>
+    <string name="add_tablon_images_after_work">Add tablon images After work</string>
+    <string name="add_steas_images_after_work">Add steas images After work</string>
+    <string name="add_glass_images_after_work">Add glass images after work</string>
+    <string name="add_floor_images_after_work">Add floor images after work</string>
+    <string name="finish">Finish</string>
+    <string name="piece_5">piece 5</string>
+    <string name="piece_6">piece 6</string>
+    <string name="outside">outside</string>
+    <string name="doors">doors</string>
+    <string name="tablon">tablon</string>
+    <string name="steas">steas</string>
+    <string name="floor">floor</string>
+    <string name="glass">glass</string>
 
 </resources>

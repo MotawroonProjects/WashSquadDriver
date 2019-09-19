@@ -63,7 +63,7 @@ private List<Data> data;
         private String work_time_choosen;
         private String work_time_en_title;
         private String work_time_ar_title;
-
+private String step;
         public int getId() {
             return id;
         }
@@ -251,6 +251,11 @@ private List<Data> data;
         public String getWork_time_ar_title() {
             return work_time_ar_title;
         }
+
+        public String getStep() {
+            return step;
+        }
+
         private List<order_images> order_images;
 
         public List<Data.order_images> getOrder_images() {

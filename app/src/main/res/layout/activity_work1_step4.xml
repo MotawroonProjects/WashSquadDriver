@@ -104,7 +104,7 @@
                         android:layout_marginRight="8dp"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
-                        android:text="@string/add_inside_images_before_work"
+                        android:text="@string/add_glass_images_before_work"
                         />
                 </LinearLayout>
                 
@@ -156,7 +156,7 @@
                             android:layout_marginTop="10dp"
                             android:textSize="13sp"
                             android:textColor="@color/gray5"
-                            android:text="@string/tire"
+                            android:text="@string/piece_1"
                             android:textAllCaps="true"
                             />
                     </LinearLayout>
@@ -172,7 +172,7 @@
                             android:id="@+id/fl2"
                             android:layout_width="match_parent"
                             android:layout_height="90dp"
-                            android:background="@drawable/image_add_bg"
+                            android:background="@drawable/image_add_bg_option"
 
                             >
 
@@ -204,11 +204,49 @@
                             android:layout_marginTop="10dp"
                             android:textSize="13sp"
                             android:textColor="@color/gray5"
-                            android:text="@string/front"
+                            android:text="@string/piece_2"
                             android:textAllCaps="true"
                             />
                     </LinearLayout>
 
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/circle_image"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp"
+                        android:text="2"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:text="@string/add_floor_images_before_work"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:weightSum="6"
+                    >
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -252,7 +290,7 @@
                             android:layout_marginTop="10dp"
                             android:textSize="13sp"
                             android:textColor="@color/gray5"
-                            android:text="@string/back2"
+                            android:text="@string/piece_1"
                             android:textAllCaps="true"
                             />
                     </LinearLayout>
@@ -301,47 +339,10 @@
                             android:layout_marginTop="10dp"
                             android:textSize="13sp"
                             android:textColor="@color/gray5"
-                            android:text="@string/trunk"
+                            android:text="@string/piece_2"
                             android:textAllCaps="true"
                             />
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal"
-                    >
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/circle_image"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="15sp"
-                        android:text="2"
-                        android:gravity="center"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"
-                        android:text="@string/add_outside_images_before_work"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:weightSum="4"
-                    >
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -385,7 +386,7 @@
                             android:layout_marginTop="10dp"
                             android:textSize="13sp"
                             android:textColor="@color/gray5"
-                            android:text="@string/roof"
+                            android:text="@string/piece_3"
                             android:textAllCaps="true"
                             />
                     </LinearLayout>
@@ -434,7 +435,7 @@
                             android:layout_marginTop="10dp"
                             android:textSize="13sp"
                             android:textColor="@color/gray5"
-                            android:text="@string/front_seats"
+                            android:text="@string/piece_4"
                             android:textAllCaps="true"
                             />
                     </LinearLayout>
@@ -450,7 +451,7 @@
                             android:id="@+id/fl33"
                             android:layout_width="match_parent"
                             android:layout_height="90dp"
-                            android:background="@drawable/image_add_bg"
+                            android:background="@drawable/image_add_bg_option"
 
                             >
 
@@ -482,7 +483,7 @@
                             android:layout_marginTop="10dp"
                             android:textSize="13sp"
                             android:textColor="@color/gray5"
-                            android:text="@string/back_seats"
+                            android:text="@string/piece_5"
                             android:textAllCaps="true"
                             />
                     </LinearLayout>
@@ -499,7 +500,7 @@
 
                             android:layout_width="match_parent"
                             android:layout_height="90dp"
-                            android:background="@drawable/image_add_bg"
+                            android:background="@drawable/image_add_bg_option"
 
                             >
 
@@ -531,7 +532,7 @@
                             android:layout_marginTop="10dp"
                             android:textSize="13sp"
                             android:textColor="@color/gray5"
-                            android:text="@string/trunk"
+                            android:text="@string/piece_6"
                             android:textAllCaps="true"
                             />
                     </LinearLayout>

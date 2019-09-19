@@ -75,6 +75,8 @@ private Fragment fragment;
 
             eventHolder.binding.start.setOnClickListener(view -> {
                 if(fragment instanceof Fragment_Current_Order){
+
+
                 activity.Show_Detials(orderlist.get(holder.getLayoutPosition()));}
                 else if(fragment instanceof Fragment_Previous_Order){
                     activity.Show_Detialsdata(orderlist.get(holder.getLayoutPosition()));

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.widget.Toast;
@@ -21,6 +22,15 @@ import androidx.databinding.DataBindingUtil;
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_cancel_order.CancelOrderActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_order_details.OrderDetailsActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity_Step1;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity_step2;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity_step3;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity_step4;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_Step1;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_step2;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_step3;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_step4;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityMapBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
@@ -96,10 +106,70 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
         binding.btnArrival.setOnClickListener(view -> {
-            Intent intent = new Intent(this, OrderDetailsActivity.class);
-            intent.putExtra("detials", data);
+            if(data.getStatus()==1&&data.getStep().equals("0")){
+                Intent intent = new Intent(this, OrderDetailsActivity.class);
+                intent.putExtra("detials", data);
 
-            startActivityForResult(intent, 1002);
+                startActivityForResult(intent, 1002);
+
+
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("0")){
+                Intent intent = new Intent(this, Work1Activity_Step1.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("1")){
+                Intent intent = new Intent(this, Work1Activity_step2.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("2")){
+                Intent intent = new Intent(this, Work1Activity_step3.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("3")){
+                Intent intent = new Intent(this, Work1Activity_step4.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("4")){
+                Intent intent = new Intent(this, Work2Activity_Step1.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("5")){
+                Intent intent = new Intent(this, Work2Activity_step2.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("6")){
+                Intent intent = new Intent(this, Work2Activity_step3.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("7")){
+                Intent intent = new Intent(this, Work2Activity_step4.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+            else if(data.getStatus()==2&&data.getStep().equals("8")){
+                Intent intent = new Intent(this, Work2Activity.class);
+                intent.putExtra("detials",data);
+
+                startActivityForResult(intent,1002);
+            }
+
+
         });
         updateUI();
         //CheckPermission();
@@ -146,6 +216,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setIndoorEnabled(true);
             mMap.setMaxZoomPreference(8.0f);
             AddMarker(data.getLatitude(), data.getLongitude());
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    String uri = String.format(Locale.ENGLISH, "geo:%f,%f", data.getLatitude(), data.getLongitude());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    startActivity(intent);
+                    return false;
+                }
+            });
         }
     }
 
@@ -157,6 +236,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (marker == null) {
             marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
+
         } else {
             marker.setPosition(new LatLng(lat, lng));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));

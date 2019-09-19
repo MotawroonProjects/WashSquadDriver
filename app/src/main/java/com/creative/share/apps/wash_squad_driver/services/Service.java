@@ -1,6 +1,7 @@
 package com.creative.share.apps.wash_squad_driver.services;
 
 
+import com.creative.share.apps.wash_squad_driver.models.Order_Images_Model;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.PlaceGeocodeData;
 import com.creative.share.apps.wash_squad_driver.models.PlaceMapDetailsData;
@@ -73,22 +74,40 @@ public interface Service {
             @Field("order_id") int order_id,
             @Field("cancel_reason_id")int cancel_reason_id
     );
-    @Multipart
+    @FormUrlEncoded
     @POST("api/driver/order/start")
-    Call<ResponseBody> Step1
-            (@Part("order_id") RequestBody id_part,
-             @Part("start_time_work") RequestBody time_part,
-             @Part List<MultipartBody.Part> partimageInsideList,
-             @Part List<MultipartBody.Part> partimageOutsideList);
-    @Multipart
+    Call<ResponseBody> start
+            (@Field("order_id") String id_part,
+             @Field("start_time_work") String time_part
+            );
+    @FormUrlEncoded
     @POST("api/driver/order/end")
     Call<ResponseBody> Step2(
-            @Part("order_id") RequestBody id_part,
-            @Part("end_time_work") RequestBody time_part,
+            @Field("order_id") String id_part,
+            @Field("end_time_work") String time_part,
 
-            @Part("feed_back")  RequestBody feed_part,
-           @Part List<MultipartBody.Part> partimageInsideList,
-            @Part List<MultipartBody.Part> partimageOutsideList);
+            @Field("feed_back")  String feed_part
+          );
+    @Multipart
+    @POST("api/driver/upload/images")
+    Call<ResponseBody> Step1
+            (@Part("order_id") RequestBody id_part,
+             @Part("status") RequestBody status,
+             @Part("type1") RequestBody type1,
+             @Part("type2") RequestBody type2,
+             @Part("step") RequestBody step,
+             @Part List<MultipartBody.Part> partimageInsideList,
+             @Part List<MultipartBody.Part> partimageOutsideList
+//
+             );
+    @FormUrlEncoded
+    @POST("api/order/images/get")
+    Call<Order_Images_Model> MyOrderimages(
+
+            @Field("order_id") int order_id,
+            @Field("status") int status
+
+    );
 }
 
 

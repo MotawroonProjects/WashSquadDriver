@@ -27,7 +27,8 @@ import androidx.databinding.DataBindingUtil;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
-import com.creative.share.apps.wash_squad_driver.databinding.ActivityWork1Binding;
+import com.creative.share.apps.wash_squad_driver.adapters.MyOrdrrAdapter;
+import com.creative.share.apps.wash_squad_driver.databinding.ActivityWork1Step3Binding;
 import com.creative.share.apps.wash_squad_driver.databinding.DialogSelectImageBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
@@ -39,7 +40,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,9 +51,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Work1Activity extends AppCompatActivity implements Listeners.BackListener {
+public class Work1Activity_step3 extends AppCompatActivity implements Listeners.BackListener {
 
-    private ActivityWork1Binding binding;
+    private ActivityWork1Step3Binding binding;
     private final int IMG1 = 1, IMG2 = 2, IMG3 = 3, IMG4 = 4, IMG5 = 5, IMG6 = 6, IMG7 = 7, IMG8 = 8;
     private int image_type = 0;
     private List<Uri> imageInsideList, imageOutsideList;
@@ -78,7 +78,7 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_work1);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_work1_step3);
         initView();
     }
 
@@ -108,37 +108,33 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
 
         binding.btnStep2.setOnClickListener(view -> {
 
-            if (isImg1 && isImg2 && isImg3 && isImg4 && isImg5 && isImg6 && isImg7 && isImg8) {
+            if (isImg1  && isImg3 && isImg4 && isImg5 && isImg6 && isImg7 ) {
                 addImageInside();
                 addImageOutside();
                 step1();
 
             } else {
                 if (!isImg1) {
-                    Toast.makeText(this, "Choose tire image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Choose tablon piece1 image", Toast.LENGTH_SHORT).show();
                 }
 
-                if (!isImg2) {
-                    Toast.makeText(this, "Choose front image", Toast.LENGTH_SHORT).show();
-                }
+
                 if (!isImg3) {
-                    Toast.makeText(this, "Choose back image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Choose steas piece1 image", Toast.LENGTH_SHORT).show();
                 }
                 if (!isImg4) {
-                    Toast.makeText(this, "Choose trunk image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Choose steas piece2 image", Toast.LENGTH_SHORT).show();
                 }
                 if (!isImg5) {
-                    Toast.makeText(this, "Choose roof image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Choose steas piece 3 image", Toast.LENGTH_SHORT).show();
                 }
                 if (!isImg6) {
-                    Toast.makeText(this, "Choose front seats image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Choose steas piece 4 image", Toast.LENGTH_SHORT).show();
                 }
                 if (!isImg7) {
-                    Toast.makeText(this, "Choose back seats image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Choose steas piece 5 image", Toast.LENGTH_SHORT).show();
                 }
-                if (!isImg8) {
-                    Toast.makeText(this, "Choose trunk image", Toast.LENGTH_SHORT).show();
-                }
+
             }
 
 
@@ -150,34 +146,38 @@ public class Work1Activity extends AppCompatActivity implements Listeners.BackLi
     private List<MultipartBody.Part> getMultipartBodyList(List<Uri> uriList, String image_cv) {
         List<MultipartBody.Part> partList = new ArrayList<>();
         for (Uri uri : uriList) {
-            MultipartBody.Part part = Common.getMultiPart(Work1Activity.this, uri, image_cv);
+            Log.e("lll",uri.toString());
+            MultipartBody.Part part = Common.getMultiPart(Work1Activity_step3.this, uri, image_cv);
             partList.add(part);
         }
         return partList;
     }
 
     private void step1() {
-        final Dialog dialog = Common.createProgressDialog(Work1Activity.this, getString(R.string.wait));
+        final Dialog dialog = Common.createProgressDialog(Work1Activity_step3.this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         RequestBody id_part = Common.getRequestBodyText(data.getId() + "");
 
-        RequestBody time_part = Common.getRequestBodyText((Calendar.getInstance().getTimeInMillis() / 1000) + "");
-Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId());
-        List<MultipartBody.Part> partimageInsideList = getMultipartBodyList(imageInsideList, "order_images_in[]");
-        List<MultipartBody.Part> partimageOutsideList = getMultipartBodyList(imageOutsideList, "order_images_out[]");
+        RequestBody status_part = Common.getRequestBodyText("1");
+        RequestBody step_part = Common.getRequestBodyText("3");
+        RequestBody type_part1 = Common.getRequestBodyText("4");
+        RequestBody type_part2 = Common.getRequestBodyText("5");
+
+        List<MultipartBody.Part> partimageInsideList = getMultipartBodyList(imageInsideList, "images1[]");
+        List<MultipartBody.Part> partimageOutsideList = getMultipartBodyList(imageOutsideList, "images2[]");
         try {
             Api.getService(lang, Tags.base_url)
-                    .Step1(id_part, time_part, partimageInsideList, partimageOutsideList).enqueue(new Callback<ResponseBody>() {
+                    .Step1(id_part, status_part,type_part1,type_part2,step_part, partimageInsideList, partimageOutsideList).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     dialog.dismiss();
                     if (response.isSuccessful()) {
                         // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
-                        Toast.makeText(Work1Activity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Work1Activity_step3.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
 
                         //  adsActivity.finish(response.body().getId_advertisement());
-                        Intent intent = new Intent(Work1Activity.this, Work2Activity.class);
+                        Intent intent = new Intent(Work1Activity_step3.this, Work1Activity_step4.class);
                         intent.putExtra("detials",data);
 
                         startActivityForResult(intent, 1003);
@@ -185,7 +185,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
                     } else {
                         try {
 
-                            Toast.makeText(Work1Activity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Work1Activity_step3.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                             Log.e("Error", response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers());
                         } catch (Exception e) {
 
@@ -198,7 +198,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     dialog.dismiss();
                     try {
-                        Toast.makeText(Work1Activity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Work1Activity_step3.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
                         Log.e("Error", t.getMessage());
                     } catch (Exception e) {
 
@@ -364,7 +364,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageInsideMap.put(2, uri);
+                imageOutsideMap.put(0, uri);
 
 
                 Picasso.with(this).load(uri).fit().into(binding.image3);
@@ -374,7 +374,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
 
 
                 uri = data.getData();
-                imageInsideMap.put(2, uri);
+                imageOutsideMap.put(0, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image3);
 
@@ -388,7 +388,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageInsideMap.put(3, uri);
+                imageOutsideMap.put(1, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image4);
 
@@ -396,7 +396,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             } else if (image_type == 2) {
 
                 uri = data.getData();
-                imageInsideMap.put(3, uri);
+                imageOutsideMap.put(1, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image4);
 
@@ -411,7 +411,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageOutsideMap.put(0, uri);
+                imageOutsideMap.put(2, uri);
                 Picasso.with(this).load(uri).fit().into(binding.image11);
 
 
@@ -419,7 +419,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
 
 
                 uri = data.getData();
-                imageOutsideMap.put(0, uri);
+                imageOutsideMap.put(2, uri);
                 Picasso.with(this).load(uri).fit().into(binding.image11);
 
             }
@@ -432,7 +432,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageOutsideMap.put(1, uri);
+                imageOutsideMap.put(3, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image22);
 
@@ -440,7 +440,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             } else if (image_type == 2) {
 
                 uri = data.getData();
-                imageOutsideMap.put(1, uri);
+                imageOutsideMap.put(3, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image22);
 
@@ -455,7 +455,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageOutsideMap.put(2, uri);
+                imageOutsideMap.put(4, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image33);
 
@@ -464,7 +464,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
 
 
                 uri = data.getData();
-                imageOutsideMap.put(2, uri);
+                imageOutsideMap.put(4, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image33);
 
@@ -478,7 +478,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             if (image_type == 1) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
-                imageOutsideMap.put(3, uri);
+                imageOutsideMap.put(5, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image44);
 
@@ -486,7 +486,7 @@ Log.e("msg",imageInsideList.size()+" "+imageOutsideList.size()+" "+data.getId())
             } else if (image_type == 2) {
 
                 uri = data.getData();
-                imageOutsideMap.put(3, uri);
+                imageOutsideMap.put(5, uri);
 
                 Picasso.with(this).load(uri).fit().into(binding.image44);
 
