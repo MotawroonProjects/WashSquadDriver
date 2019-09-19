@@ -10,7 +10,7 @@ public class Order_Images_Model  implements Serializable {
         return data;
     }
 
-    public class Data
+    public class Data implements Serializable
         {
             private int id;
                 private String order_id;

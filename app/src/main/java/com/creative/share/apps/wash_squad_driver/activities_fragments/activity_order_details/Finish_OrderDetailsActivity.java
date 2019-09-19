@@ -2,6 +2,7 @@ package com.creative.share.apps.wash_squad_driver.activities_fragments.activity_
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.creative.share.apps.wash_squad_driver.R;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_Step1;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_step2;
 import com.creative.share.apps.wash_squad_driver.adapters.ImagesAdapter;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityFinishOrderDetailsBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
@@ -156,4 +159,10 @@ binding.recAfter.setAdapter(imagesAdapter2);
     }
 
 
+    public void showimage(Order_Images_Model.Data data) {
+        Intent intent = new Intent(Finish_OrderDetailsActivity.this, Order_Image_Activity.class);
+        intent.putExtra("detials",data);
+
+        startActivityForResult(intent, 1003);
+    }
 }

@@ -85,6 +85,12 @@ private int i=0;
         else  if(order_data.getType().equals("8")){
             eventHolder.binding.tvTitle.setText(activity.getResources().getString(R.string.glass));
         }
+        eventHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.showimage(orderlist.get(eventHolder.getLayoutPosition()));
+            }
+        });
 
 
     }

@@ -175,5 +175,6 @@
     <string name="steas">steas</string>
     <string name="floor">floor</string>
     <string name="glass">glass</string>
+    <string name="image">Image</string>
 
 </resources>
