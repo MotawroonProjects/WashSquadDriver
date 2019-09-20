@@ -11,6 +11,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 
 import java.util.Locale;
 
@@ -218,45 +220,38 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setIndoorEnabled(true);
             mMap.setMaxZoomPreference(8.0f);
             AddMarker(data.getLatitude(), data.getLongitude());
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    String uri = String.format(Locale.ENGLISH, "geo:%f,%f", data.getLatitude(), data.getLongitude());
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                    startActivity(intent);
-                    return true;
-                }
-            });
+
         }
     }
 
-    private void AddMarker(double lat, double lng) {
+    private void AddMarker(final double lat, final double lng) {
 
         this.lat = lat;
         this.lng = lng;
-
         if (marker == null) {
-            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            IconGenerator iconGenerator = new IconGenerator(this);
+            iconGenerator.setBackground(null);
+            View view = LayoutInflater.from(this).inflate(R.layout.search_map_icon, null);
+            iconGenerator.setContentView(view);
+            ImageView im=view.findViewById(R.id.map_icon);
+            im.setOnClickListener(v -> {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            });
+            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon())).anchor(iconGenerator.getAnchorU(), iconGenerator.getAnchorV()));
+          //  marker.setTitle(oInnerData.getAddress());
+            marker.showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
-
         } else {
+         //   marker.setTitle(oInnerData.getAddress());
+            marker.showInfoWindow();
             marker.setPosition(new LatLng(lat, lng));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
 
 
         }
-/*
-        ImageView im = findViewById(R.id.);
-        im.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                startActivity(intent);
-            }
-        });*/
     }
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
