@@ -219,13 +219,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setBuildingsEnabled(false);
             mMap.setIndoorEnabled(true);
             mMap.setMaxZoomPreference(8.0f);
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    if(binding.card1.getVisibility()==View.GONE&&binding.card.getVisibility()==View.GONE){
+                        binding.card.setVisibility(View.VISIBLE);
+                        binding.card1.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        binding.card.setVisibility(View.GONE);
+                        binding.card1.setVisibility(View.GONE);
+                    }return false;
+                }
+            });
             AddMarker(data.getLatitude(), data.getLongitude());
-mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-    @Override
-    public void onMapClick(LatLng latLng) {
-      //  binding.card.setVisibility(View.VISIBLE);
-    }
-});
         }
     }
 
@@ -240,10 +247,13 @@ mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             iconGenerator.setContentView(view);
             ImageView im=view.findViewById(R.id.map_icon);
             im.setOnClickListener(v -> {
-                binding.card.setVisibility(View.GONE);
+
                 String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+
                 startActivity(intent);
+
+
             });
             marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon())).anchor(iconGenerator.getAnchorU(), iconGenerator.getAnchorV()));
           //  marker.setTitle(oInnerData.getAddress());
