@@ -220,7 +220,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setIndoorEnabled(true);
             mMap.setMaxZoomPreference(8.0f);
             AddMarker(data.getLatitude(), data.getLongitude());
-
+mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+    @Override
+    public void onMapClick(LatLng latLng) {
+        binding.card.setVisibility(View.VISIBLE);
+    }
+});
         }
     }
 
@@ -235,6 +240,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             iconGenerator.setContentView(view);
             ImageView im=view.findViewById(R.id.map_icon);
             im.setOnClickListener(v -> {
+                binding.card.setVisibility(View.GONE);
                 String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(intent);
