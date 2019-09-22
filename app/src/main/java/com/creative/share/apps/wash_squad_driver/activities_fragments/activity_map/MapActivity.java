@@ -223,7 +223,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
     @Override
     public void onMapClick(LatLng latLng) {
-        binding.card.setVisibility(View.VISIBLE);
+      //  binding.card.setVisibility(View.VISIBLE);
     }
 });
         }
