@@ -27,6 +27,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_Step1;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityWork1Step4Binding;
 import com.creative.share.apps.wash_squad_driver.databinding.DialogSelectImageBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
@@ -173,7 +174,7 @@ public class Work1Activity_step4 extends AppCompatActivity implements Listeners.
                         Toast.makeText(Work1Activity_step4.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
 
                         //  adsActivity.finish(response.body().getId_advertisement());
-                        Intent intent = new Intent(Work1Activity_step4.this, Work2Activity.class);
+                        Intent intent = new Intent(Work1Activity_step4.this, Work2Activity_Step1.class);
                         intent.putExtra("detials",data);
 
                         startActivityForResult(intent, 1003);
