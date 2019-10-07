@@ -94,14 +94,46 @@ public class Work1Activity_Step1 extends AppCompatActivity implements Listeners.
         binding.setBackListener(this);
 
 
-        binding.fl1.setOnClickListener(view -> CreateImageAlertDialog(IMG1));
-        binding.fl2.setOnClickListener(view -> CreateImageAlertDialog(IMG2));
-        binding.fl3.setOnClickListener(view -> CreateImageAlertDialog(IMG3));
-        binding.fl4.setOnClickListener(view -> CreateImageAlertDialog(IMG4));
-        binding.fl11.setOnClickListener(view -> CreateImageAlertDialog(IMG5));
-        binding.fl22.setOnClickListener(view -> CreateImageAlertDialog(IMG6));
-        binding.fl33.setOnClickListener(view -> CreateImageAlertDialog(IMG7));
-        binding.fl44.setOnClickListener(view -> CreateImageAlertDialog(IMG8));
+        binding.fl1.setOnClickListener(view -> {
+           // CreateImageAlertDialog(IMG1);
+            image_type = 1;
+            Check_CameraPermission(IMG1);
+        });
+        binding.fl2.setOnClickListener(view -> {
+           // CreateImageAlertDialog(IMG2);
+            image_type = 1;
+            Check_CameraPermission(IMG2);
+        });
+        binding.fl3.setOnClickListener(view -> {
+           // CreateImageAlertDialog(IMG3);
+            image_type = 1;
+            Check_CameraPermission(IMG3);
+        });
+        binding.fl4.setOnClickListener(view -> {
+            //CreateImageAlertDialog(IMG4);
+            image_type = 1;
+            Check_CameraPermission(IMG4);
+        });
+        binding.fl11.setOnClickListener(view -> {
+           // CreateImageAlertDialog(IMG5);
+            image_type = 1;
+            Check_CameraPermission(IMG5);
+        });
+        binding.fl22.setOnClickListener(view -> {
+         //   CreateImageAlertDialog(IMG6);
+            image_type = 1;
+            Check_CameraPermission(IMG6);
+        });
+        binding.fl33.setOnClickListener(view -> {
+          //  CreateImageAlertDialog(IMG7);
+            image_type = 1;
+            Check_CameraPermission(IMG7);
+        });
+        binding.fl44.setOnClickListener(view -> {
+          //  CreateImageAlertDialog(IMG8);
+            image_type = 1;
+            Check_CameraPermission(IMG8);
+        });
 
 
         binding.btnStep2.setOnClickListener(view -> {

@@ -221,7 +221,7 @@ public class Work1Activity_step4 extends AppCompatActivity implements Listeners.
     }
 
     private void CreateImageAlertDialog(int img_req) {
-
+/*
         final AlertDialog dialog = new AlertDialog.Builder(this)
                 .setCancelable(true)
                 .create();
@@ -249,7 +249,9 @@ public class Work1Activity_step4 extends AppCompatActivity implements Listeners.
         dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.setView(binding.getRoot());
-        dialog.show();
+        dialog.show();*/
+        image_type = 1;
+        Check_CameraPermission(img_req);
     }
 
 
