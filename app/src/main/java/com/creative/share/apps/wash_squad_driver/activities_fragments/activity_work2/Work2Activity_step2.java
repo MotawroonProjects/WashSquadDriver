@@ -104,6 +104,7 @@ public class Work2Activity_step2 extends AppCompatActivity implements Listeners.
         binding.fl33.setOnClickListener(view -> CreateImageAlertDialog(IMG7));
         binding.fl44.setOnClickListener(view -> CreateImageAlertDialog(IMG8));
 
+        binding.fl9.setOnClickListener(view -> CreateImageAlertDialog(IMG9));
 
         binding.btnStep2.setOnClickListener(view -> {
 
