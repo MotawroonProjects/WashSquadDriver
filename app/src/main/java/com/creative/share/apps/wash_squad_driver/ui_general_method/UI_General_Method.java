@@ -84,6 +84,28 @@ public class UI_General_Method {
 
         textView.setText(sTime);
     }
+    @BindingAdapter({"payment","lang"})
+    public static void payment(TextView textView,String payment,String lang)
+    {
+      String pay="";
+        if(payment.equals("1")){
+            if(lang.equals("ar")){
+                pay="كاش";
+            }
+            else {
+                pay="cashe";
+            }
+        }
+        else if(payment.equals("2")) {
+            if(lang.equals("ar")){
+                pay="سداد";
+            }
+            else {
+                pay="sadad";
+            }
+        }
+        textView.setText(pay);
+    }
 
     @BindingAdapter("rate")
     public static void displayRate(SimpleRatingBar simpleRatingBar, double rate) {
