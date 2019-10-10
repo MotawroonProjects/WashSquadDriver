@@ -17,6 +17,7 @@ private List<Data> data;
 
     public class Data implements Serializable {
         private int id;
+        private String user_phone;
                 private int order_type;
                 private int user_id;
                 private String marketer_id;
@@ -66,6 +67,10 @@ private List<Data> data;
         private String step;
         public int getId() {
             return id;
+        }
+
+        public String getUser_phone() {
+            return user_phone;
         }
 
         public int getOrder_type() {
