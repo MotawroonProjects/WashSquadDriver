@@ -63,7 +63,7 @@ private List<Data> data;
         private String work_time_choosen;
         private String work_time_en_title;
         private String work_time_ar_title;
-private String step;
+        private String step;
         public int getId() {
             return id;
         }

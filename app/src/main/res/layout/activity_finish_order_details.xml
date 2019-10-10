@@ -377,17 +377,13 @@ app:layout_constraintTop_toBottomOf="@+id/ll2"
                         android:text="@string/image_before_work"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
-                    <HorizontalScrollView
-                        android:fillViewport="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+
                   <androidx.recyclerview.widget.RecyclerView
                       android:id="@+id/rec_before"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content">
 
                   </androidx.recyclerview.widget.RecyclerView>
-                    </HorizontalScrollView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -397,17 +393,13 @@ app:layout_constraintTop_toBottomOf="@+id/ll2"
                         android:text="@string/image_after"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
-                    <HorizontalScrollView
-                        android:fillViewport="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+
                       <androidx.recyclerview.widget.RecyclerView
                           android:id="@+id/rec_after"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content">
 
                       </androidx.recyclerview.widget.RecyclerView>
-                    </HorizontalScrollView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -427,6 +419,7 @@ app:layout_constraintTop_toBottomOf="@+id/ll2"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:text="@{orderModel.feedback}"
+                        android:layout_marginBottom="10dp"
                         />
 
 

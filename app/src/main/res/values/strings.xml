@@ -117,7 +117,7 @@
     <string name="canceled">Canceled</string>
     <string name="client_location">Client Location</string>
     <string name="order_details">Order details</string>
-    <string name="number">Car No : </string>
+    <string name="number">Car Nu : </string>
     <string name="arrival">Arrival</string>
     <string name="driver_login">Driver Login</string>
     <string name="cancel_order">Cancel Order</string>

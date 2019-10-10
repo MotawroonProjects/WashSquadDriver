@@ -57,7 +57,7 @@ public interface Service {
     Call<Order_Model> MyOrder(
             @Field("page")int page,
             @Field("user_id") int user_id,
-            @Field("status")int status
+            @Field("status")int ...status
     );
     @FormUrlEncoded
     @POST("api/current-orders")
@@ -85,7 +85,6 @@ public interface Service {
     Call<ResponseBody> Step2(
             @Field("order_id") String id_part,
             @Field("end_time_work") String time_part,
-
             @Field("feed_back")  String feed_part
           );
     @Multipart

@@ -3,6 +3,7 @@ package com.creative.share.apps.wash_squad_driver.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ private Fragment fragment;
             EventHolder eventHolder = (EventHolder) holder;
             eventHolder.binding.setLang(lang);
             eventHolder.binding.setOrderModel(order_data);
-
+Log.e("data",order_data.getId()+" "+order_data.getStatus());
 
             eventHolder.binding.start.setOnClickListener(view -> {
                 if(fragment instanceof Fragment_Current_Order){
