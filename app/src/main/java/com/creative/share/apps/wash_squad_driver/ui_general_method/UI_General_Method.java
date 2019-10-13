@@ -132,6 +132,42 @@ public class UI_General_Method {
         textView.setText(dd);
 
     }
+    @BindingAdapter({"begin_date","end_date","langs"})
+    public static void duration(TextView textView, long begin_date,long end_date,String lang) {
+        Paper.init(textView.getContext());
+        String time="";
 
+        float diffrence=end_date-begin_date;
+        float minute=diffrence/60;
+        if(minute<60){
+
+            time=minute+"";
+            if(lang.equals("ar")){
+                time+="دقيقة";
+            }
+            else {
+                time+="Minute";
+            }
+
+        }
+        else {
+            time=(minute/60)+"";
+
+            if((diffrence%60)>0){
+
+                time+=":"+((diffrence%60)/60)+"";
+            }
+            time=String.format("%.2f",time);
+            if(lang.equals("ar")){
+                time+="ساعه";
+            }
+            else {
+                time+="Hour";
+            }
+        }
+
+        textView.setText(time);
+
+    }
 
 }

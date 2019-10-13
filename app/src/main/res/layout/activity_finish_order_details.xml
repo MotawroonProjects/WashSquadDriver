@@ -127,7 +127,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/user_name"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -137,7 +137,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text="@{orderModel.user_full_name}"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
 
@@ -156,7 +156,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/number"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -166,7 +166,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text="@{orderModel.number_of_cars}"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
                             />
@@ -184,7 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/services"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -194,8 +194,35 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text='@{lang.equals("ar")?(orderModel.service_ar_title??""):(orderModel.service_en_title??"")}'
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
 
+                            android:textSize="14sp"
+
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tvTime"
+                            startTime="@{orderModel.start_time_work}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
                             />
@@ -212,22 +239,50 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/time"
-                            android:textColor="@color/gray5"
+                            android:text="@string/end_time"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/tvTime"
-                            startTime="@{orderModel.start_time_work}"
+                            startTime="@{orderModel.end_time_work}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
                             />
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/duration"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            begin_date="@{orderModel.start_time_work}"
+                            end_date="@{orderModel.end_time_work}"
+                            langs="@{lang}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/gray6"
+                            android:textSize="14sp"
+
+                            />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -241,7 +296,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/type_car"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -251,7 +306,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text='@{lang.equals("ar")?(orderModel.carType__ar_title??""):(orderModel.carType_en_title??"")}'
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
                             />
@@ -269,7 +324,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/phone"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -278,9 +333,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:textColor="@color/gray5"
+                            android:text="@{orderModel.user_phone}"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
-android:text="@{orderModel.user_phone}"
 
                             />
                     </LinearLayout>
@@ -324,7 +379,7 @@ android:text="@{orderModel.user_phone}"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -350,7 +405,7 @@ android:text="@{orderModel.user_phone}"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text="@{orderModel.total_price}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="13sp"
 
                             />
@@ -378,14 +433,13 @@ android:text="@{orderModel.user_phone}"
                         android:textSize="16sp" />
 
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rec_before"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
+                    </androidx.recyclerview.widget.RecyclerView>
 
-                  <androidx.recyclerview.widget.RecyclerView
-                      android:id="@+id/rec_before"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content">
-
-                  </androidx.recyclerview.widget.RecyclerView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -396,12 +450,13 @@ android:text="@{orderModel.user_phone}"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
 
-                      <androidx.recyclerview.widget.RecyclerView
-                          android:id="@+id/rec_after"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rec_after"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                      </androidx.recyclerview.widget.RecyclerView>
+                    </androidx.recyclerview.widget.RecyclerView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -415,15 +470,13 @@ android:text="@{orderModel.user_phone}"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/image_add_bg"
                         android:gravity="top"
                         android:padding="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
                         android:text="@{orderModel.feedback}"
-                        android:layout_marginBottom="10dp"
-                        />
-
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
 
                 </LinearLayout>

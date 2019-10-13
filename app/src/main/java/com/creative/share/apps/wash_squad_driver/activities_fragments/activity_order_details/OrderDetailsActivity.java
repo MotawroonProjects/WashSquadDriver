@@ -1,8 +1,12 @@
 package com.creative.share.apps.wash_squad_driver.activities_fragments.activity_order_details;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.creative.share.apps.wash_squad_driver.R;
@@ -32,10 +38,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OrderDetailsActivity extends AppCompatActivity implements Listeners.BackListener {
+    private static final int REQUEST_PHONE_CALL = 1;
 
     private ActivityOrderDetailsBinding binding;
     private Order_Model.Data data;
     private String lang;
+    Intent intent;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -59,13 +67,59 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
         data = (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
         binding.setLang(lang);
         binding.setOrderModel(data);
-
+        if(data.getUser_phone()!=null&&data.getUser_phone_code()!=null) {
+            intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", data.getUser_phone_code().replaceFirst("00", "+") + data.getUser_phone(), null));
+        }
         binding.btShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 start();
             }
         });
+        binding.tvPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+if(intent!=null) {
+    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (ContextCompat.checkSelfPermission(OrderDetailsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(OrderDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+        } else {
+            startActivity(intent);
+        }
+    } else {
+        startActivity(intent);
+    }
+} }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    Activity#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for Activity#requestPermissions for more details.
+                            return;
+                        }
+                    }
+                    startActivity(intent);
+                }
+                else {
+
+                }
+                return;
+            }
+        }
     }
 
     @Override

@@ -176,5 +176,7 @@
     <string name="floor">floor</string>
     <string name="glass">glass</string>
     <string name="image">Image</string>
+    <string name="end_time">End Time : </string>
+    <string name="duration">Duration : </string>
 
 </resources>

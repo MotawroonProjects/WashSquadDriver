@@ -127,7 +127,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/user_name"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -137,7 +137,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text="@{orderModel.user_full_name}"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
 
@@ -156,7 +156,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/number"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -166,7 +166,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text="@{orderModel.number_of_cars}"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
                             />
@@ -184,7 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/services"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -194,7 +194,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text='@{lang.equals("ar")?(orderModel.service_ar_title??""):(orderModel.service_en_title??"")}'
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
 
                             android:textSize="14sp"
 
@@ -213,7 +213,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/time"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -223,7 +223,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
                             />
@@ -241,7 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/type_car"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -251,7 +251,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text='@{lang.equals("ar")?(orderModel.carType__ar_title??""):(orderModel.carType_en_title??"")}'
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
 
                             />
@@ -269,7 +269,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/phone"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
@@ -278,7 +278,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:textColor="@color/gray5"
+                            android:textColor="@color/gray6"
                             android:textSize="14sp"
                             android:text="@{orderModel.user_phone}"
 
@@ -324,8 +324,10 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             lang="@{lang}"
-                            payment="@{orderModel.payment_method}"                            android:textColor="@color/black"
+                            payment="@{orderModel.payment_method}"
+                            android:textColor="@color/gray6"
                             android:textSize="13sp"
+
 
                             />
                     </LinearLayout>
@@ -352,7 +354,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
                             android:text="@{orderModel.total_price}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="13sp"
 
 

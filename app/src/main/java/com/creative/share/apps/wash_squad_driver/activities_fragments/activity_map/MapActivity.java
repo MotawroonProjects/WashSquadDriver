@@ -116,7 +116,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 startActivityForResult(intent, 1002);
 
-
             }
             else if(data.getStatus()==2&&data.getStep().equals("0")){
                 Intent intent = new Intent(this, Work1Activity_Step1.class);
@@ -172,6 +171,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 startActivityForResult(intent,1002);
             }
+            finish();
 
 
         });
