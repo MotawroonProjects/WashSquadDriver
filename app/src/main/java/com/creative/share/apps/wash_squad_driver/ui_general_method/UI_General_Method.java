@@ -141,7 +141,8 @@ public class UI_General_Method {
         float minute=diffrence/60;
         if(minute<60){
 
-            time=minute+"";
+            time=String.format("%.2f",minute);
+
             if(lang.equals("ar")){
                 time+="دقيقة";
             }
