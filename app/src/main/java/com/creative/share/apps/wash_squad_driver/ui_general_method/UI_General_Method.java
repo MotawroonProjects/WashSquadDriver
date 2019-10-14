@@ -159,6 +159,7 @@ public class UI_General_Method {
 
                 time+=":"+String.format("%.2f",((diffrence%60)/60))+"";
             }
+            time=time.replaceFirst("0.","");
             if(lang.equals("ar")){
                 time+="ساعه";
             }
