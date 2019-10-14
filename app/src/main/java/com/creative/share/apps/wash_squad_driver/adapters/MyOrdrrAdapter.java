@@ -73,7 +73,12 @@ private Fragment fragment;
             eventHolder.binding.setLang(lang);
             eventHolder.binding.setOrderModel(order_data);
 Log.e("data",order_data.getId()+" "+order_data.getStatus());
-
+eventHolder.binding.tvPhone.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        activity.makecall(orderlist.get(holder.getLayoutPosition()));
+    }
+});
             eventHolder.binding.start.setOnClickListener(view -> {
                 if(fragment instanceof Fragment_Current_Order){
 
