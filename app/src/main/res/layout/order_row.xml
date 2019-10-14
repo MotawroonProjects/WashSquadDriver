@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_name"
-                    android:textColor="@color/gray5"
+                    android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
@@ -140,7 +140,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:text="@{orderModel.user_full_name}"
-                    android:textColor="@color/gray5"
+                    android:textColor="@color/gray6"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -156,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/services"
-                    android:textColor="@color/gray5"
+                    android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:textColor="@color/gray5"
+                    android:textColor="@color/gray6"
                     android:textSize="14sp"
                     android:text='@{lang.equals("ar")?(orderModel.service_ar_title??""):(orderModel.service_en_title??"")}'
 
@@ -184,7 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone"
-                    android:textColor="@color/gray5"
+                    android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
@@ -193,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:textColor="@color/gray5"
+                    android:textColor="@color/gray6"
                     android:textSize="14sp"
                     android:text="@{orderModel.user_phone}"
 
@@ -212,7 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/price"
-                    android:textColor="@color/gray5"
+                    android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
@@ -221,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:textColor="@color/gray5"
+                    android:textColor="@color/gray6"
                     android:textSize="14sp"
                     android:text="@{orderModel.total_price}"
                     />
