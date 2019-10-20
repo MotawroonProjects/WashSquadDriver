@@ -227,6 +227,32 @@
                     />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reason_cancel"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textColor="@color/gray6"
+                    android:textSize="14sp"
+                    android:text='@{lang.equals("ar")?(orderModel.cancel_ar_title??""):(orderModel.cancel_en_title??"")}'
+                    />
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -72,6 +72,13 @@ private Fragment fragment;
             EventHolder eventHolder = (EventHolder) holder;
             eventHolder.binding.setLang(lang);
             eventHolder.binding.setOrderModel(order_data);
+            if(order_data.getStatus()==5){
+eventHolder.binding.llReason.setVisibility(View.GONE);
+            }
+            else {
+                eventHolder.binding.llReason.setVisibility(View.VISIBLE);
+
+            }
 Log.e("data",order_data.getId()+" "+order_data.getStatus());
 eventHolder.binding.tvPhone.setOnClickListener(new View.OnClickListener() {
     @Override
