@@ -152,13 +152,14 @@ public class UI_General_Method {
 
         }
         else {
-            time=(minute/60)+"";
+
+            time=(int)(minute/60)+"";
 
             if((diffrence%60)>0){
 
-                time+=":"+((diffrence%60)/60)+"";
+                time+=":"+String.format("%.2f",((diffrence%60)/60))+"";
             }
-            time=String.format("%.2f",time);
+            time=time.replaceFirst("0.","");
             if(lang.equals("ar")){
                 time+="ساعه";
             }
