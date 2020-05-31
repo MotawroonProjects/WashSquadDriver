@@ -20,6 +20,8 @@ import androidx.databinding.DataBindingUtil;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity_Step1;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_step4;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityOrderDetailsBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
@@ -67,29 +69,38 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
         data = (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
         binding.setLang(lang);
         binding.setOrderModel(data);
-        if(data.getUser_phone()!=null&&data.getUser_phone_code()!=null) {
+        if (data.getUser_phone() != null && data.getUser_phone_code() != null) {
             intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", data.getUser_phone_code().replaceFirst("00", "+") + data.getUser_phone(), null));
         }
+
         binding.btShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                start();
+                if (data.getStatus() == 1) {
+                    start();
+                } else if (data.getStatus() == 2) {
+                    Intent intent = new Intent(OrderDetailsActivity.this, Work2Activity.class);
+                    intent.putExtra("detials", data);
+                    startActivityForResult(intent, 1002);
+                    finish();
+                }
             }
         });
         binding.tvPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-if(intent!=null) {
-    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        if (ContextCompat.checkSelfPermission(OrderDetailsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(OrderDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
-        } else {
-            startActivity(intent);
-        }
-    } else {
-        startActivity(intent);
-    }
-} }
+                if (intent != null) {
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (ContextCompat.checkSelfPermission(OrderDetailsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(OrderDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                        } else {
+                            startActivity(intent);
+                        }
+                    } else {
+                        startActivity(intent);
+                    }
+                }
+            }
         });
     }
 
@@ -113,8 +124,7 @@ if(intent!=null) {
                         }
                     }
                     startActivity(intent);
-                }
-                else {
+                } else {
 
                 }
                 return;
@@ -157,7 +167,7 @@ if(intent!=null) {
                         Toast.makeText(OrderDetailsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
 
                         //  adsActivity.finish(response.body().getId_advertisement());
-                        Intent intent = new Intent(OrderDetailsActivity.this, Work1Activity_Step1.class);
+                        Intent intent = new Intent(OrderDetailsActivity.this, Work2Activity.class);
                         intent.putExtra("detials", data);
 
                         startActivityForResult(intent, 1003);

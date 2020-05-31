@@ -3,6 +3,7 @@ package com.creative.share.apps.wash_squad_driver.activities_fragments.activity_
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -11,6 +12,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,6 +40,9 @@ import com.creative.share.apps.wash_squad_driver.databinding.ActivityMapBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
+import com.creative.share.apps.wash_squad_driver.remote.Api;
+import com.creative.share.apps.wash_squad_driver.share.Common;
+import com.creative.share.apps.wash_squad_driver.tags.Tags;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -62,9 +67,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 
+import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, Listeners.BackListener {
     private ActivityMapBinding binding;
@@ -110,67 +122,69 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
         binding.btnArrival.setOnClickListener(view -> {
-            if(data.getStatus()==1&&data.getStep().equals("0")){
+//            if(data.getStatus()==1&&data.getStep().equals("0")){
                 Intent intent = new Intent(this, OrderDetailsActivity.class);
                 intent.putExtra("detials", data);
 
                 startActivityForResult(intent, 1002);
 
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("0")){
-                Intent intent = new Intent(this, Work1Activity_Step1.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("1")){
-                Intent intent = new Intent(this, Work1Activity_step2.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("2")){
-                Intent intent = new Intent(this, Work1Activity_step3.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("3")){
-                Intent intent = new Intent(this, Work1Activity_step4.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("4")){
-                Intent intent = new Intent(this, Work2Activity_Step1.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("5")){
-                Intent intent = new Intent(this, Work2Activity_step2.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("6")){
-                Intent intent = new Intent(this, Work2Activity_step3.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("7")){
-                Intent intent = new Intent(this, Work2Activity_step4.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
-            else if(data.getStatus()==2&&data.getStep().equals("8")){
-                Intent intent = new Intent(this, Work2Activity.class);
-                intent.putExtra("detials",data);
-
-                startActivityForResult(intent,1002);
-            }
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("0")){
+//
+////                Intent intent = new Intent(this, Work1Activity_Step1.class);
+////                intent.putExtra("detials",data);
+////
+////                startActivityForResult(intent,1002);
+//             //   step1();
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("1")){
+//                Intent intent = new Intent(this, Work1Activity_step2.class);
+//                intent.putExtra("detials",data);
+//
+//                startActivityForResult(intent,1002);
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("2")){
+//                Intent intent = new Intent(this, Work1Activity_step3.class);
+//                intent.putExtra("detials",data);
+//
+//                startActivityForResult(intent,1002);
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("3")){
+//                Intent intent = new Intent(this, Work1Activity_step4.class);
+//                intent.putExtra("detials",data);
+//
+//                startActivityForResult(intent,1002);
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("4")){
+//                Intent intent = new Intent(this, Work2Activity_Step1.class);
+//                intent.putExtra("detials",data);
+//
+//                startActivityForResult(intent,1002);
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("5")){
+//                Intent intent = new Intent(this, Work2Activity_step2.class);
+//                intent.putExtra("detials",data);
+//
+//                startActivityForResult(intent,1002);
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("6")){
+//                Intent intent = new Intent(this, Work2Activity_step3.class);
+//                intent.putExtra("detials",data);
+//
+//                startActivityForResult(intent,1002);
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("7")){
+//                Intent intent = new Intent(this, Work2Activity_step4.class);
+//                intent.putExtra("detials",data);
+//
+//                startActivityForResult(intent,1002);
+//            }
+//            else if(data.getStatus()==2&&data.getStep().equals("8")){
+//                Intent intent = new Intent(this, Work2Activity.class);
+//                intent.putExtra("detials",data);
+//
+//                startActivityForResult(intent,1002);
+//            }
             finish();
 
 
@@ -382,6 +396,63 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
     }
+//    private void step1() {
+//        final Dialog dialog = Common.createProgressDialog(MapActivity.this, getString(R.string.wait));
+//        dialog.setCancelable(false);
+//        dialog.show();
+//        RequestBody id_part = Common.getRequestBodyText(data.getId() + "");
+//
+//        RequestBody status_part = Common.getRequestBodyText("1");
+//        RequestBody step_part = Common.getRequestBodyText("1");
+//        RequestBody type_part1 = Common.getRequestBodyText("1");
+//        RequestBody type_part2 = Common.getRequestBodyText("2");
+//
+////        List<MultipartBody.Part> partimageInsideList = getMultipartBodyList(imageInsideList, "images1[]");
+////        List<MultipartBody.Part> partimageOutsideList = getMultipartBodyList(imageOutsideList, "images2[]");
+//        try {
+//            Api.getService(lang, Tags.base_url)
+//                    .Step1(id_part, status_part,type_part1,type_part2,step_part).enqueue(new Callback<ResponseBody>() {
+//                @Override
+//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                    dialog.dismiss();
+//                    if (response.isSuccessful()) {
+//                        // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+//                        Toast.makeText(MapActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+//
+//                        //  adsActivity.finish(response.body().getId_advertisement());
+//                        Intent intent = new Intent(MapActivity.this, Work1Activity_step4.class);
+//                        intent.putExtra("detials",data);
+//
+//                        startActivityForResult(intent, 1003);
+//                        finish();
+//                    } else {
+//                        try {
+//
+//                            Toast.makeText(MapActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+//                            Log.e("Error", response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers());
+//                        } catch (Exception e) {
+//
+//
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                    dialog.dismiss();
+//                    try {
+//                        Toast.makeText(MapActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+//                        Log.e("Error", t.getMessage());
+//                    } catch (Exception e) {
+//
+//                    }
+//                }
+//            });
+//        } catch (Exception e) {
+//            dialog.dismiss();
+//            Log.e("error", e.getMessage().toString());
+//        }
+//    }
 
 
     @Override

@@ -178,5 +178,6 @@
     <string name="image">Image</string>
     <string name="end_time">End Time : </string>
     <string name="duration">Duration : </string>
+    <string name="feedback">FeedBack</string>
 
 </resources>

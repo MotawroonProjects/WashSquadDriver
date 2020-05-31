@@ -64,8 +64,8 @@ public class Finish_OrderDetailsActivity extends AppCompatActivity implements Li
         binding = DataBindingUtil.setContentView(this, R.layout.activity_finish_order_details);
 
         initView();
-        getOrders(1);
-        getOrders(2);
+      //  getOrders(1);
+        //getOrders(2);
     }
 
     private void initView() {

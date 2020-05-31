@@ -419,7 +419,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/ll2">
+                    app:layout_constraintTop_toBottomOf="@+id/ll2"
+
+                    >
+
+
 
 
                     <TextView
@@ -430,13 +434,16 @@
                         android:layout_marginRight="8dp"
                         android:text="@string/image_before_work"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
 
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rec_before"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
 
                     </androidx.recyclerview.widget.RecyclerView>
 
@@ -448,12 +455,18 @@
                         android:layout_marginRight="8dp"
                         android:text="@string/image_after"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:visibility="gone"
+
+                        />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rec_after"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+
+                        >
 
                     </androidx.recyclerview.widget.RecyclerView>
 
@@ -461,9 +474,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="@string/write_a_feedback"
+                        android:text="@string/feedback"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+
+                        />
 
                     <TextView
                         android:id="@+id/edtFeedback"
