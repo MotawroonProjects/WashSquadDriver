@@ -75,6 +75,12 @@ public class Fragment_Current_Order extends Fragment {
         binding.recView.setAdapter(myOrdrrAdapter);
         binding.progBar.setVisibility(View.GONE);
         binding.llNoOrders.setVisibility(View.GONE);
+        binding.swipeContainer.setOnClickListener(v -> {
+            if (userModel != null) {
+                getOrders();
+            } else {
+                binding.llNoOrders.setVisibility(View.VISIBLE);
+            }        });
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {

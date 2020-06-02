@@ -50,12 +50,11 @@ public class Fragment_Previous_Order extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order, container, false);
         initView();
-        if(userModel!=null){
+        if (userModel != null) {
             getOrders();
-        }
-        else {
+        } else {
             binding.llNoOrders.setVisibility(View.VISIBLE);
         }
         return binding.getRoot();
@@ -68,7 +67,7 @@ public class Fragment_Previous_Order extends Fragment {
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         preferences = Preferences.newInstance();
         userModel = preferences.getUserData(activity);
-        myOrdrrAdapter = new MyOrdrrAdapter(oDataList, activity,this);
+        myOrdrrAdapter = new MyOrdrrAdapter(oDataList, activity, this);
         binding.recView.setItemViewCacheSize(25);
         binding.recView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recView.setDrawingCacheEnabled(true);
@@ -77,6 +76,12 @@ public class Fragment_Previous_Order extends Fragment {
         binding.recView.setAdapter(myOrdrrAdapter);
         binding.progBar.setVisibility(View.GONE);
         binding.llNoOrders.setVisibility(View.GONE);
+        binding.swipeContainer.setOnClickListener(v -> {
+            if (userModel != null) {
+                getOrders();
+            } else {
+                binding.llNoOrders.setVisibility(View.VISIBLE);
+            }        });
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -90,7 +95,7 @@ public class Fragment_Previous_Order extends Fragment {
                         oDataList.add(null);
                         myOrdrrAdapter.notifyItemInserted(oDataList.size() - 1);
                         if (userModel != null) {
-                            int page= current_page +1;
+                            int page = current_page + 1;
                             loadMore(page);
                         }
                     }
@@ -102,8 +107,6 @@ public class Fragment_Previous_Order extends Fragment {
 
 
     }
-
-
 
 
     public void getOrders() {
@@ -159,7 +162,7 @@ public class Fragment_Previous_Order extends Fragment {
                             }
                         }
                     });
-        }catch (Exception e){
+        } catch (Exception e) {
             binding.progBar.setVisibility(View.GONE);
             binding.llNoOrders.setVisibility(View.VISIBLE);
 
@@ -170,44 +173,44 @@ public class Fragment_Previous_Order extends Fragment {
         try {
 
 
-        Api.getService(lang, Tags.base_url)
-                .MyOrder(page, userModel.getId(), 3)
-                .enqueue(new Callback<Order_Model>() {
-                    @Override
-                    public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {
-                        oDataList.remove(oDataList.size() - 1);
-                        myOrdrrAdapter.notifyItemRemoved(oDataList.size() - 1);
-                        isLoading = false;
-                        if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
-
-                            oDataList.addAll(response.body().getData());
-                            // categories.addAll(response.body().getCategories());
-                            current_page = response.body().getCurrent_page();
-                            myOrdrrAdapter.notifyDataSetChanged();
-
-                        } else {
-                            //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                            try {
-                                Log.e("Error_code", response.code() + "_" + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Order_Model> call, Throwable t) {
-                        try {
+            Api.getService(lang, Tags.base_url)
+                    .MyOrder(page, userModel.getId(), 3)
+                    .enqueue(new Callback<Order_Model>() {
+                        @Override
+                        public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {
                             oDataList.remove(oDataList.size() - 1);
                             myOrdrrAdapter.notifyItemRemoved(oDataList.size() - 1);
                             isLoading = false;
-                              // Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                            Log.e("error", t.getMessage());
-                        } catch (Exception e) {
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+
+                                oDataList.addAll(response.body().getData());
+                                // categories.addAll(response.body().getCategories());
+                                current_page = response.body().getCurrent_page();
+                                myOrdrrAdapter.notifyDataSetChanged();
+
+                            } else {
+                                //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                try {
+                                    Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
-                    }
-                });}
-        catch (Exception e){
+
+                        @Override
+                        public void onFailure(Call<Order_Model> call, Throwable t) {
+                            try {
+                                oDataList.remove(oDataList.size() - 1);
+                                myOrdrrAdapter.notifyItemRemoved(oDataList.size() - 1);
+                                isLoading = false;
+                                // Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                Log.e("error", t.getMessage());
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
             oDataList.remove(oDataList.size() - 1);
             myOrdrrAdapter.notifyItemRemoved(oDataList.size() - 1);
             isLoading = false;

@@ -65,16 +65,15 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(LanguageHelper.updateResources(newBase,"en"));
+        super.attachBaseContext(LanguageHelper.updateResources(newBase, "en"));
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_home);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         initView();
-
-
 
 
     }
@@ -88,12 +87,11 @@ public class HomeActivity extends AppCompatActivity {
         userModel = preferences.getUserData(this);
         binding.setUserModel(userModel);
         String lastVisit = preferences.getLastVisit(this);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         String now = dateFormat.format(new Date(Calendar.getInstance().getTimeInMillis()));
 
-        if (!lastVisit.equals(now))
-        {
-            updateVisit(now,(Calendar.getInstance().getTimeInMillis()/1000));
+        if (!lastVisit.equals(now)) {
+            updateVisit(now, (Calendar.getInstance().getTimeInMillis() / 1000));
 
         }
 
@@ -103,12 +101,12 @@ public class HomeActivity extends AppCompatActivity {
         adapter.addFragments(getFragments());
         adapter.addTitles(getTitles());
         binding.pager.setAdapter(adapter);
-binding.tvLogout.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        logout();
-    }
-});
+        binding.tvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
         binding.pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -117,16 +115,13 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onPageSelected(int position) {
-                if (position==0)
-                {
+                if (position == 0) {
                     binding.setTitle(getString(R.string.order2));
 
-                }else if (position==1)
-                {
+                } else if (position == 1) {
                     binding.setTitle(getString(R.string.finished));
 
-                }else if (position==2)
-                {
+                } else if (position == 2) {
                     binding.setTitle(getString(R.string.canceled));
 
                 }
@@ -137,7 +132,6 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
 
             }
         });
-
 
 
     }
@@ -171,8 +165,7 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
     }
 
 
-    private List<Fragment> getFragments()
-    {
+    private List<Fragment> getFragments() {
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(Fragment_Current_Order.newInstance());
         fragmentList.add(Fragment_Previous_Order.newInstance());
@@ -181,8 +174,7 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
 
     }
 
-    private List<String> getTitles()
-    {
+    private List<String> getTitles() {
         List<String> titleList = new ArrayList<>();
         titleList.add(getString(R.string.order2));
         titleList.add(getString(R.string.finished));
@@ -190,12 +182,13 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
         return titleList;
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1002 ) {
+        if (requestCode == 1002) {
             Intent intent = getIntent();
-           startActivity(intent);
+            startActivity(intent);
             finish();
         }
     }
@@ -205,14 +198,14 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
         startActivity(intent);
         finish();
     }
-    private void logout()
-    {
+
+    private void logout() {
 
       /*  Intent intent = new Intent(activity, HomeActivity.class);
         startActivity(intent);
         activity.finish();*/
 //Log.e("llll","kkkkkk");
-        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         try {
@@ -222,37 +215,34 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             dialog.dismiss();
-                            if (response.isSuccessful()&&response.body()!=null)
-                            {
-                               // Log.e("token",response.body().getName());
+                            if (response.isSuccessful() && response.body() != null) {
+                                // Log.e("token",response.body().getName());
                                 preferences.create_update_userData(HomeActivity.this, null);
                                 preferences.createSession(HomeActivity.this, Tags.session_logout);
                                 Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
                                 startActivity(intent);
                                 finish();
 
-                            }else
-                            {
-                                Log.e("llll","kkkkkk");
+                            } else {
+                                Log.e("llll", "kkkkkk");
 
                                /* if (response.code() == 422) {
                                     Toast.makeText(activity, getString(R.string.em_exist), Toast.LENGTH_SHORT).show();
-                                } else*/ if (response.code() == 500) {
-                                Toast.makeText(HomeActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                                } else*/
+                                if (response.code() == 500) {
+                                    Toast.makeText(HomeActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
 
 
-                            }
-                            else
-                            {
-                                Toast.makeText(HomeActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(HomeActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
 
-                                try {
+                                    try {
 
-                                    Log.e("error",response.code()+"_"+response.errorBody().string());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
                             }
                         }
 
@@ -260,40 +250,39 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             try {
                                 dialog.dismiss();
-                                if (t.getMessage()!=null)
-                                {
-                                    Log.e("error",t.getMessage());
-                                    if (t.getMessage().toLowerCase().contains("failed to connect")||t.getMessage().toLowerCase().contains("unable to resolve host"))
-                                    {
-                                        Toast.makeText(HomeActivity.this,R.string.something, Toast.LENGTH_SHORT).show();
-                                    }else
-                                    {
-                                        Toast.makeText(HomeActivity.this,t.getMessage(), Toast.LENGTH_SHORT).show();
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(HomeActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(HomeActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
-                            }catch (Exception e){}
+                            } catch (Exception e) {
+                            }
                         }
                     });
-        }catch (Exception e){
+        } catch (Exception e) {
             dialog.dismiss();
-            Log.e("lll",e.getMessage().toString());
+            Log.e("lll", e.getMessage().toString());
         }
     }
 
     public void Show_Detials(Order_Model.Data data) {
-        Intent intent=new Intent(HomeActivity.this, MapActivity.class);
-        intent.putExtra("detials",data);
-        startActivityForResult(intent,1002);
+        Intent intent = new Intent(HomeActivity.this, MapActivity.class);
+        intent.putExtra("detials", data);
+        startActivityForResult(intent, 1002);
 
 
     }
 
     public void Show_Detialsdata(Order_Model.Data data) {
-        Intent intent=new Intent(HomeActivity.this, Finish_OrderDetailsActivity.class);
-        intent.putExtra("detials",data);
+        Intent intent = new Intent(HomeActivity.this, Finish_OrderDetailsActivity.class);
+        intent.putExtra("detials", data);
         startActivity(intent);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -314,19 +303,19 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
                         }
                     }
                     startActivity(intent);
-                }
-                else {
+                } else {
 
                 }
                 return;
             }
         }
     }
+
     public void makecall(Order_Model.Data data) {
-        if(data.getUser_phone()!=null&&data.getUser_phone_code()!=null) {
+        if (data.getUser_phone() != null && data.getUser_phone_code() != null) {
             intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", data.getUser_phone_code().replaceFirst("00", "+") + data.getUser_phone(), null));
         }
-        if(intent!=null){
+        if (intent != null) {
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
@@ -336,6 +325,7 @@ binding.tvLogout.setOnClickListener(new View.OnClickListener() {
             } else {
                 startActivity(intent);
             }
-        }}
+        }
     }
+}
 
