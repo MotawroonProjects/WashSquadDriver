@@ -3,9 +3,9 @@ package com.creative.share.apps.wash_squad_driver.models;
 import java.io.Serializable;
 import java.util.List;
 
-public class Order_Model  implements Serializable {
+public class Order_Model implements Serializable {
     private int current_page;
-private List<Data> data;
+    private List<Data> data;
 
     public int getCurrent_page() {
         return current_page;
@@ -19,33 +19,33 @@ private List<Data> data;
         private int id;
         private String user_phone_code;
         private String user_phone;
-                private int order_type;
-                private int user_id;
-                private String marketer_id;
-              private String employee_id;
-                private int service_id;
+        private int order_type;
+        private int user_id;
+        private String marketer_id;
+        private String employee_id;
+        private int service_id;
         private int size_id;
         private int type_id;
-                private String package_id;
+        private String package_id;
         private String address;
-               private double latitude;
+        private double latitude;
         private double longitude;
-                private long order_date;
-                private int order_time_id;
-                private String addons;
-                private String number_of_cars;
-                private String payment_method;
-                private int driver_id;
-                private String feedback;
-                private long start_time_work;
-                private long end_time_work;
-                private int status;
-                private String distributor_employee_id;
-                private int cancel_reason;
-                private int opinion_des;
-                private double rating;
-                private String total_price;
-                private String coupon_serial;
+        private long order_date;
+        private int order_time_id;
+        private String addons;
+        private String number_of_cars;
+        private String payment_method;
+        private int driver_id;
+        private String feedback;
+        private long start_time_work;
+        private long end_time_work;
+        private int status;
+        private String distributor_employee_id;
+        private int cancel_reason;
+        private int opinion_des;
+        private double rating;
+        private String total_price;
+        private String coupon_serial;
         private String created_at;
         private String updated_at;
         private String driver_full_name;
@@ -66,6 +66,7 @@ private List<Data> data;
         private String work_time_en_title;
         private String work_time_ar_title;
         private String step;
+
         public int getId() {
             return id;
         }
@@ -272,12 +273,11 @@ private List<Data> data;
             return order_images;
         }
 
-        public class order_images implements Serializable
-        {
+        public class order_images implements Serializable {
             private int id;
-                private int order_id;
-               private String image;
-                private String type;
+            private int order_id;
+            private String image;
+            private String type;
 
             public int getId() {
                 return id;
