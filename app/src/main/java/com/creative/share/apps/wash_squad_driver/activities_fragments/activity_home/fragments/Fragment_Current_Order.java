@@ -115,6 +115,7 @@ public class Fragment_Current_Order extends Fragment {
         try {
 
 
+            Log.e("vvvvvv",userModel.getId()+"");
             Api.getService(lang, Tags.base_url)
                     .MyOrder(1, userModel.getId())
                     .enqueue(new Callback<Order_Model>() {

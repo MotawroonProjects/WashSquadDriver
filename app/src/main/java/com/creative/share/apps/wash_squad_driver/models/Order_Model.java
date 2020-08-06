@@ -37,8 +37,8 @@ public class Order_Model implements Serializable {
         private String payment_method;
         private int driver_id;
         private String feedback;
-        private long start_time_work;
-        private long end_time_work;
+        private String start_time_work;
+        private String end_time_work;
         private int status;
         private String distributor_employee_id;
         private int cancel_reason;
@@ -151,11 +151,11 @@ public class Order_Model implements Serializable {
             return feedback;
         }
 
-        public long getStart_time_work() {
+        public String getStart_time_work() {
             return start_time_work;
         }
 
-        public long getEnd_time_work() {
+        public String getEnd_time_work() {
             return end_time_work;
         }
 

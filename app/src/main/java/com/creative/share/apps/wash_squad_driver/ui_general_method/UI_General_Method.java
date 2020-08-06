@@ -74,34 +74,38 @@ public class UI_General_Method {
     }
 
     @BindingAdapter({"startTime"})
-    public static void displayTime(TextView textView, long start_time) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
-        String sTime = dateFormat.format(new Date(start_time * 1000));
+    public static void displayTime(TextView textView, String start_time) {
 
-        //   SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+        if (start_time == null) {
+            textView.setText("Not Started");
 
-        //  String eTime = dateFormat2.format(new Date(Long.parseLong(end_time)*1000));
+        } else {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+            String sTime = dateFormat.format(new Date(Long.parseLong(start_time) * 1000));
 
-        textView.setText(sTime);
-    }
-    @BindingAdapter({"payment","lang"})
-    public static void payment(TextView textView,String payment,String lang)
-    {
-      String pay="";
-        if(payment.equals("1")){
-            if(lang.equals("ar")){
-                pay="كاش";
-            }
-            else {
-                pay="cashe";
-            }
+            //   SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+
+            //  String eTime = dateFormat2.format(new Date(Long.parseLong(end_time)*1000));
+
+            textView.setText(sTime);
         }
-        else if(payment.equals("2")) {
-            if(lang.equals("ar")){
-                pay="سداد";
+
+    }
+
+    @BindingAdapter({"payment", "lang"})
+    public static void payment(TextView textView, String payment, String lang) {
+        String pay = "";
+        if (payment.equals("1")) {
+            if (lang.equals("ar")) {
+                pay = "كاش";
+            } else {
+                pay = "cashe";
             }
-            else {
-                pay="sadad";
+        } else if (payment.equals("2")) {
+            if (lang.equals("ar")) {
+                pay = "سداد";
+            } else {
+                pay = "sadad";
             }
         }
         textView.setText(pay);
@@ -132,44 +136,44 @@ public class UI_General_Method {
         textView.setText(dd);
 
     }
-    @BindingAdapter({"begin_date","end_date","langs"})
-    public static void duration(TextView textView, long begin_date,long end_date,String lang) {
+
+    @BindingAdapter({"begin_date", "end_date", "langs"})
+    public static void duration(TextView textView, String begin_date, String end_date, String lang) {
         Paper.init(textView.getContext());
-        String time="";
+        String time = "";
+        if (begin_date != null) {
+            float diffrence = Long.parseLong(end_date) - Long.parseLong(begin_date);
+            float minute = diffrence / 60;
+            if (minute < 60) {
 
-        float diffrence=end_date-begin_date;
-        float minute=diffrence/60;
-        if(minute<60){
+                time = String.format("%.2f", minute);
 
-            time=String.format("%.2f",minute);
+                if (lang.equals("ar")) {
+                    time += "دقيقة";
+                } else {
+                    time += "Minute";
+                }
 
-            if(lang.equals("ar")){
-                time+="دقيقة";
+            } else {
+
+                time = (int) (minute / 60) + "";
+
+                if ((diffrence % 60) > 0) {
+
+                    time += ":" + String.format("%.2f", ((diffrence % 60) / 60)) + "";
+                }
+                time = time.replaceFirst("0.", "");
+                if (lang.equals("ar")) {
+                    time += "ساعه";
+                } else {
+                    time += "Hour";
+                }
             }
-            else {
-                time+="Minute";
-            }
 
+            textView.setText(time);
+        } else {
+            textView.setText("not Start");
         }
-        else {
-
-            time=(int)(minute/60)+"";
-
-            if((diffrence%60)>0){
-
-                time+=":"+String.format("%.2f",((diffrence%60)/60))+"";
-            }
-            time=time.replaceFirst("0.","");
-            if(lang.equals("ar")){
-                time+="ساعه";
-            }
-            else {
-                time+="Hour";
-            }
-        }
-
-        textView.setText(time);
-
     }
 
 }
