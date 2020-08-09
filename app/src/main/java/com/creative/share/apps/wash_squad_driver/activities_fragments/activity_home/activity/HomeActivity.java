@@ -37,6 +37,7 @@ import com.creative.share.apps.wash_squad_driver.preferences.Preferences;
 import com.creative.share.apps.wash_squad_driver.remote.Api;
 import com.creative.share.apps.wash_squad_driver.share.Common;
 import com.creative.share.apps.wash_squad_driver.tags.Tags;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -85,6 +86,11 @@ public class HomeActivity extends AppCompatActivity {
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
         userModel = preferences.getUserData(this);
+        if (userModel != null) {
+            // EventBus.getDefault().register(this);
+            updateTokenFireBase();
+
+        }
         binding.setUserModel(userModel);
         String lastVisit = preferences.getLastVisit(this);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -327,5 +333,64 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
+    private void updateTokenFireBase() {
+
+
+        FirebaseInstanceId.getInstance()
+                .getInstanceId().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String token = task.getResult().getToken();
+
+                try {
+
+                    try {
+
+                        Api.getService(lang,Tags.base_url)
+                                .updatePhoneToken(  token, userModel.getId(), "1")
+                                .enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful() && response.body() != null) {
+                                            Log.e("token", "updated successfully");
+                                        } else {
+                                            try {
+
+                                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        try {
+
+                                            if (t.getMessage() != null) {
+                                                Log.e("error", t.getMessage());
+                                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                                    Toast.makeText(HomeActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(HomeActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                        } catch (Exception e) {
+                                        }
+                                    }
+                                });
+                    } catch (Exception e) {
+
+
+                    }
+                } catch (Exception e) {
+
+
+                }
+
+            }
+        });
+    }
+
 }
 

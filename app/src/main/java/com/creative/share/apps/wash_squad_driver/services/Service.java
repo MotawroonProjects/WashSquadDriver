@@ -107,6 +107,14 @@ public interface Service {
             @Field("status") int status
 
     );
+    @FormUrlEncoded
+    @POST("api/update-firebase")
+    Call<ResponseBody> updatePhoneToken(
+            @Field("phone_token") String phone_token,
+            @Field("user_id") int user_id,
+            @Field("soft_type") String soft_type
+
+    );
 }
 
 
