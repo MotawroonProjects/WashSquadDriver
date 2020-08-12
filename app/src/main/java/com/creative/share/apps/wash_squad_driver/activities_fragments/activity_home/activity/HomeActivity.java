@@ -31,6 +31,7 @@ import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_s
 import com.creative.share.apps.wash_squad_driver.adapters.MyPagerAdapter;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityHomeBinding;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
+import com.creative.share.apps.wash_squad_driver.models.NotStateModel;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.UserModel;
 import com.creative.share.apps.wash_squad_driver.preferences.Preferences;
@@ -38,6 +39,10 @@ import com.creative.share.apps.wash_squad_driver.remote.Api;
 import com.creative.share.apps.wash_squad_driver.share.Common;
 import com.creative.share.apps.wash_squad_driver.tags.Tags;
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -87,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
 
         userModel = preferences.getUserData(this);
         if (userModel != null) {
-            // EventBus.getDefault().register(this);
+            EventBus.getDefault().register(this);
             updateTokenFireBase();
 
         }
@@ -110,7 +115,7 @@ public class HomeActivity extends AppCompatActivity {
         binding.tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logout();
+                DeleteTokenFireBase();
             }
         });
         binding.pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -138,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
+        getDataFromIntent();
 
     }
 
@@ -333,6 +338,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
+
     private void updateTokenFireBase() {
 
 
@@ -345,8 +351,8 @@ public class HomeActivity extends AppCompatActivity {
 
                     try {
 
-                        Api.getService(lang,Tags.base_url)
-                                .updatePhoneToken(  token, userModel.getId(), "1")
+                        Api.getService(lang, Tags.base_url)
+                                .updatePhoneToken(token, userModel.getId(), "1")
                                 .enqueue(new Callback<ResponseBody>() {
                                     @Override
                                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -391,6 +397,93 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ListenNotificationChange(final NotStateModel notStateModel) {
+        if (adapter != null && adapter.getCount() > 0) {
+            Fragment_Current_Order fragment_current_order = (Fragment_Current_Order) adapter.getItem(0);
+            fragment_current_order.getOrders();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+
+    }
+
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent != null && intent.getStringExtra("data") != null && intent.getStringExtra("data").equals("order")) {
+            if (adapter != null && adapter.getCount() > 0) {
+                Fragment_Current_Order fragment_current_order = (Fragment_Current_Order) adapter.getItem(0);
+                fragment_current_order.getOrders();
+            }
+        }
+    }
+
+    private void DeleteTokenFireBase() {
+
+
+        FirebaseInstanceId.getInstance()
+                .getInstanceId().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String token = task.getResult().getToken();
+
+                try {
+
+                    try {
+
+                        Api.getService(lang, Tags.base_url)
+                                .deltePhoneToken(token, userModel.getId())
+                                .enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful() && response.body() != null) {
+                                            logout();
+                                        } else {
+                                            try {
+
+                                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        try {
+
+                                            if (t.getMessage() != null) {
+                                                Log.e("error", t.getMessage());
+                                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                                    Toast.makeText(HomeActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(HomeActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                        } catch (Exception e) {
+                                        }
+                                    }
+                                });
+                    } catch (Exception e) {
+
+
+                    }
+                } catch (Exception e) {
+
+
+                }
+
+            }
+        });
+    }
+
 
 }
 

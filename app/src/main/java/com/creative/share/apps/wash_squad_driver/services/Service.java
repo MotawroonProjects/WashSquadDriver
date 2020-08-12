@@ -115,6 +115,13 @@ public interface Service {
             @Field("soft_type") String soft_type
 
     );
+    @FormUrlEncoded
+    @POST("api/token/delete")
+    Call<ResponseBody> deltePhoneToken(
+            @Field("phone_token") String phone_token,
+            @Field("user_id") int user_id
+
+    );
 }
 
 
