@@ -176,7 +176,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
                         try {
 
                             Toast.makeText(OrderDetailsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                            Log.e("Error", response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers());
+                            Log.e("Error", response.code() + "" + response.message() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
                         } catch (Exception e) {
 
 

@@ -108,11 +108,11 @@ public interface Service {
 
     );
     @FormUrlEncoded
-    @POST("api/update-firebase")
+    @POST("api/phone-tokens")
     Call<ResponseBody> updatePhoneToken(
             @Field("phone_token") String phone_token,
             @Field("user_id") int user_id,
-            @Field("soft_type") String soft_type
+            @Field("software_type") String software_type
 
     );
     @FormUrlEncoded

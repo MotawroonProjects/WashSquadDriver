@@ -136,7 +136,7 @@ private Order_Model.Data data;
                     try {
 
                         Toast.makeText(Work2Activity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                        Log.e("Error", response.code() + "" + response.errorBody() + response.raw() + response.body() + response.headers());
+                        Log.e("Error", response.code() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
                     }catch (Exception e){
 
 

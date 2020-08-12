@@ -71,7 +71,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         String not_type = map.get("message_key");
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         String class_path = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-        if (class_path.equals("com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity")) {
+        if (class_path.equals("com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity")) {
 
             if (not_type.equals("new_order")) {
 
@@ -123,7 +123,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         String not_type = map.get("message_key");
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         String class_path = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-        if (class_path.equals("com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity")) {
+        if (class_path.equals("com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity")) {
 
             if (not_type.equals("new_order")) {
 

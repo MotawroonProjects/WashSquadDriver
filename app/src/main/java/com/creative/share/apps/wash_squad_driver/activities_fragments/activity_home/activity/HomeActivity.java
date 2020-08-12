@@ -416,13 +416,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getDataFromIntent() {
-        Intent intent = getIntent();
-        if (intent != null && intent.getStringExtra("data") != null && intent.getStringExtra("data").equals("order")) {
-            if (adapter != null && adapter.getCount() > 0) {
-                Fragment_Current_Order fragment_current_order = (Fragment_Current_Order) adapter.getItem(0);
-                fragment_current_order.getOrders();
-            }
-        }
+//        Intent intent = getIntent();
+//        if (intent != null && intent.getStringExtra("data") != null && intent.getStringExtra("data").equals("order")) {
+//            if (adapter != null && adapter.getCount() > 0) {
+//                Fragment_Current_Order fragment_current_order = (Fragment_Current_Order) adapter.getItem(0);
+//                fragment_current_order.getOrders();
+//            }
+//        }
     }
 
     private void DeleteTokenFireBase() {
