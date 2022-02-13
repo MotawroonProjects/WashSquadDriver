@@ -119,7 +119,7 @@ public class UI_General_Method {
 
     @BindingAdapter("date")
     public static void convertToDate(TextView textView, long date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE dd/MM/yyy", Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE dd-MM-yyy", Locale.ENGLISH);
         String d = dateFormat.format(new Date(date * 1000));
         textView.setText(d);
 

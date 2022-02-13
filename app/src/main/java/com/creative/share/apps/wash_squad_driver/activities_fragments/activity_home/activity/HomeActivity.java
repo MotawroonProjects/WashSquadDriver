@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
 
         }
 
-        binding.setTitle(getString(R.string.order2));
+        binding.setTitle(getString(R.string.order2).toUpperCase());
         binding.tab.setupWithViewPager(binding.pager);
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         adapter.addFragments(getFragments());
@@ -127,13 +127,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    binding.setTitle(getString(R.string.order2));
+                    binding.setTitle(getString(R.string.order2).toUpperCase());
 
                 } else if (position == 1) {
-                    binding.setTitle(getString(R.string.finished));
+                    binding.setTitle(getString(R.string.finished).toUpperCase());
 
                 } else if (position == 2) {
-                    binding.setTitle(getString(R.string.canceled));
+                    binding.setTitle(getString(R.string.canceled).toUpperCase());
 
                 }
             }

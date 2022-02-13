@@ -37,7 +37,8 @@ public class MyOrdrrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private LayoutInflater inflater;
     private String lang;
     private HomeActivity activity;
-private Fragment fragment;
+    private Fragment fragment;
+
     public MyOrdrrAdapter(List<Order_Model.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
@@ -45,63 +46,58 @@ private Fragment fragment;
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         this.activity = (HomeActivity) context;
-        this.fragment=fragment;
+        this.fragment = fragment;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (viewType==ITEM_DATA)
-        {
-            OrderRowBinding binding  = DataBindingUtil.inflate(inflater, R.layout.order_row,parent,false);
+        if (viewType == ITEM_DATA) {
+            OrderRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.order_row, parent, false);
             return new EventHolder(binding);
 
-        }else
-            {
-                LoadMoreBinding binding = DataBindingUtil.inflate(inflater, R.layout.load_more,parent,false);
-                return new LoadHolder(binding);
-            }
+        } else {
+            LoadMoreBinding binding = DataBindingUtil.inflate(inflater, R.layout.load_more, parent, false);
+            return new LoadHolder(binding);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Order_Model.Data order_data = orderlist.get(position);
-        if (holder instanceof EventHolder)
-        {
+        if (holder instanceof EventHolder) {
             EventHolder eventHolder = (EventHolder) holder;
             eventHolder.binding.setLang(lang);
             eventHolder.binding.setOrderModel(order_data);
-            if(order_data.getStatus()==5){
-eventHolder.binding.llReason.setVisibility(View.GONE);
-            }
-            else {
+            if (order_data.getStatus() == 5) {
+                eventHolder.binding.llReason.setVisibility(View.GONE);
+            } else {
                 eventHolder.binding.llReason.setVisibility(View.VISIBLE);
 
             }
-Log.e("data",order_data.getId()+" "+order_data.getStatus());
-eventHolder.binding.tvPhone.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        activity.makecall(orderlist.get(holder.getLayoutPosition()));
-    }
-});
-            eventHolder.binding.start.setOnClickListener(view -> {
-                if(fragment instanceof Fragment_Current_Order){
+            Log.e("data", order_data.getId() + " " + order_data.getStatus());
+            eventHolder.binding.tvPhone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.makecall(orderlist.get(holder.getLayoutPosition()));
+                }
+            });
+            eventHolder.binding.btnAccept.setOnClickListener(view -> {
+                if (fragment instanceof Fragment_Current_Order) {
 
 
-                activity.Show_Detials(orderlist.get(holder.getLayoutPosition()));}
-                else if(fragment instanceof Fragment_Previous_Order){
+                    activity.Show_Detials(orderlist.get(holder.getLayoutPosition()));
+                } else if (fragment instanceof Fragment_Previous_Order) {
                     activity.Show_Detialsdata(orderlist.get(holder.getLayoutPosition()));
                 }
             });
 
 
-        }else
-            {
-                LoadHolder loadHolder = (LoadHolder) holder;
-                loadHolder.binding.progBar.setIndeterminate(true);
-            }
+        } else {
+            LoadHolder loadHolder = (LoadHolder) holder;
+            loadHolder.binding.progBar.setIndeterminate(true);
+        }
     }
 
     @Override
@@ -111,24 +107,26 @@ eventHolder.binding.tvPhone.setOnClickListener(new View.OnClickListener() {
 
     public class EventHolder extends RecyclerView.ViewHolder {
         public OrderRowBinding binding;
+
         public EventHolder(@NonNull OrderRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            if(fragment instanceof Fragment_Canceled_Order){
-                this.binding.start.setVisibility(View.GONE);
+            if (fragment instanceof Fragment_Canceled_Order) {
+                this.binding.btnAccept.setVisibility(View.GONE);
             }
-            if(fragment instanceof Fragment_Previous_Order){
-                this.binding.start.setText(activity.getResources().getString(R.string.details));
+            if (fragment instanceof Fragment_Previous_Order) {
+                this.binding.btnAccept.setText(activity.getResources().getString(R.string.details));
             }
         }
     }
 
     public class LoadHolder extends RecyclerView.ViewHolder {
         private LoadMoreBinding binding;
+
         public LoadHolder(@NonNull LoadMoreBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+            binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         }
 
     }
@@ -136,13 +134,11 @@ eventHolder.binding.tvPhone.setOnClickListener(new View.OnClickListener() {
     @Override
     public int getItemViewType(int position) {
         Order_Model.Data order_Model = orderlist.get(position);
-        if (order_Model!=null)
-        {
+        if (order_Model != null) {
             return ITEM_DATA;
-        }else
-            {
-                return LOAD;
-            }
+        } else {
+            return LOAD;
+        }
 
     }
 

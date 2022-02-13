@@ -10,8 +10,8 @@
     <string name="are_you_forgot_password">Forgot password ?</string>
     <string name="do_you_have_a_new_account">Do you have a new account?</string>
     <string name="create_an_account">Create a new account</string>
-    <string name="user_name">Name</string>
-    <string name="phone">Phone Number</string>
+    <string name="user_name">Name : </string>
+    <string name="phone">Phon : </string>
     <string name="you_already_have_an_account_log_in">You already have an account! log in</string>
     <string name="home">Home</string>
     <string name="notifications">Notifications</string>
@@ -94,7 +94,7 @@
     <string name="add_comment">Add Comment</string>
     <string name="add_rate">Add Rate</string>
     <string name="offer">Offers</string>
-    <string name="services">Service</string>
+    <string name="services">Service : </string>
     <string name="cart">Cart</string>
     <string name="no_offers_to_display">No Offers to display</string>
     <string name="no_services_to_display">No Services to display</string>
@@ -117,7 +117,7 @@
     <string name="canceled">Canceled</string>
     <string name="client_location">Client Location</string>
     <string name="order_details">Order details</string>
-    <string name="number">Car No : </string>
+    <string name="number">Number : </string>
     <string name="arrival">Arrival</string>
     <string name="driver_login">Driver Login</string>
     <string name="cancel_order">Cancel Order</string>
@@ -179,5 +179,10 @@
     <string name="end_time">End Time : </string>
     <string name="duration">Duration : </string>
     <string name="feedback">FeedBack</string>
+    <string name="driver_app">DRIVER APP</string>
+    <string name="from">From :</string>
+    <string name="accept_order">ACCEPT ORDER</string>
+    <string name="go">GO</string>
+    <string name="arrived">ARRIVED</string>
 
 </resources>
