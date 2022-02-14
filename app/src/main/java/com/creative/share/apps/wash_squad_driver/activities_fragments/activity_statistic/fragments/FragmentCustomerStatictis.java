@@ -66,7 +66,7 @@ public class FragmentCustomerStatictis extends Fragment {
         preferences = Preferences.newInstance();
         userModel = preferences.getUserData(activity);
         monthAdapter=new MonthAdapter(list,activity);
-        binding.recView.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, true));
+        binding.recView.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recView.setAdapter(monthAdapter);
 
 

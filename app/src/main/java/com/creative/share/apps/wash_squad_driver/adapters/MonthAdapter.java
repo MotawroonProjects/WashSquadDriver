@@ -24,8 +24,8 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private LayoutInflater inflater;
     private String lang;
-    private int currentPos = 0;
-    private int oldPos = currentPos;
+    private int currentPos = -1;
+    private int oldPos;
 
     public MonthAdapter(List<String> list, Context context) {
         this.list = list;
@@ -54,34 +54,35 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         eventHolder.binding.setTitle(list.get(position));
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                currentPos = holder.getLayoutPosition();
-//                BranchModel model = list.get(currentPos);
-//
-//                if (!model.isSelected()) {
-//
-//                    BranchModel oldModel = list.get(oldPos);
-//                    oldModel.setSelected(false);
-//                    list.set(oldPos, oldModel);
-//                    notifyItemChanged(oldPos);
-//
-//                    model.setSelected(true);
-//                    list.set(currentPos, model);
-//                    oldPos = currentPos;
-//                    notifyItemChanged(currentPos);
-//                    // notifyDataSetChanged();
-//
-//                }
-//                // Log.e("d'd;d;;d", oldPos + "");
-//
-//
-//                //notifyItemChanged(currentPos);
-//
-//
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentPos = holder.getLayoutPosition();
+
+
+
+                    notifyItemChanged(oldPos);
+
+
+                    oldPos = currentPos;
+                    notifyItemChanged(currentPos);
+                    // notifyDataSetChanged();
+
+
+                // Log.e("d'd;d;;d", oldPos + "");
+
+
+                //notifyItemChanged(currentPos);
+
+
+            }
+        });
+        if(oldPos==position){
+            ((EventHolder) holder).binding.view.setVisibility(View.GONE);
+        }
+        if(currentPos==position){
+            ((EventHolder) holder).binding.view.setVisibility(View.VISIBLE);
+        }
 
     }
 
