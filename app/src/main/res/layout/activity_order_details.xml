@@ -41,7 +41,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{()->backListener.back()}"
                 android:orientation="horizontal">
@@ -56,7 +56,7 @@
                     android:tint="@color/white" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
@@ -64,6 +64,7 @@
                     android:clickable="false"
                     android:longClickable="false"
                     android:text="@string/order_details"
+                    android:gravity="center"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
@@ -90,18 +91,25 @@
                 >
 
 
-                <ImageView
-                    android:id="@+id/image"
-                    imageActivityEndPoint="@{orderModel.user_image}"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-
-                    android:layout_marginTop="8dp"
+                <FrameLayout
+                    android:id="@+id/fl"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:background="@drawable/circle_image"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_user"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintVertical_bias=".3"
+                    app:layout_constraintBottom_toBottomOf="@+id/ll2"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/image"
+                        imageUserEndPoint="@{orderModel.service_image}"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        app:civ_border_width="0dp" />
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/ll"
@@ -111,22 +119,24 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/image"
+                    app:layout_constraintStart_toEndOf="@id/fl"
                     app:layout_constraintTop_toTopOf="parent"
 
                     >
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/order_number"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="15sp" />
 
                         <TextView
@@ -154,7 +164,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/user_name"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="15sp" />
 
                         <TextView
@@ -183,7 +193,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/number"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="15sp" />
 
                         <TextView
@@ -192,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:text="@{orderModel.number_of_cars}"
+                            android:text="@{String.valueOf(orderModel.id)}"
                             android:textColor="@color/gray6"
                             android:textSize="14sp"
 
@@ -211,7 +221,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/services"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="15sp" />
 
                         <TextView
@@ -240,7 +250,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/time"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="15sp" />
 
                         <TextView
@@ -267,12 +277,31 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/type_car"
-                            android:textColor="@color/black"
+                            android:text="@string/car_brands"
+                            android:textColor="@color/gray6"
                             android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/tvTypeCar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:text='@{lang.equals("ar")?(orderModel.carType__ar_title??""):(orderModel.carType_en_title??"")}'
+                            android:textColor="@color/gray6"
+                            android:textSize="14sp"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/car_types"
+                            android:layout_marginStart="7dp"
+                            android:textColor="@color/gray6"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="3dp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
@@ -296,7 +325,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/phone"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray6"
                             android:textSize="15sp" />
 
                         <TextView
@@ -305,9 +334,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
+                            android:text="@{orderModel.user_phone}"
                             android:textColor="@color/gray6"
                             android:textSize="14sp"
-                            android:text="@{orderModel.user_phone}"
 
 
                             />
@@ -323,9 +352,11 @@
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:weightSum="1"
+                    android:padding="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ll"
+                    android:background="@drawable/rounded_strock_black"
 
                     >
 
@@ -346,12 +377,12 @@
 
                         <TextView
                             android:id="@+id/tvPayment"
+                            lang="@{lang}"
+                            payment="@{orderModel.payment_method}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            lang="@{lang}"
-                            payment="@{orderModel.payment_method}"
                             android:textColor="@color/gray6"
                             android:textSize="13sp"
 
@@ -391,11 +422,50 @@
 
                 </LinearLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/ll2" />
+
+                <net.crosp.libs.android.circletimeview.CircleTimeView
+                    android:id="@+id/circle_timer_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="32dp"
+                    app:ctvCircleButtonColor="@color/transparent"
+                    app:ctvCircleColor="@color/black"
+                    app:ctvCircleHandButtonRadius="6dp"
+                    app:ctvCirclePressedButtonColor="@color/colorPrimary"
+                    app:ctvCircleStrokeWidth="1dp"
+                    app:ctvCurrentTimeInSeconds="120"
+                    app:ctvHighlightMarkLineColor="@color/colorPrimary"
+                    app:ctvLabelText="Timer"
+                    app:ctvLabelTextColor="@color/black"
+                    app:ctvLabelTextSize="18sp"
+                    app:ctvLapBackgroundColor="@color/black"
+                    app:ctvLapLabelMarginTop="32dp"
+                    app:ctvLapLabelTextSize="12sp"
+                    app:ctvLapTextColor="@color/colorPrimary"
+                    app:ctvMarginTopLabel="22dp"
+                    app:ctvMarkLineColor="@color/colorPrimary"
+                    app:ctvMarkLineWidth="1dp"
+                    app:ctvMarkSize="10dp"
+                    app:ctvMultiLapRotation="true"
+                    app:ctvPaddingInnerRadius="15dp"
+                    app:ctvQuarterMarkSize="10dp"
+                    app:ctvQuarterNumberTextSize="0sp"
+                    app:ctvTimeFormat="seconds_minutes"
+                    app:ctvTimeMode="normal"
+                    app:ctvTimeNumberColor="@color/black"
+                    app:ctvTimeNumbersTextSize="55sp"
+                    app:layout_constraintTop_toBottomOf="@id/recView" />
+
                 <Button
                     android:id="@+id/bt_show"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/btn_send"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
@@ -404,7 +474,7 @@
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ll" />
+                    app:layout_constraintTop_toBottomOf="@id/circle_timer_view" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,13 @@
 package com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -80,7 +83,8 @@ public class Fragment_Current_Order extends Fragment {
                 getOrders();
             } else {
                 binding.llNoOrders.setVisibility(View.VISIBLE);
-            }        });
+            }
+        });
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -103,7 +107,12 @@ public class Fragment_Current_Order extends Fragment {
                 }
             }
         });
-
+        binding.imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeSheet();
+            }
+        });
 
     }
 
@@ -115,7 +124,7 @@ public class Fragment_Current_Order extends Fragment {
         try {
 
 
-            Log.e("vvvvvv",userModel.getId()+"");
+            Log.e("vvvvvv", userModel.getId() + "");
             Api.getService(lang, Tags.base_url)
                     .MyOrder(1, userModel.getId())
                     .enqueue(new Callback<Order_Model>() {
@@ -140,7 +149,7 @@ public class Fragment_Current_Order extends Fragment {
                             } else {
                                 binding.llNoOrders.setVisibility(View.VISIBLE);
 
-                             //   Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                //   Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                 try {
                                     Log.e("Error_code", response.code() + "_" + response.errorBody().string());
                                 } catch (IOException e) {
@@ -188,7 +197,7 @@ public class Fragment_Current_Order extends Fragment {
                                 myOrdrrAdapter.notifyDataSetChanged();
 
                             } else {
-                           //     Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                //     Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                 try {
                                     Log.e("Error_code", response.code() + "_" + response.errorBody().string());
                                 } catch (IOException e) {
@@ -220,4 +229,58 @@ public class Fragment_Current_Order extends Fragment {
         return new Fragment_Current_Order();
     }
 
+
+    public void openSheet(Order_Model.Data data) {
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.slide_up);
+
+        binding.flData.clearAnimation();
+        binding.flData.startAnimation(animation);
+
+
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                binding.flData.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
+
+    private void closeSheet() {
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.slide_down);
+
+        binding.flData.clearAnimation();
+        binding.flData.startAnimation(animation);
+
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                binding.flData.setVisibility(View.GONE);
+
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+    }
 }

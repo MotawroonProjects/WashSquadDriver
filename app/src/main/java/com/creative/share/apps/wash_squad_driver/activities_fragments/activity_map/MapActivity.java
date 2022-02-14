@@ -120,13 +120,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             intent.putExtra("detials", data);
             startActivityForResult(intent, 1001);
         });
+        binding.btnGo.setOnClickListener(view -> {
+            binding.btnGo.setBackground(getResources().getDrawable(R.drawable.rounded_gray));
+            binding.btnGo.setEnabled(false);
+            binding.btnArrival.setAlpha(.9f);
+            binding.btnArrival.setEnabled(true);
+
+        });
 
         binding.btnArrival.setOnClickListener(view -> {
 //            if(data.getStatus()==1&&data.getStep().equals("0")){
-                Intent intent = new Intent(this, OrderDetailsActivity.class);
-                intent.putExtra("detials", data);
+            Intent intent = new Intent(this, OrderDetailsActivity.class);
+            intent.putExtra("detials", data);
 
-                startActivityForResult(intent, 1002);
+            startActivityForResult(intent, 1002);
 
 //            }
 //            else if(data.getStatus()==2&&data.getStep().equals("0")){
@@ -236,14 +243,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    if(binding.card1.getVisibility()==View.GONE&&binding.card.getVisibility()==View.GONE){
+                    if (binding.card1.getVisibility() == View.GONE && binding.card.getVisibility() == View.GONE) {
                         binding.card.setVisibility(View.VISIBLE);
                         binding.card1.setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         binding.card.setVisibility(View.GONE);
                         binding.card1.setVisibility(View.GONE);
-                    }return false;
+                    }
+                    return false;
                 }
             });
             AddMarker(data.getLatitude(), data.getLongitude());
@@ -259,7 +266,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             iconGenerator.setBackground(null);
             View view = LayoutInflater.from(this).inflate(R.layout.search_map_icon, null);
             iconGenerator.setContentView(view);
-            ImageView im=view.findViewById(R.id.map_icon);
+            ImageView im = view.findViewById(R.id.map_icon);
             im.setOnClickListener(v -> {
 
                 String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
@@ -270,11 +277,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             });
             marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon())).anchor(iconGenerator.getAnchorU(), iconGenerator.getAnchorV()));
-          //  marker.setTitle(oInnerData.getAddress());
+            //  marker.setTitle(oInnerData.getAddress());
             marker.showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
         } else {
-         //   marker.setTitle(oInnerData.getAddress());
+            //   marker.setTitle(oInnerData.getAddress());
             marker.showInfoWindow();
             marker.setPosition(new LatLng(lat, lng));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
@@ -390,9 +397,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         } else if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
             int reason = data.getIntExtra("reason", 0);
             cancelOrder(reason);
-        }
-        else if (requestCode == 1002 && resultCode == RESULT_OK && data != null) {
-           finish();
+        } else if (requestCode == 1002 && resultCode == RESULT_OK && data != null) {
+            finish();
         }
 
     }

@@ -17,11 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity_Step1;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_step4;
+import com.creative.share.apps.wash_squad_driver.adapters.AdditionalServiceAdapter;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityOrderDetailsBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
@@ -30,6 +33,7 @@ import com.creative.share.apps.wash_squad_driver.remote.Api;
 import com.creative.share.apps.wash_squad_driver.share.Common;
 import com.creative.share.apps.wash_squad_driver.tags.Tags;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -72,7 +76,9 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
         if (data.getUser_phone() != null && data.getUser_phone_code() != null) {
             intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", data.getUser_phone_code().replaceFirst("00", "+") + data.getUser_phone(), null));
         }
-
+       // binding.circleTimerView.startTimer();
+binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL,true));
+binding.recView.setAdapter(new AdditionalServiceAdapter(new ArrayList<>(),this));
         binding.btShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

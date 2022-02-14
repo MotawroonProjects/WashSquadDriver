@@ -116,7 +116,7 @@
     <string name="finished">Finished</string>
     <string name="canceled">Canceled</string>
     <string name="client_location">Client Location</string>
-    <string name="order_details">Order details</string>
+    <string name="order_details">ORDER DETIALS</string>
     <string name="number">Number : </string>
     <string name="arrival">Arrival</string>
     <string name="driver_login">Driver Login</string>
@@ -184,5 +184,21 @@
     <string name="accept_order">ACCEPT ORDER</string>
     <string name="go">GO</string>
     <string name="arrived">ARRIVED</string>
+    <string name="why_do_you_want_to_accept_this_order">WHY DO YOU WANT TO ACCEPT THIS ORDER ?</string>
+    <string name="car_issue">CAR ISSUE</string>
+    <string name="time_issue">TIME ISSUE</string>
+    <string name="car_brands">Car Brands :</string>
+    <string name="car_types">Car Types :</string>
+    <string name="statistics">STATISTICS :</string>
+    <string name="polishing">Polishing</string>
+    <string name="wash">Wash</string>
+    <string name="setrilization">Setrilization</string>
+    <string name="subsriptions">Subsriptions</string>
+    <string name="total_order">Total Order</string>
+    <string name="commission">Commission</string>
+    <string name="total_commission">Total Commission</string>
+    <string name="average_reviews_customer">AVERAGE REVIEWS CUSTOMER</string>
+    <string name="orders_amount">ORDERS AMOUNT</string>
+    <string name="reviews">REVIEWS CUSTOMER</string>
 
 </resources>

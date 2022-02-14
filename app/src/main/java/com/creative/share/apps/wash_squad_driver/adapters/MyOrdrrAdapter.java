@@ -92,7 +92,13 @@ public class MyOrdrrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     activity.Show_Detialsdata(orderlist.get(holder.getLayoutPosition()));
                 }
             });
+            eventHolder.binding.btNo.setOnClickListener(view -> {
+                if (fragment instanceof Fragment_Current_Order) {
 
+                    Fragment_Current_Order fragment_current_order = (Fragment_Current_Order) fragment;
+                    fragment_current_order.openSheet(orderlist.get(holder.getLayoutPosition()));
+                }
+            });
 
         } else {
             LoadHolder loadHolder = (LoadHolder) holder;

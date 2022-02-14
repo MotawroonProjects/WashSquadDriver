@@ -18,6 +18,9 @@
     <color name="transparent">#00000000</color>
     <color name="primary_dark">#5C014B</color>
     <color name="unselected">#D6B5D5</color>
-<color name="color1">#670054</color>
+    <color name="color1">#670054</color>
+    <color name="black_trans">#55000000</color>
+    <color name="rate">#ffe816</color>
+
 
 </resources>

@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -28,6 +30,7 @@ import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_m
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_order_details.Finish_OrderDetailsActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_order_details.OrderDetailsActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_sign_in.SignInActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_statistic.activity.StatictisActivity;
 import com.creative.share.apps.wash_squad_driver.adapters.MyPagerAdapter;
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityHomeBinding;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
@@ -144,7 +147,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         getDataFromIntent();
-
+binding.lluser.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent intent=new Intent(HomeActivity.this, StatictisActivity.class);
+        startActivity(intent);
+    }
+});
     }
 
     private void updateVisit(String now, long time) {
@@ -483,6 +492,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 }
