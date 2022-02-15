@@ -4,9 +4,10 @@
 
     >
     <data>
+        <import type="android.view.View"/>
         <variable
-            name="title"
-            type="String" />
+            name="model"
+            type="com.creative.share.apps.wash_squad_driver.models.MonthModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -33,7 +34,7 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@{title}"
+                android:text="@{model.title}"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -42,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="7dp"
                 android:background="@drawable/rounded_white"
-                android:visibility="gone" />
+                android:visibility='@{model.isselected?View.VISIBLE:View.GONE,default=gone}' />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

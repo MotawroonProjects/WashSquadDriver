@@ -121,9 +121,13 @@ public class StatictisActivity extends AppCompatActivity {
 
             }
         });
-
+        binding.imBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
-
 
 
     private List<Fragment> getFragments() {
@@ -214,8 +218,6 @@ public class StatictisActivity extends AppCompatActivity {
     }
 
 
-
-
     private void DeleteTokenFireBase() {
 
 
@@ -275,8 +277,9 @@ public class StatictisActivity extends AppCompatActivity {
         });
     }
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
 

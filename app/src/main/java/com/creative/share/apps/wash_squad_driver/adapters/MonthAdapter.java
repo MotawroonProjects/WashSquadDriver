@@ -1,6 +1,7 @@
 package com.creative.share.apps.wash_squad_driver.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.databinding.MonthRowBinding;
+import com.creative.share.apps.wash_squad_driver.models.MonthModel;
 import com.creative.share.apps.wash_squad_driver.models.Resson_Model;
 
 import java.util.List;
@@ -20,14 +22,14 @@ import io.paperdb.Paper;
 
 public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<String> list;
+    private List<MonthModel> list;
     private Context context;
     private LayoutInflater inflater;
     private String lang;
     private int currentPos = -1;
     private int oldPos;
 
-    public MonthAdapter(List<String> list, Context context) {
+    public MonthAdapter(List<MonthModel> list, Context context) {
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -52,24 +54,24 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         EventHolder eventHolder = (EventHolder) holder;
 
-        eventHolder.binding.setTitle(list.get(position));
+        eventHolder.binding.setModel(list.get(position));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentPos = holder.getLayoutPosition();
 
-
-
-                    notifyItemChanged(oldPos);
-
-
+                MonthModel monthModel = list.get(oldPos);
+                    monthModel.setIsselected(false);
+                    notifyItemChanged(oldPos, monthModel);
+                    MonthModel model = list.get(currentPos);
+                    model.setIsselected(true);
                     oldPos = currentPos;
-                    notifyItemChanged(currentPos);
+
+                    notifyItemChanged(currentPos,model);
                     // notifyDataSetChanged();
 
-
-                // Log.e("d'd;d;;d", oldPos + "");
+                    // Log.e("d'd;d;;d", oldPos + "");
 
 
                 //notifyItemChanged(currentPos);
@@ -77,12 +79,7 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             }
         });
-        if(oldPos==position){
-            ((EventHolder) holder).binding.view.setVisibility(View.GONE);
-        }
-        if(currentPos==position){
-            ((EventHolder) holder).binding.view.setVisibility(View.VISIBLE);
-        }
+
 
     }
 

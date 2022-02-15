@@ -23,6 +23,7 @@ import com.creative.share.apps.wash_squad_driver.adapters.MonthAdapter;
 import com.creative.share.apps.wash_squad_driver.adapters.MyOrdrrAdapter;
 import com.creative.share.apps.wash_squad_driver.databinding.FragmentCustomerStatisticsBinding;
 import com.creative.share.apps.wash_squad_driver.databinding.FragmentOrderBinding;
+import com.creative.share.apps.wash_squad_driver.models.MonthModel;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.UserModel;
 import com.creative.share.apps.wash_squad_driver.preferences.Preferences;
@@ -45,7 +46,7 @@ public class FragmentCustomerStatictis extends Fragment {
     private Preferences preferences;
     private UserModel userModel;
     private String lang;
-    private List<String> list;
+    private List<MonthModel> list;
     private MonthAdapter monthAdapter;
 
     @Nullable
@@ -73,9 +74,19 @@ public class FragmentCustomerStatictis extends Fragment {
     }
 
     private void addmonth() {
-        list.add("JAN");
-        list.add("FEB");
 
+        list.add(new MonthModel("JAN"));
+        list.add(new MonthModel("FEB"));
+        list.add(new MonthModel("MAR"));
+        list.add(new MonthModel("APR"));
+        list.add(new MonthModel("MAY"));
+        list.add(new MonthModel("JUN"));
+        list.add(new MonthModel("JUL"));
+        list.add(new MonthModel("AUG"));
+        list.add(new MonthModel("SEP"));
+        list.add(new MonthModel("OCT"));
+        list.add(new MonthModel("NOV"));
+        list.add(new MonthModel("DEC"));
     }
 
 
