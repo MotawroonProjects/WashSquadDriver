@@ -298,6 +298,7 @@ binding.lluser.setOnClickListener(new View.OnClickListener() {
     }
 
     public void Show_Detialsdata(Order_Model.Data data) {
+
         Intent intent = new Intent(HomeActivity.this, Finish_OrderDetailsActivity.class);
         intent.putExtra("detials", data);
         startActivity(intent);
@@ -494,7 +495,11 @@ binding.lluser.setOnClickListener(new View.OnClickListener() {
     }
 
 
+    public void Show_currentDetialsdata(Order_Model.Data data) {
 
-
+        Intent intent = new Intent(HomeActivity.this, OrderDetailsActivity.class);
+        intent.putExtra("detials", data);
+        startActivityForResult(intent,1002);
+    }
 }
 

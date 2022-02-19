@@ -200,5 +200,6 @@
     <string name="average_reviews_customer">AVERAGE REVIEWS CUSTOMER</string>
     <string name="orders_amount">ORDERS AMOUNT</string>
     <string name="reviews">REVIEWS CUSTOMER</string>
+    <string name="timer">Timer</string>
 
 </resources>

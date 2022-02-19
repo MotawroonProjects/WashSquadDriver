@@ -73,11 +73,11 @@ public class UI_General_Method {
         textView.setText(String.format("%s - %s", sDate, eDate));
     }
 
-    @BindingAdapter({"startTime"})
-    public static void displayTime(TextView textView, String start_time) {
+    @BindingAdapter({"startTime","timechose","type"})
+    public static void displayTime(TextView textView, String start_time,String timechose,String type) {
 
         if (start_time == null) {
-            textView.setText("Not Started");
+            textView.setText(timechose+" "+type);
 
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);

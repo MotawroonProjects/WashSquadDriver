@@ -2,14 +2,18 @@ package com.creative.share.apps.wash_squad_driver.activities_fragments.activity_
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -21,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.creative.share.apps.wash_squad_driver.R;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity_Step1;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_step4;
@@ -28,20 +33,28 @@ import com.creative.share.apps.wash_squad_driver.adapters.AdditionalServiceAdapt
 import com.creative.share.apps.wash_squad_driver.databinding.ActivityOrderDetailsBinding;
 import com.creative.share.apps.wash_squad_driver.interfaces.Listeners;
 import com.creative.share.apps.wash_squad_driver.language.LanguageHelper;
+import com.creative.share.apps.wash_squad_driver.models.Order_Data_Model;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.remote.Api;
 import com.creative.share.apps.wash_squad_driver.share.Common;
 import com.creative.share.apps.wash_squad_driver.tags.Tags;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import io.paperdb.Paper;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timerx.Stopwatch;
+import timerx.StopwatchBuilder;
+import timerx.Timer;
+import timerx.TimerBuilder;
 
 public class OrderDetailsActivity extends AppCompatActivity implements Listeners.BackListener {
     private static final int REQUEST_PHONE_CALL = 1;
@@ -50,7 +63,10 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
     private Order_Model.Data data;
     private String lang;
     Intent intent;
-
+    private Chronometer chronometer;
+    private Order_Data_Model.OrderModel orderModel;
+private AdditionalServiceAdapter additionalServiceAdapter;
+private List<Order_Model.Data.Services> servicesList;
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -66,6 +82,9 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
     }
 
     private void initView() {
+        servicesList=new ArrayList<>();
+        additionalServiceAdapter=new AdditionalServiceAdapter(servicesList,this);
+        // binding.time.setFormat("Formated Time - %s");
         binding.setBackListener(this);
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
@@ -73,22 +92,64 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
         data = (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
         binding.setLang(lang);
         binding.setOrderModel(data);
-        if (data.getUser_phone() != null && data.getUser_phone_code() != null) {
-            intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", data.getUser_phone_code().replaceFirst("00", "+") + data.getUser_phone(), null));
-        }
-       // binding.circleTimerView.startTimer();
-binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL,true));
-binding.recView.setAdapter(new AdditionalServiceAdapter(new ArrayList<>(),this));
+
+
+//        final Handler handler
+//                = new Handler();
+
+        // Call the post() method,
+        // passing in a new Runnable.
+        // The post() method processes
+        // code without a delay,
+        // so the code in the Runnable
+        // will run almost immediately.
+//        handler.post(new Runnable() {
+//            @Override
+//
+//            public void run()
+//            {
+//                int hours = seconds / 3600;
+//                int minutes = (seconds % 3600) / 60;
+//                int secs = seconds % 60;
+//
+//                // Format the seconds into hours, minutes,
+//                // and seconds.
+//                String time
+//                        = String
+//                        .format(Locale.getDefault(),
+//                                "%d:%02d:%02d", hours,
+//                                minutes, secs);
+//
+//                // Set the text view text.
+//                timeView.setText(time);
+//
+//                // If running is true, increment the
+//                // seconds variable.
+//                if (running) {
+//                    seconds++;
+//                }
+//
+//                // Post the code again
+//                // with a delay of 1 second.
+//                handler.postDelayed(this, 1000);
+//            }
+//        });
+
+        // binding.circleTimerView.startTimer();
+        binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, true));
+        binding.recView.setAdapter(additionalServiceAdapter);
         binding.btShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (data.getStatus() == 1) {
+                if (data.getStatus() == 12) {
                     start();
                 } else if (data.getStatus() == 2) {
-                    Intent intent = new Intent(OrderDetailsActivity.this, Work2Activity.class);
-                    intent.putExtra("detials", data);
-                    startActivityForResult(intent, 1002);
-                    finish();
+                    binding.time.stop();
+                    step2("");
+//                    Intent intent = new Intent(OrderDetailsActivity.this, Work2Activity.class);
+//                    intent.putExtra("detials", data);
+//                    startActivityForResult(intent, 1002);
+//                    finish();
                 }
             }
         });
@@ -108,6 +169,7 @@ binding.recView.setAdapter(new AdditionalServiceAdapter(new ArrayList<>(),this))
                 }
             }
         });
+        getOrder();
     }
 
     @Override
@@ -164,20 +226,23 @@ binding.recView.setAdapter(new AdditionalServiceAdapter(new ArrayList<>(),this))
 
         try {
             Api.getService(lang, Tags.base_url)
-                    .start(data.getId() + "", (Calendar.getInstance().getTimeInMillis() / 1000) + "").enqueue(new Callback<ResponseBody>() {
+                    .start(data.getId() + "", (System.currentTimeMillis() / 1000) + "").enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     dialog.dismiss();
                     if (response.isSuccessful()) {
                         // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
                         Toast.makeText(OrderDetailsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+                        //binding.time.setBase(System.currentTimeMillis());
+                        binding.time.start();
+                        binding.btShow.setText(getResources().getString(R.string.done));
 
                         //  adsActivity.finish(response.body().getId_advertisement());
-                        Intent intent = new Intent(OrderDetailsActivity.this, Work2Activity.class);
-                        intent.putExtra("detials", data);
-
-                        startActivityForResult(intent, 1003);
-                        finish();
+//                        Intent intent = new Intent(OrderDetailsActivity.this, Work2Activity.class);
+//                        intent.putExtra("detials", data);
+//
+//                        startActivityForResult(intent, 1003);
+//                        finish();
                     } else {
                         try {
 
@@ -206,4 +271,140 @@ binding.recView.setAdapter(new AdditionalServiceAdapter(new ArrayList<>(),this))
             Log.e("error", e.getMessage().toString());
         }
     }
+
+    private void step2(String feedback) {
+        final Dialog dialog = Common.createProgressDialog(OrderDetailsActivity.this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        try {
+
+
+            Api.getService(lang, Tags.base_url)
+                    .Step2(data.getId() + "", (Calendar.getInstance().getTimeInMillis() / 1000) + "", feedback).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    dialog.dismiss();
+                    if (response.isSuccessful()) {
+                        // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+
+                        //  adsActivity.finish(response.body().getId_advertisement());
+
+                        finish();
+                    } else {
+                        try {
+
+                            Toast.makeText(OrderDetailsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            Log.e("Error", response.code() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
+                        } catch (Exception e) {
+
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    dialog.dismiss();
+                    try {
+                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                        Log.e("Error", t.getMessage());
+                    } catch (Exception e) {
+
+                    }
+                }
+            });
+        } catch (Exception e) {
+            dialog.dismiss();
+        }
+    }
+
+    private void getOrder() {
+        try {
+            ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+            dialog.setCancelable(false);
+            dialog.show();
+            Api.getService(lang, Tags.base_url)
+                    .getOrdersById(data.getId() + "")
+                    .enqueue(new Callback<Order_Model.Data>() {
+                        @Override
+                        public void onResponse(Call<Order_Model.Data> call, Response<Order_Model.Data> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful() && response.body() != null) {
+                                data = response.body();
+                                updateUi(data);
+
+                            } else {
+                                if (response.code() == 500) {
+                                    Toast.makeText(OrderDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                                    try {
+                                        Log.e("errorsssss", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                } else {
+                                    Toast.makeText(OrderDetailsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                    try {
+
+                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Order_Model.Data> call, Throwable t) {
+                            try {
+
+                                dialog.dismiss();
+
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(OrderDetailsActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(OrderDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
+    }
+
+    private void updateUi(Order_Model.Data orderModel) {
+        data = orderModel;
+        String times = "0";
+        if (data.getStart_time_work() != null) {
+            times = data.getStart_time_work();
+            Log.e("lllll", System.currentTimeMillis() + " " + (Long.parseLong(times) * 1000) + " " + (System.currentTimeMillis() - (Long.parseLong(times) * 1000)));
+
+            long milliseconds = System.currentTimeMillis() - (Long.parseLong(times) * 1000);
+            long minutes = (milliseconds / 1000) / 60;
+
+            // formula for conversion for
+            // milliseconds to seconds
+            long seconds = (milliseconds / 1000) % 60;
+            binding.time.setBase(SystemClock.elapsedRealtime() - (minutes * 60000 + seconds * 1000));
+            binding.time.start();
+            binding.btShow.setText(getResources().getString(R.string.done));
+        }
+        servicesList.addAll(orderModel.getSub_service());
+        additionalServiceAdapter.notifyDataSetChanged();
+        binding.setOrderModel(data);
+        if (data.getUser_phone() != null && data.getUser_phone_code() != null) {
+            intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", data.getUser_phone_code().replaceFirst("00", "+") + data.getUser_phone(), null));
+        }
+
+    }
+
 }

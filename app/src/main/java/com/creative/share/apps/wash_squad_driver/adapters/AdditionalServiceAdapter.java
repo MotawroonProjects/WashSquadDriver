@@ -13,6 +13,7 @@ import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_cancel_order.CancelOrderActivity;
 import com.creative.share.apps.wash_squad_driver.databinding.AddtionServiceRowBinding;
 import com.creative.share.apps.wash_squad_driver.databinding.ResonRowBinding;
+import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.Resson_Model;
 
 import java.util.List;
@@ -22,12 +23,13 @@ import io.paperdb.Paper;
 
 public class AdditionalServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Resson_Model.Data> orderlist;
+    private List<Order_Model.Data.Services> orderlist;
     private Context context;
     private LayoutInflater inflater;
     private String lang;
-private int i=0;
-    public AdditionalServiceAdapter(List<Resson_Model.Data> orderlist, Context context) {
+    private int i = 0;
+
+    public AdditionalServiceAdapter(List<Order_Model.Data.Services> orderlist, Context context) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -40,8 +42,8 @@ private int i=0;
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-        AddtionServiceRowBinding binding  = DataBindingUtil.inflate(inflater, R.layout.addtion_service_row,parent,false);
-            return new EventHolder(binding);
+        AddtionServiceRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.addtion_service_row, parent, false);
+        return new EventHolder(binding);
 
 
     }
@@ -50,27 +52,26 @@ private int i=0;
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         //Resson_Model.Data order_data = orderlist.get(position);
 
-            EventHolder eventHolder = (EventHolder) holder;
+        EventHolder eventHolder = (EventHolder) holder;
 
-
+        eventHolder.binding.setModel(orderlist.get(position));
 
 
     }
 
     @Override
     public int getItemCount() {
-        return 7;
+        return orderlist.size();
     }
 
     public class EventHolder extends RecyclerView.ViewHolder {
-        public  AddtionServiceRowBinding binding;
+        public AddtionServiceRowBinding binding;
+
         public EventHolder(@NonNull AddtionServiceRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
     }
-
-
 
 
 }

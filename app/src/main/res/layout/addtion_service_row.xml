@@ -4,6 +4,13 @@
 
     >
 
+    <data>
+
+        <variable
+            name="model"
+            type="com.creative.share.apps.wash_squad_driver.models.Order_Model.Data.Services" />
+    </data>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,11 +29,11 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image"
+                imageUserEndPoint="@{model.image}"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:src="@drawable/logo_only"
                 app:civ_border_width="0dp" />
         </FrameLayout>
 
@@ -37,6 +44,6 @@
             android:longClickable="false"
             android:padding="3dp"
 
-            android:src="@drawable/ic_close2" />
+            android:src='@{model.taked?@drawable/correct:@drawable/ic_close2}' />
     </LinearLayout>
 </layout>

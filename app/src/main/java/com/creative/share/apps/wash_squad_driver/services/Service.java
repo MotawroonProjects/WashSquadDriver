@@ -1,6 +1,7 @@
 package com.creative.share.apps.wash_squad_driver.services;
 
 
+import com.creative.share.apps.wash_squad_driver.models.Order_Data_Model;
 import com.creative.share.apps.wash_squad_driver.models.Order_Images_Model;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.PlaceGeocodeData;
@@ -75,6 +76,12 @@ public interface Service {
             @Field("cancel_reason_id")int cancel_reason_id
     );
     @FormUrlEncoded
+    @POST("api/driver/order/go-arrive")
+    Call<ResponseBody> go
+            (@Field("order_id") String id_part,
+             @Field("status") String status
+            );
+    @FormUrlEncoded
     @POST("api/driver/order/start")
     Call<ResponseBody> start
             (@Field("order_id") String id_part,
@@ -105,6 +112,12 @@ public interface Service {
 
             @Field("order_id") int order_id,
             @Field("status") int status
+
+    );
+    @FormUrlEncoded
+    @POST("api/single-order")
+    Call<Order_Model.Data> getOrdersById(
+            @Field("order_id") String order_id
 
     );
     @FormUrlEncoded

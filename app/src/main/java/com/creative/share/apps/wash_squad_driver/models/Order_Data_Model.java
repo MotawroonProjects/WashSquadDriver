@@ -3,22 +3,21 @@ package com.creative.share.apps.wash_squad_driver.models;
 import java.io.Serializable;
 import java.util.List;
 
-public class Order_Model implements Serializable {
+public class Order_Data_Model implements Serializable {
     private int current_page;
-    private List<Data> data;
+    private List<OrderModel> data;
 
     public int getCurrent_page() {
         return current_page;
     }
 
-    public List<Data> getData() {
+    public List<OrderModel> getData() {
         return data;
     }
 
-    public class Data implements Serializable {
+    public static class OrderModel implements Serializable
+    {
         private int id;
-        private String user_phone_code;
-        private String user_phone;
         private int order_type;
         private int user_id;
         private String marketer_id;
@@ -37,14 +36,14 @@ public class Order_Model implements Serializable {
         private String payment_method;
         private int driver_id;
         private String feedback;
-        private String start_time_work;
-        private String end_time_work;
+        private long start_time_work;
+        private long end_time_work;
         private int status;
         private String distributor_employee_id;
         private int cancel_reason;
-        private int opinion_des;
+        private String opinion_des;
         private double rating;
-        private String total_price;
+        private double total_price;
         private String coupon_serial;
         private String created_at;
         private String updated_at;
@@ -65,25 +64,15 @@ public class Order_Model implements Serializable {
         private String work_time_choosen;
         private String work_time_en_title;
         private String work_time_ar_title;
-        private String step;
+        private String service_level2_en_title;
+        private String service_level2_ar_title;
         private String brand_en_title;
         private String brand__ar_title;
-        private List<Services> sub_service;
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
+        private String see_images;
+        private List<Products> order_sub_services;
 
         public int getId() {
             return id;
-        }
-
-        public String getUser_phone_code() {
-            return user_phone_code;
-        }
-
-        public String getUser_phone() {
-            return user_phone;
         }
 
         public int getOrder_type() {
@@ -158,11 +147,11 @@ public class Order_Model implements Serializable {
             return feedback;
         }
 
-        public String getStart_time_work() {
+        public long getStart_time_work() {
             return start_time_work;
         }
 
-        public String getEnd_time_work() {
+        public long getEnd_time_work() {
             return end_time_work;
         }
 
@@ -178,7 +167,7 @@ public class Order_Model implements Serializable {
             return cancel_reason;
         }
 
-        public int getOpinion_des() {
+        public String getOpinion_des() {
             return opinion_des;
         }
 
@@ -186,7 +175,7 @@ public class Order_Model implements Serializable {
             return rating;
         }
 
-        public String getTotal_price() {
+        public double getTotal_price() {
             return total_price;
         }
 
@@ -270,14 +259,12 @@ public class Order_Model implements Serializable {
             return work_time_ar_title;
         }
 
-        public String getStep() {
-            return step;
+        public String getService_level2_en_title() {
+            return service_level2_en_title;
         }
 
-        private List<order_images> order_images;
-
-        public List<Data.order_images> getOrder_images() {
-            return order_images;
+        public String getService_level2_ar_title() {
+            return service_level2_ar_title;
         }
 
         public String getBrand_en_title() {
@@ -288,11 +275,21 @@ public class Order_Model implements Serializable {
             return brand__ar_title;
         }
 
-        public List<Services> getSub_service() {
-            return sub_service;
+        public String getSee_images() {
+            return see_images;
         }
 
-        public class order_images implements Serializable {
+        public List<Products> getOrder_sub_services() {
+            return order_sub_services;
+        }
+
+        private List<order_images> order_images;
+
+        public List<OrderModel.order_images> getOrder_images() {
+            return order_images;
+        }
+
+        public static class order_images implements Serializable {
             private int id;
             private int order_id;
             private String image;
@@ -314,79 +311,60 @@ public class Order_Model implements Serializable {
                 return type;
             }
         }
-        public class Services implements Serializable {
-            private String id;
-            private String ar_title;
-            private String en_title;
-            private String ar_des;
-            private String en_des;
-            private String ar_note;
-            private String en_note;
-            private String image;
-            private String parent_id;
-            private String level;
-            private String price;
-            private String created_at;
-            private String updated_at;
-            private boolean taked;
+    }
 
-            public String getId() {
-                return id;
-            }
+    public static class Products implements Serializable
+    {
+        private int id;
+        private int order_id;
+        private int sub_service_id;
+        private double price;
+        private String sub_service_en_title;
+        private String sub_service_ar_title;
+        private String sub_service_image;
+        private int sub_service_price;
+        private int sub_service_parent_id;
+        private int sub_service_level;
 
-            public String getAr_title() {
-                return ar_title;
-            }
-
-            public String getEn_title() {
-                return en_title;
-            }
-
-            public String getAr_des() {
-                return ar_des;
-            }
-
-            public String getEn_des() {
-                return en_des;
-            }
-
-            public String getAr_note() {
-                return ar_note;
-            }
-
-            public String getEn_note() {
-                return en_note;
-            }
-
-            public String getImage() {
-                return image;
-            }
-
-            public String getParent_id() {
-                return parent_id;
-            }
-
-            public String getLevel() {
-                return level;
-            }
-
-            public String getPrice() {
-                return price;
-            }
-
-            public String getCreated_at() {
-                return created_at;
-            }
-
-            public String getUpdated_at() {
-                return updated_at;
-            }
-
-            public boolean isTaked() {
-                return taked;
-            }
+        public int getId() {
+            return id;
         }
 
+        public int getOrder_id() {
+            return order_id;
+        }
+
+        public int getSub_service_id() {
+            return sub_service_id;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public String getSub_service_en_title() {
+            return sub_service_en_title;
+        }
+
+        public String getSub_service_ar_title() {
+            return sub_service_ar_title;
+        }
+
+        public String getSub_service_image() {
+            return sub_service_image;
+        }
+
+        public int getSub_service_price() {
+            return sub_service_price;
+        }
+
+        public int getSub_service_parent_id() {
+            return sub_service_parent_id;
+        }
+
+        public int getSub_service_level() {
+            return sub_service_level;
+        }
     }
 
 }

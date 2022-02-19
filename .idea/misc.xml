@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/btn_bg.xml" value="0.2537037037037037" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/circle_gap.xml" value="0.15885416666666666" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/circle_primary_gap.xml" value="0.20277777777777778" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/custom_bg.xml" value="0.2814814814814815" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/edt_comment.xml" value="0.2537037037037037" />
@@ -13,6 +14,7 @@
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/rounded_strock_black.xml" value="0.20277777777777778" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/rounded_white.xml" value="0.2814814814814815" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_cancel_order.xml" value="0.27291666666666664" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_finish_order_details.xml" value="0.33" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_home.xml" value="0.27291666666666664" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_image.xml" value="0.14270833333333333" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_map.xml" value="0.27291666666666664" />

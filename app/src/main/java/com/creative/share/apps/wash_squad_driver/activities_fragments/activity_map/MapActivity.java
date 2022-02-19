@@ -67,6 +67,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -115,25 +116,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         data = (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
         binding.setLang(lang);
         binding.setOrderModel(data);
+        if(data.getStatus()==11){
+            binding.btnGo.setBackground(getResources().getDrawable(R.drawable.rounded_gray));
+            binding.btnGo.setEnabled(false);
+            binding.btnArrival.setAlpha(.9f);
+            binding.btnArrival.setEnabled(true);
+        }
         binding.btnCancel.setOnClickListener(view -> {
             Intent intent = new Intent(this, CancelOrderActivity.class);
             intent.putExtra("detials", data);
             startActivityForResult(intent, 1001);
         });
         binding.btnGo.setOnClickListener(view -> {
-            binding.btnGo.setBackground(getResources().getDrawable(R.drawable.rounded_gray));
-            binding.btnGo.setEnabled(false);
-            binding.btnArrival.setAlpha(.9f);
-            binding.btnArrival.setEnabled(true);
+
+            goArrive("11");
 
         });
 
         binding.btnArrival.setOnClickListener(view -> {
+            goArrive("12");
 //            if(data.getStatus()==1&&data.getStep().equals("0")){
-            Intent intent = new Intent(this, OrderDetailsActivity.class);
-            intent.putExtra("detials", data);
-
-            startActivityForResult(intent, 1002);
+//            Intent intent = new Intent(this, OrderDetailsActivity.class);
+//            intent.putExtra("detials", data);
+//
+//            startActivityForResult(intent, 1002);
 
 //            }
 //            else if(data.getStatus()==2&&data.getStep().equals("0")){
@@ -459,6 +465,64 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //            Log.e("error", e.getMessage().toString());
 //        }
 //    }
+private void goArrive(String status) {
+    final Dialog dialog = Common.createProgressDialog(MapActivity.this, getString(R.string.wait));
+    dialog.setCancelable(false);
+    dialog.show();
+
+
+    try {
+        Api.getService(lang, Tags.base_url)
+                .go(data.getId() + "", status).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+                    Toast.makeText(MapActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+
+                    //  adsActivity.finish(response.body().getId_advertisement());
+                    if(status.equals("12")){
+                    Intent intent = new Intent(MapActivity.this, OrderDetailsActivity.class);
+                    data.setStatus(12);
+                    intent.putExtra("detials", data);
+
+                    startActivityForResult(intent, 1002);
+                    finish();}
+                    else {
+                        binding.btnGo.setBackground(getResources().getDrawable(R.drawable.rounded_gray));
+                        binding.btnGo.setEnabled(false);
+                        binding.btnArrival.setAlpha(.9f);
+                        binding.btnArrival.setEnabled(true);
+                    }
+                } else {
+                    try {
+
+                        Toast.makeText(MapActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                        Log.e("Error", response.code() + "" + response.message() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
+                    } catch (Exception e) {
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dialog.dismiss();
+                try {
+                    Toast.makeText(MapActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    Log.e("Error", t.getMessage());
+                } catch (Exception e) {
+
+                }
+            }
+        });
+    } catch (Exception e) {
+        dialog.dismiss();
+        Log.e("error", e.getMessage().toString());
+    }
+}
 
 
     @Override

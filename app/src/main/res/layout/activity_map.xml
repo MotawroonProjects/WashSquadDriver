@@ -193,6 +193,8 @@
                         <TextView
                             android:id="@+id/tvTime"
                             startTime="@{orderModel.start_time_work}"
+                            timechose="@{orderModel.work_time_choosen}"
+                            type='@{lang.equals("ar")?orderModel.work_time_ar_title:orderModel.work_time_en_title}'
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"

@@ -131,6 +131,7 @@ public class Fragment_Current_Order extends Fragment {
                         @Override
                         public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {
                             binding.progBar.setVisibility(View.GONE);
+                            binding.swipeContainer.setRefreshing(false);
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                                 oDataList.clear();
                                 oDataList.addAll(response.body().getData());
@@ -148,6 +149,7 @@ public class Fragment_Current_Order extends Fragment {
                                 }
                             } else {
                                 binding.llNoOrders.setVisibility(View.VISIBLE);
+                                binding.swipeContainer.setRefreshing(false);
 
                                 //   Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                 try {
