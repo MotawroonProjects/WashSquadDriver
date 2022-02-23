@@ -506,6 +506,7 @@
                         android:text="@string/feedback"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
+                        android:visibility="gone"
 
                         />
 
@@ -514,6 +515,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginTop="10dp"
+                        android:visibility="gone"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/image_add_bg"
                         android:gravity="top"

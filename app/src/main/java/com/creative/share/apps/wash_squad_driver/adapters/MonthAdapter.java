@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.creative.share.apps.wash_squad_driver.R;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_statistic.fragments.FragmentCustomerStatictis;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_statistic.fragments.FragmentOrderStatictis;
 import com.creative.share.apps.wash_squad_driver.databinding.MonthRowBinding;
 import com.creative.share.apps.wash_squad_driver.models.MonthModel;
 import com.creative.share.apps.wash_squad_driver.models.Resson_Model;
@@ -28,10 +31,12 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private String lang;
     private int currentPos = -1;
     private int oldPos;
+    private Fragment fragment;
 
-    public MonthAdapter(List<MonthModel> list, Context context) {
+    public MonthAdapter(List<MonthModel> list, Context context, Fragment fragment) {
         this.list = list;
         this.context = context;
+        this.fragment = fragment;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
@@ -62,16 +67,21 @@ public class MonthAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 currentPos = holder.getLayoutPosition();
 
                 MonthModel monthModel = list.get(oldPos);
-                    monthModel.setIsselected(false);
-                    notifyItemChanged(oldPos, monthModel);
-                    MonthModel model = list.get(currentPos);
-                    model.setIsselected(true);
-                    oldPos = currentPos;
+                monthModel.setIsselected(false);
+                notifyItemChanged(oldPos, monthModel);
+                MonthModel model = list.get(currentPos);
+                model.setIsselected(true);
+                oldPos = currentPos;
 
-                    notifyItemChanged(currentPos,model);
-                    // notifyDataSetChanged();
-
-                    // Log.e("d'd;d;;d", oldPos + "");
+                notifyItemChanged(currentPos, model);
+                // notifyDataSetChanged();
+                if (fragment instanceof FragmentCustomerStatictis) {
+                    FragmentCustomerStatictis fragmentCustomerStatictis = (FragmentCustomerStatictis) fragment;
+                    fragmentCustomerStatictis.getReviews((holder.getLayoutPosition() + 1) + "");
+                } else if (fragment instanceof FragmentOrderStatictis) {
+                    FragmentOrderStatictis fragmentOrderStatictis = (FragmentOrderStatictis) fragment;
+                    fragmentOrderStatictis.getReviews((holder.getLayoutPosition() + 1) + "");
+                }        // Log.e("d'd;d;;d", oldPos + "");
 
 
                 //notifyItemChanged(currentPos);

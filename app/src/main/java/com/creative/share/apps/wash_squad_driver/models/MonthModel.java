@@ -1,7 +1,6 @@
 package com.creative.share.apps.wash_squad_driver.models;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class MonthModel implements Serializable {
     private String title;
@@ -21,5 +20,6 @@ public class MonthModel implements Serializable {
 
     public void setIsselected(boolean isselected) {
         this.isselected = isselected;
+
     }
 }

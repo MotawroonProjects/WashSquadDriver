@@ -6,7 +6,9 @@ import com.creative.share.apps.wash_squad_driver.models.Order_Images_Model;
 import com.creative.share.apps.wash_squad_driver.models.Order_Model;
 import com.creative.share.apps.wash_squad_driver.models.PlaceGeocodeData;
 import com.creative.share.apps.wash_squad_driver.models.PlaceMapDetailsData;
+import com.creative.share.apps.wash_squad_driver.models.RateModel;
 import com.creative.share.apps.wash_squad_driver.models.Resson_Model;
+import com.creative.share.apps.wash_squad_driver.models.StaticModel;
 import com.creative.share.apps.wash_squad_driver.models.UserModel;
 
 
@@ -133,6 +135,20 @@ public interface Service {
     Call<ResponseBody> deltePhoneToken(
             @Field("phone_token") String phone_token,
             @Field("user_id") int user_id
+
+    );
+    @FormUrlEncoded
+    @POST("api/driver/order/review")
+    Call<RateModel> getreviews(
+            @Field("month") String month,
+            @Field("driver_id") int driver_id
+
+    );
+    @FormUrlEncoded
+    @POST("api/driver/order/amount")
+    Call<StaticModel> getStatistic(
+            @Field("month") String month,
+            @Field("driver_id") int driver_id
 
     );
 }

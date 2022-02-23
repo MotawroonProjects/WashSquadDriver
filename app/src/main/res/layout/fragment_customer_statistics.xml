@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     >
-
+<data>
+    <variable
+        name="model"
+        type="com.creative.share.apps.wash_squad_driver.models.ReviewModel" />
+</data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -108,7 +112,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            android:progress="25"
+                            android:progress='@{(int)((model.rate5.count_of_orders/(model.rate5.count_of_orders+model.rate1.count_of_orders+model.rate2.count_of_orders+model.rate3.count_of_orders+model.rate4.count_of_orders))*100)}'
                             tools:ignore="RtlCompat" />
 
                         <TextView
@@ -118,7 +122,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="30"
+                            android:text='@{model.rate5.count_of_orders+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp"
                             tools:ignore="RtlCompat" />
@@ -177,7 +181,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            android:progress="25"
+                            android:progress='@{(int)((model.rate4.count_of_orders/(model.rate5.count_of_orders+model.rate1.count_of_orders+model.rate2.count_of_orders+model.rate3.count_of_orders+model.rate4.count_of_orders))*100)}'
                             tools:ignore="RtlCompat" />
 
                         <TextView
@@ -187,7 +191,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="30"
+                            android:text='@{model.rate4.count_of_orders+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp"
                             tools:ignore="RtlCompat" />
@@ -240,7 +244,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            android:progress="25"
+                            android:progress='@{(int)((model.rate3.count_of_orders/(model.rate5.count_of_orders+model.rate1.count_of_orders+model.rate2.count_of_orders+model.rate3.count_of_orders+model.rate4.count_of_orders))*100)}'
                             tools:ignore="RtlCompat" />
 
                         <TextView
@@ -250,7 +254,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="30"
+                            android:text='@{model.rate3.count_of_orders+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp"
                             tools:ignore="RtlCompat" />
@@ -296,7 +300,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            android:progress="25"
+                            android:progress='@{(int)((model.rate2.count_of_orders/(model.rate5.count_of_orders+model.rate1.count_of_orders+model.rate2.count_of_orders+model.rate3.count_of_orders+model.rate4.count_of_orders))*100)}'
                             tools:ignore="RtlCompat" />
 
                         <TextView
@@ -306,7 +310,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="30"
+                            android:text='@{model.rate2.count_of_orders+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp"
                             tools:ignore="RtlCompat" />
@@ -345,7 +349,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="5dp"
                             android:layout_weight="1"
-                            android:progress="25"
+                            android:progress='@{(int)((model.rate1.count_of_orders/(model.rate5.count_of_orders+model.rate1.count_of_orders+model.rate2.count_of_orders+model.rate3.count_of_orders+model.rate4.count_of_orders))*100)}'
                             tools:ignore="RtlCompat" />
 
                         <TextView
@@ -355,7 +359,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="30"
+                            android:text='@{model.rate1.count_of_orders+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp"
                             tools:ignore="RtlCompat" />
@@ -432,7 +436,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="23"
+                            android:text='@{model.rate5.count_of_orders+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -483,7 +487,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="30"
+                            android:text='@{model.rate5.sum_of_commission+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -553,10 +557,10 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="30"
+                            android:text='@{model.rate4.count_of_orders+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
-                        >
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -605,7 +609,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="23"
+                            android:text='@{model.rate4.sum_of_commission+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>

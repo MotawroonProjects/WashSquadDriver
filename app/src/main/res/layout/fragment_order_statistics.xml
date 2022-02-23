@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >
-
+<data>
+    <variable
+        name="model"
+        type="com.creative.share.apps.wash_squad_driver.models.StaticModel" />
+</data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,7 +72,7 @@
                             android:gravity="center"
                             android:maxLines="2"
                             android:layout_marginTop="16dp"
-                            android:text="23"
+                            android:text='@{model.data.polishing+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -118,7 +122,7 @@
                             android:gravity="center"
                             android:maxLines="2"
                             android:layout_marginTop="16dp"
-                            android:text="30"
+                            android:text='@{model.data.wash+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -167,7 +171,7 @@
                             android:gravity="center"
                             android:maxLines="2"
                             android:layout_marginTop="16dp"
-                            android:text="30"
+                            android:text='@{model.data.sterilization+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -225,7 +229,7 @@
                             android:gravity="center"
                             android:maxLines="2"
                             android:layout_marginTop="16dp"
-                            android:text="23"
+                            android:text='@{model.data.subscription+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -275,7 +279,7 @@
                             android:gravity="center"
                             android:maxLines="2"
                             android:layout_marginTop="16dp"
-                            android:text="30"
+                            android:text='@{model.data.total_orders+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -324,7 +328,7 @@
                             android:gravity="center"
                             android:maxLines="2"
                             android:layout_marginTop="16dp"
-                            android:text="30"
+                            android:text='@{model.data.commissions+""}'
                             android:textColor="@color/gray6"
                             android:textSize="14sp" />
                     </LinearLayout>

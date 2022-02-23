@@ -382,7 +382,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn_send"
 
-            android:visibility="@{(orderModel.status==1||orderModel.status==11)?View.GONE:View.VISIBLE}"
+            android:visibility="@{(orderModel.status==1||orderModel.status==11||orderModel.status==5)?View.GONE:View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll"
