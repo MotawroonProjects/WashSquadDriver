@@ -403,7 +403,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         } else if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
             int reason = data.getIntExtra("reason", 0);
             cancelOrder(reason);
-        } else if (requestCode == 1002 && resultCode == RESULT_OK && data != null) {
+        } else if (requestCode == 1002 ) {
             finish();
         }
 
@@ -488,7 +488,7 @@ private void goArrive(String status) {
                     intent.putExtra("detials", data);
 
                     startActivityForResult(intent, 1002);
-                    finish();}
+                    }
                     else {
                         binding.btnGo.setBackground(getResources().getDrawable(R.drawable.rounded_gray));
                         binding.btnGo.setEnabled(false);

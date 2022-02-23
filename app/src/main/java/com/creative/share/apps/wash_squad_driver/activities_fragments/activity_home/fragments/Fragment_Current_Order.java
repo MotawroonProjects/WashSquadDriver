@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity;
@@ -78,11 +79,14 @@ public class Fragment_Current_Order extends Fragment {
         binding.recView.setAdapter(myOrdrrAdapter);
         binding.progBar.setVisibility(View.GONE);
         binding.llNoOrders.setVisibility(View.GONE);
-        binding.swipeContainer.setOnClickListener(v -> {
-            if (userModel != null) {
-                getOrders();
-            } else {
-                binding.llNoOrders.setVisibility(View.VISIBLE);
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (userModel != null) {
+                    getOrders();
+                } else {
+                    binding.llNoOrders.setVisibility(View.VISIBLE);
+                }
             }
         });
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
