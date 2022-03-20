@@ -201,5 +201,11 @@
     <string name="orders_amount">ORDERS AMOUNT</string>
     <string name="reviews">REVIEWS CUSTOMER</string>
     <string name="timer">Timer</string>
+    <string name="payment_type">Payment Type</string>
+    <string name="apple_pay">Apple Pay</string>
+    <string name="pos">POS</string>
+    <string name="cache">Cash</string>
+    <string name="my_wallet">My Wallet</string>
+    <string name="my_wallet_balance">My wallet balance</string>
 
 </resources>

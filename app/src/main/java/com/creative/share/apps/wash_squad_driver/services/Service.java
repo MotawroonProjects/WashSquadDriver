@@ -131,7 +131,7 @@ public interface Service {
 
     );
     @FormUrlEncoded
-    @POST("api/token/delete")
+    @POST("api/phone/token/delete")
     Call<ResponseBody> deltePhoneToken(
             @Field("phone_token") String phone_token,
             @Field("user_id") int user_id

@@ -6,10 +6,15 @@
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/btn_bg.xml" value="0.2537037037037037" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/circle_gap.xml" value="0.15885416666666666" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/circle_primary_gap.xml" value="0.20277777777777778" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/correct.xml" value="0.14427083333333332" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/custom_bg.xml" value="0.2814814814814815" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/edt_comment.xml" value="0.2537037037037037" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/ic_car.xml" value="0.12760416666666666" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/ic_cart.xml" value="0.12760416666666666" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/ic_close.xml" value="0.15885416666666666" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/ic_close2.xml" value="0.20277777777777778" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/ic_empty_circle3.xml" value="0.15885416666666666" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/rb_bg4.xml" value="0.15885416666666666" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/rounded_gray.xml" value="0.2537037037037037" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/rounded_strock_black.xml" value="0.20277777777777778" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/drawable/rounded_white.xml" value="0.2814814814814815" />
@@ -19,12 +24,14 @@
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_image.xml" value="0.14270833333333333" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_map.xml" value="0.27291666666666664" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_order_details.xml" value="0.25" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_payemnt.xml" value="0.21" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_sign_in.xml" value="0.27291666666666664" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_splash.xml" value="0.27291666666666664" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_statistics.xml" value="0.27291666666666664" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_work1_step1.xml" value="0.14270833333333333" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_work2.xml" value="0.14270833333333333" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_work2_step1.xml" value="0.14270833333333333" />
+        <entry key="..\:/WashSquadDriver/app/src/main/res/layout/activity_work2_step4.xml" value="0.1" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/addtion_service_row.xml" value="0.27291666666666664" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/dialog_alert.xml" value="0.14270833333333333" />
         <entry key="..\:/WashSquadDriver/app/src/main/res/layout/dialog_language.xml" value="0.14270833333333333" />
