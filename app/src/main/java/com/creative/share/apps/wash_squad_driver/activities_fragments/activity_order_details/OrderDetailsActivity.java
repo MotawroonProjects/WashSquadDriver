@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.creative.share.apps.wash_squad_driver.R;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_home.activity.HomeActivity;
+import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_payment.PaymentActivity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work1.Work1Activity_Step1;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity;
 import com.creative.share.apps.wash_squad_driver.activities_fragments.activity_work2.Work2Activity_step4;
@@ -145,11 +146,11 @@ private List<Order_Model.Data.Services> servicesList;
                     start();
                 } else if (data.getStatus() == 2) {
                     binding.time.stop();
-                    step2("");
-//                    Intent intent = new Intent(OrderDetailsActivity.this, Work2Activity.class);
-//                    intent.putExtra("detials", data);
-//                    startActivityForResult(intent, 1002);
-//                    finish();
+                    //step2("");
+                    Intent intent = new Intent(OrderDetailsActivity.this, PaymentActivity.class);
+                    intent.putExtra("detials", data);
+                    startActivityForResult(intent, 1002);
+                    finish();
                 }
             }
         });
@@ -234,6 +235,7 @@ private List<Order_Model.Data.Services> servicesList;
                         // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
                         Toast.makeText(OrderDetailsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                         //binding.time.setBase(System.currentTimeMillis());
+                        data.setStatus(2);
                         binding.time.start();
                         binding.btShow.setText(getResources().getString(R.string.done));
 
@@ -272,52 +274,52 @@ private List<Order_Model.Data.Services> servicesList;
         }
     }
 
-    private void step2(String feedback) {
-        final Dialog dialog = Common.createProgressDialog(OrderDetailsActivity.this, getString(R.string.wait));
-        dialog.setCancelable(false);
-        dialog.show();
-        try {
-
-
-            Api.getService(lang, Tags.base_url)
-                    .Step2(data.getId() + "", (Calendar.getInstance().getTimeInMillis() / 1000) + "", feedback).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    dialog.dismiss();
-                    if (response.isSuccessful()) {
-                        // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
-                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
-
-                        //  adsActivity.finish(response.body().getId_advertisement());
-
-                        finish();
-                    } else {
-                        try {
-
-                            Toast.makeText(OrderDetailsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                            Log.e("Error", response.code() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
-                        } catch (Exception e) {
-
-
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    dialog.dismiss();
-                    try {
-                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                        Log.e("Error", t.getMessage());
-                    } catch (Exception e) {
-
-                    }
-                }
-            });
-        } catch (Exception e) {
-            dialog.dismiss();
-        }
-    }
+//    private void step2(String feedback) {
+//        final Dialog dialog = Common.createProgressDialog(OrderDetailsActivity.this, getString(R.string.wait));
+//        dialog.setCancelable(false);
+//        dialog.show();
+//        try {
+//
+//
+//            Api.getService(lang, Tags.base_url)
+//                    .Step2(data.getId() + "", (Calendar.getInstance().getTimeInMillis() / 1000) + "", feedback).enqueue(new Callback<ResponseBody>() {
+//                @Override
+//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                    dialog.dismiss();
+//                    if (response.isSuccessful()) {
+//                        // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+//                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+//
+//                        //  adsActivity.finish(response.body().getId_advertisement());
+//
+//                        finish();
+//                    } else {
+//                        try {
+//
+//                            Toast.makeText(OrderDetailsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+//                            Log.e("Error", response.code() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
+//                        } catch (Exception e) {
+//
+//
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                    dialog.dismiss();
+//                    try {
+//                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+//                        Log.e("Error", t.getMessage());
+//                    } catch (Exception e) {
+//
+//                    }
+//                }
+//            });
+//        } catch (Exception e) {
+//            dialog.dismiss();
+//        }
+//    }
 
     private void getOrder() {
         try {

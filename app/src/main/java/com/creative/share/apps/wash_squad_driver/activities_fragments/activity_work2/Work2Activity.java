@@ -93,7 +93,7 @@ private Order_Model.Data data;
             {
                 binding.edtFeedback.setError(null);
 
-               step2(feedback);
+             //  step2(feedback);
             }else
             {
 
@@ -108,57 +108,57 @@ private Order_Model.Data data;
 
 
     }
-    private void step2(String feedback) {
-        final Dialog dialog = Common.createProgressDialog(Work2Activity.this, getString(R.string.wait));
-        dialog.setCancelable(false);
-        dialog.show();
-        try {
-
-
-
-
-        Api.getService(lang, Tags.base_url)
-                .Step2(data.getId()+"",(Calendar.getInstance().getTimeInMillis()/1000)+"",feedback).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                dialog.dismiss();
-                if (response.isSuccessful()) {
-                    // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
-                    Toast.makeText(Work2Activity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
-
-                    //  adsActivity.finish(response.body().getId_advertisement());
-                    Intent intent = new Intent(Work2Activity.this, HomeActivity.class);
-                    intent.putExtra("detials",data);
-
-                    startActivityForResult(intent, 1003);
-                    finish();
-                } else {
-                    try {
-
-                        Toast.makeText(Work2Activity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                        Log.e("Error", response.code() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
-                    }catch (Exception e){
-
-
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                dialog.dismiss();
-                try {
-                    Toast.makeText(Work2Activity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                    Log.e("Error", t.getMessage());
-                }
-                catch (Exception e){
-
-                }
-            }
-        });}catch (Exception e){
-            dialog.dismiss();
-        }
-    }
+//    private void step2(String feedback) {
+//        final Dialog dialog = Common.createProgressDialog(Work2Activity.this, getString(R.string.wait));
+//        dialog.setCancelable(false);
+//        dialog.show();
+//        try {
+//
+//
+//
+////
+////        Api.getService(lang, Tags.base_url)
+////                .Step2(data.getId()+"",(Calendar.getInstance().getTimeInMillis()/1000)+"",feedback).enqueue(new Callback<ResponseBody>() {
+////            @Override
+////            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+////                dialog.dismiss();
+////                if (response.isSuccessful()) {
+////                    // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+////                    Toast.makeText(Work2Activity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+////
+////                    //  adsActivity.finish(response.body().getId_advertisement());
+////                    Intent intent = new Intent(Work2Activity.this, HomeActivity.class);
+////                    intent.putExtra("detials",data);
+////
+////                    startActivityForResult(intent, 1003);
+////                    finish();
+////                } else {
+////                    try {
+////
+////                        Toast.makeText(Work2Activity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+////                        Log.e("Error", response.code() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
+////                    }catch (Exception e){
+////
+////
+////                    }
+////                }
+////            }
+////
+////            @Override
+////            public void onFailure(Call<ResponseBody> call, Throwable t) {
+////                dialog.dismiss();
+////                try {
+////                    Toast.makeText(Work2Activity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+////                    Log.e("Error", t.getMessage());
+////                }
+////                catch (Exception e){
+////
+////                }
+////            }
+////        });}catch (Exception e){
+////            dialog.dismiss();
+//
+//    }
 
 
 

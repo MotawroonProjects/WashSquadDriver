@@ -30,7 +30,6 @@ import retrofit2.http.Query;
 public interface Service {
 
 
-
     @GET("place/findplacefromtext/json")
     Call<PlaceMapDetailsData> searchOnMap(@Query(value = "inputtype") String inputtype,
                                           @Query(value = "input") String input,
@@ -48,54 +47,64 @@ public interface Service {
     @POST("api/driver/login")
     Call<UserModel> login(
             @Field("username") String username,
-            @Field("password")String password
+            @Field("password") String password
     );
+
     @FormUrlEncoded
     @POST("api/driver/logout")
     Call<ResponseBody> logout(
             @Field("user_id") int user_id
     );
+
     @FormUrlEncoded
     @POST("api/orders")
     Call<Order_Model> MyOrder(
-            @Field("page")int page,
+            @Field("page") int page,
             @Field("user_id") int user_id,
-            @Field("status")int ...status
+            @Field("status") int... status
     );
+
     @FormUrlEncoded
     @POST("api/current-orders")
     Call<Order_Model> MyOrder(
-            @Field("page")int page,
+            @Field("page") int page,
             @Field("driver_id") int driver_id
 
     );
+
     @GET("api/cancelReasons")
     Call<Resson_Model> getreasson();
+
     @FormUrlEncoded
     @POST("api/driver/order/cancel")
     Call<ResponseBody> Csncel_order(
             @Field("order_id") int order_id,
-            @Field("cancel_reason_id")int cancel_reason_id
+            @Field("cancel_reason_id") int cancel_reason_id
     );
+
     @FormUrlEncoded
     @POST("api/driver/order/go-arrive")
     Call<ResponseBody> go
             (@Field("order_id") String id_part,
              @Field("status") String status
             );
+
     @FormUrlEncoded
     @POST("api/driver/order/start")
     Call<ResponseBody> start
             (@Field("order_id") String id_part,
              @Field("start_time_work") String time_part
             );
+
     @FormUrlEncoded
     @POST("api/driver/order/end")
     Call<ResponseBody> Step2(
             @Field("order_id") String id_part,
             @Field("end_time_work") String time_part,
-            @Field("feed_back")  String feed_part
-          );
+            @Field("feed_back") String feed_part,
+            @Field("payment_method_check") String payment_method_check
+    );
+
     @Multipart
     @POST("api/driver/upload/images")
     Call<ResponseBody> Step1
@@ -107,7 +116,8 @@ public interface Service {
              @Part List<MultipartBody.Part> partimageInsideList,
              @Part List<MultipartBody.Part> partimageOutsideList
 //
-             );
+            );
+
     @FormUrlEncoded
     @POST("api/order/images/get")
     Call<Order_Images_Model> MyOrderimages(
@@ -116,12 +126,14 @@ public interface Service {
             @Field("status") int status
 
     );
+
     @FormUrlEncoded
     @POST("api/single-order")
     Call<Order_Model.Data> getOrdersById(
             @Field("order_id") String order_id
 
     );
+
     @FormUrlEncoded
     @POST("api/phone-tokens")
     Call<ResponseBody> updatePhoneToken(
@@ -130,6 +142,7 @@ public interface Service {
             @Field("software_type") String software_type
 
     );
+
     @FormUrlEncoded
     @POST("api/phone/token/delete")
     Call<ResponseBody> deltePhoneToken(
@@ -137,6 +150,7 @@ public interface Service {
             @Field("user_id") int user_id
 
     );
+
     @FormUrlEncoded
     @POST("api/driver/order/review")
     Call<RateModel> getreviews(
@@ -144,6 +158,7 @@ public interface Service {
             @Field("driver_id") int driver_id
 
     );
+
     @FormUrlEncoded
     @POST("api/driver/order/amount")
     Call<StaticModel> getStatistic(
