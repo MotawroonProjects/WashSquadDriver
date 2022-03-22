@@ -33,6 +33,7 @@ public class Order_Model implements Serializable {
         private long order_date;
         private int order_time_id;
         private String addons;
+        private String order_time;
         private String number_of_cars;
         private String payment_method;
         private int driver_id;
@@ -292,6 +293,10 @@ public class Order_Model implements Serializable {
             return sub_service;
         }
 
+        public String getOrder_time() {
+            return order_time;
+        }
+
         public class order_images implements Serializable {
             private int id;
             private int order_id;
@@ -314,6 +319,7 @@ public class Order_Model implements Serializable {
                 return type;
             }
         }
+
         public class Services implements Serializable {
             private String id;
             private String ar_title;

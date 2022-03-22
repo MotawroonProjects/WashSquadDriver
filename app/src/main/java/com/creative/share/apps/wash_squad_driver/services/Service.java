@@ -83,7 +83,7 @@ public interface Service {
     );
 
     @FormUrlEncoded
-    @POST("api/driver/order/go-arrive")
+    @POST("api/order/updateOrderStatus")
     Call<ResponseBody> go
             (@Field("order_id") String id_part,
              @Field("status") String status

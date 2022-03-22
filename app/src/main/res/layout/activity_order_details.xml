@@ -433,48 +433,48 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/ll2" />
 
-                <FrameLayout
-                    android:id="@+id/fll"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:background="@drawable/circle_gap"
-                    android:padding="4dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recView">
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fll"-->
+<!--                    android:layout_width="200dp"-->
+<!--                    android:layout_height="200dp"-->
+<!--                    android:background="@drawable/circle_gap"-->
+<!--                    android:padding="4dp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/recView">-->
 
-                    <FrameLayout
-                        android:layout_width="170dp"
-                        android:layout_height="170dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/circle_image">
+<!--                    <FrameLayout-->
+<!--                        android:layout_width="170dp"-->
+<!--                        android:layout_height="170dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:background="@drawable/circle_image">-->
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="vertical">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:gravity="center"-->
+<!--                            android:orientation="vertical">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/timer"
-                                android:textColor="@color/black"
-                                android:textSize="13sp" />
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="@string/timer"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="13sp" />-->
 
-                            <Chronometer
-                                android:id="@+id/time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"
-                                 />
-                        </LinearLayout>
-                    </FrameLayout>
+<!--                            <Chronometer-->
+<!--                                android:id="@+id/time"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="20dp"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="20sp"-->
+<!--                                 />-->
+<!--                        </LinearLayout>-->
+<!--                    </FrameLayout>-->
 
-                </FrameLayout>
+<!--                </FrameLayout>-->
 
                 <!--                <com.bcgdv.asia.lib.ticktock.TickTockView-->
                 android:id="@+id/circle_timer_view"
@@ -493,38 +493,39 @@
                 app:tickEmptyRingColor="@android:color/white"
                 app:tickFillRingColor="@color/colorPrimary"
                 app:tickRingThickness="3dp" />
-                <!--                <net.crosp.libs.android.circletimeview.CircleTimeView-->
-                <!--                    android:id="@+id/circle_timer_view"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="250dp"-->
-                <!--                    android:layout_marginTop="32dp"-->
-                <!--                    app:ctvCircleButtonColor="@color/transparent"-->
-                <!--                    app:ctvCircleColor="@color/black"-->
-                <!--                    app:ctvCircleHandButtonRadius="6dp"-->
-                <!--                    app:ctvCirclePressedButtonColor="@color/colorPrimary"-->
-                <!--                    app:ctvCircleStrokeWidth="1dp"-->
-                <!--                    app:ctvCurrentTimeInSeconds="120"-->
-                <!--                    app:ctvHighlightMarkLineColor="@color/colorPrimary"-->
-                <!--                    app:ctvLabelText="Timer"-->
-                <!--                    app:ctvLabelTextColor="@color/black"-->
-                <!--                    app:ctvLabelTextSize="18sp"-->
-                <!--                    app:ctvLapBackgroundColor="@color/black"-->
-                <!--                    app:ctvLapLabelMarginTop="32dp"-->
-                <!--                    app:ctvLapLabelTextSize="12sp"-->
-                <!--                    app:ctvLapTextColor="@color/colorPrimary"-->
-                <!--                    app:ctvMarginTopLabel="22dp"-->
-                <!--                    app:ctvMarkLineColor="@color/colorPrimary"-->
-                <!--                    app:ctvMarkLineWidth="1dp"-->
-                <!--                    app:ctvMarkSize="10dp"-->
-                <!--                    app:ctvMultiLapRotation="true"-->
-                <!--                    app:ctvPaddingInnerRadius="15dp"-->
-                <!--                    app:ctvQuarterMarkSize="10dp"-->
-                <!--                    app:ctvQuarterNumberTextSize="0sp"-->
-                <!--                    app:ctvTimeFormat="seconds_minutes"-->
-                <!--                    app:ctvTimeMode="normal"-->
-                <!--                    app:ctvTimeNumberColor="@color/black"-->
-                <!--                    app:ctvTimeNumbersTextSize="55sp"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@id/recView" />-->
+
+
+                <net.crosp.libs.android.circletimeview.CircleTimeView
+                                    android:id="@+id/circle_timer_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="250dp"
+                                    android:layout_marginTop="32dp"
+                                    app:ctvCircleButtonColor="@color/transparent"
+                                    app:ctvCircleColor="@color/black"
+                                    app:ctvCircleHandButtonRadius="6dp"
+                                    app:ctvCirclePressedButtonColor="@color/colorPrimary"
+                                    app:ctvCircleStrokeWidth="1dp"
+                                    app:ctvHighlightMarkLineColor="@color/colorPrimary"
+                                    app:ctvLabelText="Timer"
+                                    app:ctvLabelTextColor="@color/black"
+                                    app:ctvLabelTextSize="18sp"
+                                    app:ctvLapBackgroundColor="@color/black"
+                                    app:ctvLapLabelMarginTop="32dp"
+                                    app:ctvLapLabelTextSize="12sp"
+                                    app:ctvLapTextColor="@color/colorPrimary"
+                                    app:ctvMarginTopLabel="22dp"
+                                    app:ctvMarkLineColor="@color/colorPrimary"
+                                    app:ctvMarkLineWidth="1dp"
+                                    app:ctvMarkSize="10dp"
+                                    app:ctvMultiLapRotation="true"
+                                    app:ctvPaddingInnerRadius="15dp"
+                                    app:ctvQuarterMarkSize="10dp"
+                                    app:ctvQuarterNumberTextSize="0sp"
+                                    app:ctvTimeFormat="minutes_hours"
+                                    app:ctvTimeMode="timer"
+                                    app:ctvTimeNumberColor="@color/black"
+                                    app:ctvTimeNumbersTextSize="55sp"
+                                    app:layout_constraintTop_toBottomOf="@id/recView" />
 
                 <Button
                     android:id="@+id/bt_show"
@@ -539,7 +540,7 @@
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fll" />
+                    app:layout_constraintTop_toBottomOf="@id/circle_timer_view" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

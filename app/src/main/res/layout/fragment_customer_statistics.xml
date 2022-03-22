@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="7dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -52,12 +52,12 @@
                         android:maxLines="1"
                         android:text="@string/average_reviews_customer"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="7dp"
                         android:orientation="horizontal">
 
 
@@ -124,14 +124,14 @@
                             android:maxLines="1"
                             android:text='@{model.rate5.count_of_orders+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             tools:ignore="RtlCompat" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="7dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -193,14 +193,14 @@
                             android:maxLines="1"
                             android:text='@{model.rate4.count_of_orders+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             tools:ignore="RtlCompat" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="7dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -256,14 +256,14 @@
                             android:maxLines="1"
                             android:text='@{model.rate3.count_of_orders+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             tools:ignore="RtlCompat" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="7dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -312,14 +312,14 @@
                             android:maxLines="1"
                             android:text='@{model.rate2.count_of_orders+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             tools:ignore="RtlCompat" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="7dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -361,7 +361,7 @@
                             android:maxLines="1"
                             android:text='@{model.rate1.count_of_orders+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             tools:ignore="RtlCompat" />
                     </LinearLayout>
                 </LinearLayout>
@@ -406,7 +406,7 @@
                                 android:maxLines="1"
                                 android:text="5X"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <ImageView
 
@@ -421,24 +421,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text="@string/total_order"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text='@{model.rate5.count_of_orders+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -472,24 +472,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text="@string/total_commission"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text='@{model.rate5.sum_of_commission+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -527,7 +527,7 @@
                                 android:maxLines="1"
                                 android:text="4X"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <ImageView
 
@@ -542,24 +542,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text="@string/total_order"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text='@{model.rate4.count_of_orders+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -594,24 +594,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text="@string/total_commission"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text='@{model.rate4.sum_of_commission+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

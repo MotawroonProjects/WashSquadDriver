@@ -17,6 +17,7 @@ import android.widget.Chronometer;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,8 +42,13 @@ import com.creative.share.apps.wash_squad_driver.share.Common;
 import com.creative.share.apps.wash_squad_driver.tags.Tags;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -66,8 +72,9 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
     Intent intent;
     private Chronometer chronometer;
     private Order_Data_Model.OrderModel orderModel;
-private AdditionalServiceAdapter additionalServiceAdapter;
-private List<Order_Model.Data.Services> servicesList;
+    private AdditionalServiceAdapter additionalServiceAdapter;
+    private List<Order_Model.Data.Services> servicesList;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -83,8 +90,8 @@ private List<Order_Model.Data.Services> servicesList;
     }
 
     private void initView() {
-        servicesList=new ArrayList<>();
-        additionalServiceAdapter=new AdditionalServiceAdapter(servicesList,this);
+        servicesList = new ArrayList<>();
+        additionalServiceAdapter = new AdditionalServiceAdapter(servicesList, this);
         // binding.time.setFormat("Formated Time - %s");
         binding.setBackListener(this);
         Paper.init(this);
@@ -145,7 +152,7 @@ private List<Order_Model.Data.Services> servicesList;
                 if (data.getStatus() == 12) {
                     start();
                 } else if (data.getStatus() == 2) {
-                    binding.time.stop();
+                    binding.circleTimerView.stopTimer();
                     //step2("");
                     Intent intent = new Intent(OrderDetailsActivity.this, PaymentActivity.class);
                     intent.putExtra("detials", data);
@@ -236,7 +243,7 @@ private List<Order_Model.Data.Services> servicesList;
                         Toast.makeText(OrderDetailsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                         //binding.time.setBase(System.currentTimeMillis());
                         data.setStatus(2);
-                        binding.time.start();
+                        binding.circleTimerView.stopTimer();
                         binding.btShow.setText(getResources().getString(R.string.done));
 
                         //  adsActivity.finish(response.body().getId_advertisement());
@@ -385,21 +392,34 @@ private List<Order_Model.Data.Services> servicesList;
 
     private void updateUi(Order_Model.Data orderModel) {
         data = orderModel;
-        String times = "0";
-        if (data.getStart_time_work() != null) {
-            times = data.getStart_time_work();
-            Log.e("lllll", System.currentTimeMillis() + " " + (Long.parseLong(times) * 1000) + " " + (System.currentTimeMillis() - (Long.parseLong(times) * 1000)));
+//        String times = "0";
+//        if (data.getStart_time_work() != null) {
+//            times = data.getStart_time_work();
+//            Log.e("lllll", System.currentTimeMillis() + " " + (Long.parseLong(times) * 1000) + " " + (System.currentTimeMillis() - (Long.parseLong(times) * 1000)));
+//
+//            long milliseconds = System.currentTimeMillis() - (Long.parseLong(times) * 1000);
+//            long minutes = (milliseconds / 1000) / 60;
+//
+//            // formula for conversion for
+//            // milliseconds to seconds
+//            long seconds = (milliseconds / 1000) % 60;
+//            binding.time.setBase(SystemClock.elapsedRealtime() - (minutes * 60000 + seconds * 1000));
+//            binding.time.start();
+//            binding.btShow.setText(getResources().getString(R.string.done));
+//        }
+        if (orderModel.getOrder_time() != null) {
+            DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
-            long milliseconds = System.currentTimeMillis() - (Long.parseLong(times) * 1000);
-            long minutes = (milliseconds / 1000) / 60;
-
-            // formula for conversion for
-            // milliseconds to seconds
-            long seconds = (milliseconds / 1000) % 60;
-            binding.time.setBase(SystemClock.elapsedRealtime() - (minutes * 60000 + seconds * 1000));
-            binding.time.start();
-            binding.btShow.setText(getResources().getString(R.string.done));
+            try {
+                binding.circleTimerView.setCurrentTime(formatter.parse(orderModel.getOrder_time()).getTime());
+            } catch (ParseException e) {
+              //  e.printStackTrace();
+            }
+          //  binding.circleTimerView.setTimeFormat(1);
+            binding.circleTimerView.startTimer();
         }
+        if(data.getStatus()==2){
+        binding.btShow.setText(getResources().getString(R.string.done));}
         servicesList.addAll(orderModel.getSub_service());
         additionalServiceAdapter.notifyDataSetChanged();
         binding.setOrderModel(data);

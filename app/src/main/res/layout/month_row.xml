@@ -36,12 +36,12 @@
                 android:maxLines="1"
                 android:text="@{model.title}"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="7dp"
+                android:layout_height="5dp"
                 android:background="@drawable/rounded_white"
                 android:visibility='@{model.isselected?View.VISIBLE:View.GONE,default=gone}' />
         </LinearLayout>

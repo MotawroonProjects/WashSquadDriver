@@ -61,20 +61,20 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text="@string/polishing"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text='@{model.data.polishing+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -111,20 +111,20 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text="@string/wash"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text='@{model.data.wash+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -160,20 +160,20 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text="@string/setrilization"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text='@{model.data.sterilization+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -182,7 +182,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="7dp"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -218,20 +218,20 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text="@string/subsriptions"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text='@{model.data.subscription+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -268,20 +268,20 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text="@string/total_order"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text='@{model.data.total_orders+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -317,20 +317,20 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text="@string/commission"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="7dp"
                             android:text='@{model.data.commissions+""}'
                             android:textColor="@color/gray6"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
