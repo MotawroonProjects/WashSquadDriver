@@ -70,6 +70,7 @@ public class Order_Model implements Serializable {
         private String brand_en_title;
         private String brand__ar_title;
         private List<Services> sub_service;
+        private Services service;
 
         public void setStatus(int status) {
             this.status = status;
@@ -297,6 +298,10 @@ public class Order_Model implements Serializable {
             return order_time;
         }
 
+        public Services getService() {
+            return service;
+        }
+
         public class order_images implements Serializable {
             private int id;
             private int order_id;
@@ -335,6 +340,7 @@ public class Order_Model implements Serializable {
             private String created_at;
             private String updated_at;
             private boolean taked;
+            private int timer;
 
             public String getId() {
                 return id;
@@ -390,6 +396,10 @@ public class Order_Model implements Serializable {
 
             public boolean isTaked() {
                 return taked;
+            }
+
+            public int getTimer() {
+                return timer;
             }
         }
 

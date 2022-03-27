@@ -51,6 +51,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import io.paperdb.Paper;
@@ -407,19 +408,19 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
 //            binding.time.start();
 //            binding.btShow.setText(getResources().getString(R.string.done));
 //        }
-        if (orderModel.getOrder_time() != null) {
+        if (orderModel.getStart_time_work() != null) {
             DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
-            try {
-                binding.circleTimerView.setCurrentTime(formatter.parse(orderModel.getOrder_time()).getTime());
-            } catch (ParseException e) {
-              //  e.printStackTrace();
-            }
-          //  binding.circleTimerView.setTimeFormat(1);
+            binding.circleTimerView.setCurrentTime(orderModel.getService().getTimer() * 60 * 1000);
             binding.circleTimerView.startTimer();
+
+
+            //  binding.circleTimerView.setTimeFormat(1);
+
         }
-        if(data.getStatus()==2){
-        binding.btShow.setText(getResources().getString(R.string.done));}
+        if (data.getStatus() == 2) {
+            binding.btShow.setText(getResources().getString(R.string.done));
+        }
         servicesList.addAll(orderModel.getSub_service());
         additionalServiceAdapter.notifyDataSetChanged();
         binding.setOrderModel(data);
