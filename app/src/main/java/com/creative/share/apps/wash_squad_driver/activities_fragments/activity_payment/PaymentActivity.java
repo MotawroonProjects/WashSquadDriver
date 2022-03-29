@@ -90,15 +90,15 @@ public class PaymentActivity extends AppCompatActivity implements Listeners.Back
         });
         binding.rb2.setOnClickListener(view ->
         {
-            payment_method = 1;
+            payment_method = 2;
 
 
         });
         binding.rb3.setOnClickListener(view -> {
-            payment_method = 2;
+            payment_method = 3;
         });
         binding.rb4.setOnClickListener(view -> {
-            payment_method = 3;
+            payment_method = 4;
         });
 binding.btnStep2.setOnClickListener(new View.OnClickListener() {
     @Override
