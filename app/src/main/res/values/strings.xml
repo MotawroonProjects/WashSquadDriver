@@ -209,5 +209,6 @@
     <string name="my_wallet_balance">My wallet balance</string>
     <string name="ch_payment">Choose Payment</string>
     <string name="payment_type2">"Payment Type : "</string>
+    <string name="minute">Minute</string>
 
 </resources>

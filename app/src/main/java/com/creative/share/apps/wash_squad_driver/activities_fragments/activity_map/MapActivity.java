@@ -93,6 +93,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private final String fineLocPerm = Manifest.permission.ACCESS_FINE_LOCATION;
     private final int loc_req = 1225;
     private Order_Model.Data data;
+    private int counter;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -121,7 +122,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             binding.btnGo.setEnabled(false);
             binding.btnArrival.setAlpha(.9f);
             binding.btnArrival.setEnabled(true);
+            binding.flTime.setVisibility(View.VISIBLE);
         }
+        binding.imUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                counter+=1;
+                binding.tvtime.setText(counter + getResources().getString(R.string.minute));
+            }
+        });
         binding.btnCancel.setOnClickListener(view -> {
             Intent intent = new Intent(this, CancelOrderActivity.class);
             intent.putExtra("detials", data);
@@ -494,6 +503,8 @@ private void goArrive(String status) {
                         binding.btnGo.setEnabled(false);
                         binding.btnArrival.setAlpha(.9f);
                         binding.btnArrival.setEnabled(true);
+                        binding.flTime.setVisibility(View.VISIBLE);
+
                     }
                 } else {
                     try {
