@@ -128,6 +128,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding.imUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 counter+=1;
                 binding.tvtime.setText(counter + getResources().getString(R.string.minute));
             }
