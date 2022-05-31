@@ -123,6 +123,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             binding.btnArrival.setAlpha(.9f);
             binding.btnArrival.setEnabled(true);
             binding.flTime.setVisibility(View.VISIBLE);
+
         }
         binding.imUp.setOnClickListener(new View.OnClickListener() {
             @Override
