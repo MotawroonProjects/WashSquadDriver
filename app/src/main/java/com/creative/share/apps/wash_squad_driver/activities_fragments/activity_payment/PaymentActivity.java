@@ -100,18 +100,18 @@ public class PaymentActivity extends AppCompatActivity implements Listeners.Back
         binding.rb4.setOnClickListener(view -> {
             payment_method = 4;
         });
-binding.btnStep2.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        if(payment_method==0){
-            Toast.makeText(PaymentActivity.this, getResources().getString(R.string.ch_payment), Toast.LENGTH_SHORT).show();
-        }
-        else{
-            step2("");
-        }
+        binding.btnStep2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (payment_method == 0) {
+                    Toast.makeText(PaymentActivity.this, getResources().getString(R.string.ch_payment), Toast.LENGTH_SHORT).show();
+                } else {
+                    step2("");
+                }
+            }
+        });
     }
-});
-    }
+
     private void step2(String feedback) {
         final Dialog dialog = Common.createProgressDialog(PaymentActivity.this, getString(R.string.wait));
         dialog.setCancelable(false);
@@ -120,40 +120,40 @@ binding.btnStep2.setOnClickListener(new View.OnClickListener() {
 
 
             Api.getService(lang, Tags.base_url)
-                    .Step2(data.getId() + "", (Calendar.getInstance().getTimeInMillis() / 1000) + "", feedback,payment_method+"").enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    dialog.dismiss();
-                    if (response.isSuccessful()) {
-                        // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
-                        Toast.makeText(PaymentActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+                    .Step2(data.getId() + "", (Calendar.getInstance().getTimeInMillis() / 1000) + "", feedback, payment_method + "").enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful()) {
+                                // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+                                Toast.makeText(PaymentActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+                                setResult(RESULT_OK);
+                                //  adsActivity.finish(response.body().getId_advertisement());
 
-                        //  adsActivity.finish(response.body().getId_advertisement());
+                                finish();
+                            } else {
+                                try {
 
-                        finish();
-                    } else {
-                        try {
-
-                            Toast.makeText(PaymentActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                            Log.e("Error", response.code() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
-                        } catch (Exception e) {
+                                    Toast.makeText(PaymentActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                    Log.e("Error", response.code() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
+                                } catch (Exception e) {
 
 
+                                }
+                            }
                         }
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    dialog.dismiss();
-                    try {
-                        Toast.makeText(PaymentActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                        Log.e("Error", t.getMessage());
-                    } catch (Exception e) {
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            dialog.dismiss();
+                            try {
+                                Toast.makeText(PaymentActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                Log.e("Error", t.getMessage());
+                            } catch (Exception e) {
 
-                    }
-                }
-            });
+                            }
+                        }
+                    });
         } catch (Exception e) {
             dialog.dismiss();
         }

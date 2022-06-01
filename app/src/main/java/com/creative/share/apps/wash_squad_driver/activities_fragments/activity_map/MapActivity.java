@@ -117,7 +117,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         data = (Order_Model.Data) getIntent().getExtras().getSerializable("detials");
         binding.setLang(lang);
         binding.setOrderModel(data);
-        if(data.getStatus()==11){
+        if (data.getStatus() == 11) {
             binding.btnGo.setBackground(getResources().getDrawable(R.drawable.rounded_gray));
             binding.btnGo.setEnabled(false);
             binding.btnArrival.setAlpha(.9f);
@@ -129,8 +129,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
 
-                counter+=1;
+                counter += 1;
                 binding.tvtime.setText(counter + getResources().getString(R.string.minute));
+            }
+        });
+        binding.imDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (counter > 0) {
+                    counter -= 1;
+                    binding.tvtime.setText(counter + getResources().getString(R.string.minute));
+                }
             }
         });
         binding.btnCancel.setOnClickListener(view -> {
@@ -209,7 +218,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //
 //                startActivityForResult(intent,1002);
 //            }
-            finish();
+
 
 
         });
@@ -284,7 +293,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             View view = LayoutInflater.from(this).inflate(R.layout.search_map_icon, null);
             iconGenerator.setContentView(view);
             ImageView im = view.findViewById(R.id.map_icon);
-            im.setOnClickListener(v -> {
+            binding.imageMap.setOnClickListener(v -> {
 
                 String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
@@ -414,12 +423,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         } else if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
             int reason = data.getIntExtra("reason", 0);
             cancelOrder(reason);
-        } else if (requestCode == 1002 ) {
+        } else if (requestCode == 1002) {
             finish();
         }
 
     }
-//    private void step1() {
+
+    //    private void step1() {
 //        final Dialog dialog = Common.createProgressDialog(MapActivity.this, getString(R.string.wait));
 //        dialog.setCancelable(false);
 //        dialog.show();
@@ -476,66 +486,65 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //            Log.e("error", e.getMessage().toString());
 //        }
 //    }
-private void goArrive(String status) {
-    final Dialog dialog = Common.createProgressDialog(MapActivity.this, getString(R.string.wait));
-    dialog.setCancelable(false);
-    dialog.show();
+    private void goArrive(String status) {
+        final Dialog dialog = Common.createProgressDialog(MapActivity.this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
 
 
-    try {
-        Api.getService(lang, Tags.base_url)
-                .go(data.getId() + "", status).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                dialog.dismiss();
-                if (response.isSuccessful()) {
-                    // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
-                    Toast.makeText(MapActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+        try {
+            Api.getService(lang, Tags.base_url)
+                    .go(data.getId() + "", status).enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful()) {
+                                // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
+                                Toast.makeText(MapActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
 
-                    //  adsActivity.finish(response.body().getId_advertisement());
-                    if(status.equals("12")){
-                    Intent intent = new Intent(MapActivity.this, OrderDetailsActivity.class);
-                    data.setStatus(12);
-                    intent.putExtra("detials", data);
+                                //  adsActivity.finish(response.body().getId_advertisement());
+                                if (status.equals("12")) {
+                                    Intent intent = new Intent(MapActivity.this, OrderDetailsActivity.class);
+                                    data.setStatus(12);
+                                    intent.putExtra("detials", data);
 
-                    startActivityForResult(intent, 1002);
-                    }
-                    else {
-                        binding.btnGo.setBackground(getResources().getDrawable(R.drawable.rounded_gray));
-                        binding.btnGo.setEnabled(false);
-                        binding.btnArrival.setAlpha(.9f);
-                        binding.btnArrival.setEnabled(true);
-                        binding.flTime.setVisibility(View.VISIBLE);
+                                    startActivityForResult(intent, 1002);
+                                } else {
+                                    binding.btnGo.setBackground(getResources().getDrawable(R.drawable.rounded_gray));
+                                    binding.btnGo.setEnabled(false);
+                                    binding.btnArrival.setAlpha(.9f);
+                                    binding.btnArrival.setEnabled(true);
+                                    binding.flTime.setVisibility(View.VISIBLE);
 
-                    }
-                } else {
-                    try {
+                                }
+                            } else {
+                                try {
 
-                        Toast.makeText(MapActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                        Log.e("Error", response.code() + "" + response.message() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
-                    } catch (Exception e) {
+                                    Toast.makeText(MapActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                    Log.e("Error", response.code() + "" + response.message() + "" + response.errorBody().string() + response.raw() + response.body() + response.headers());
+                                } catch (Exception e) {
 
 
-                    }
-                }
-            }
+                                }
+                            }
+                        }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                dialog.dismiss();
-                try {
-                    Toast.makeText(MapActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                    Log.e("Error", t.getMessage());
-                } catch (Exception e) {
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            dialog.dismiss();
+                            try {
+                                Toast.makeText(MapActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                Log.e("Error", t.getMessage());
+                            } catch (Exception e) {
 
-                }
-            }
-        });
-    } catch (Exception e) {
-        dialog.dismiss();
-        Log.e("error", e.getMessage().toString());
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            dialog.dismiss();
+            Log.e("error", e.getMessage().toString());
+        }
     }
-}
 
 
     @Override

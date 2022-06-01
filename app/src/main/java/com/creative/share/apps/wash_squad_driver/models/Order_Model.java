@@ -69,7 +69,7 @@ public class Order_Model implements Serializable {
         private String step;
         private String brand_en_title;
         private String brand__ar_title;
-        private List<Services> sub_service;
+        private List<Services> sub_services;
         private Services service;
 
         public void setStatus(int status) {
@@ -291,7 +291,7 @@ public class Order_Model implements Serializable {
         }
 
         public List<Services> getSub_service() {
-            return sub_service;
+            return sub_services;
         }
 
         public String getOrder_time() {

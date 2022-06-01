@@ -85,6 +85,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <ImageView
+                android:id="@+id/imageMap"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="10dp"
+
+                android:src="@drawable/ic_showmap" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/card1"
                 android:layout_width="match_parent"
@@ -299,8 +310,8 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
-                            android:visibility="gone"
-                            android:background="@drawable/rounded_white_strock_primary">
+                            android:background="@drawable/rounded_white_strock_primary"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -316,7 +327,7 @@
                                     android:layout_marginEnd="5dp"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="1minute"
+                                    android:text="0minute"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="14sp"
 
@@ -333,25 +344,29 @@
                                     android:layout_gravity="center"
                                     android:layout_marginStart="5dp"
                                     android:layout_marginEnd="5dp"
-                                    android:gravity="center"
                                     android:layout_weight=".25"
+                                    android:gravity="center"
                                     android:orientation="vertical">
 
                                     <ImageView
                                         android:id="@+id/imUp"
-                                        android:layout_width="10dp"
-                                        android:layout_height="10dp"
-                                        android:layout_marginBottom="5dp"
+                                        android:layout_width="30dp"
+                                        android:layout_height="20dp"
                                         android:clickable="false"
                                         android:longClickable="false"
                                         android:rotation="90"
+                                        android:padding="5dp"
+                                        android:layout_marginTop="3dp"
+
                                         android:src="@drawable/ic_arrow_left" />
 
                                     <ImageView
                                         android:id="@+id/imDown"
-                                        android:layout_width="10dp"
-                                        android:layout_height="10dp"
+                                        android:layout_width="30dp"
+                                        android:layout_height="20dp"
                                         android:clickable="false"
+                                        android:layout_marginBottom="3dp"
+                                        android:padding="5dp"
                                         android:longClickable="false"
                                         android:rotation="-90"
 

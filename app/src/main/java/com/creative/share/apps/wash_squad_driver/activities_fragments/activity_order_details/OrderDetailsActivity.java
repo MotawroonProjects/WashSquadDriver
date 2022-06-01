@@ -158,7 +158,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
                     Intent intent = new Intent(OrderDetailsActivity.this, PaymentActivity.class);
                     intent.putExtra("detials", data);
                     startActivityForResult(intent, 1002);
-                    finish();
+
                 }
             }
         });
@@ -217,12 +217,13 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == 1002 || requestCode == 1003) && resultCode == RESULT_OK && data != null) {
+        if ((requestCode == 1002 || requestCode == 1003) && resultCode == RESULT_OK ) {
             Intent intent = getIntent();
             if (intent != null) {
                 intent.putExtra("reason", 1);
-                setResult(RESULT_OK, intent);
+
             }
+            setResult(RESULT_OK, intent);
             finish();
         }
     }
