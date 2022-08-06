@@ -367,7 +367,7 @@ binding.lluser.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                         if (response.isSuccessful() && response.body() != null) {
-                                            Log.e("token", "updated successfully");
+                                            Log.e("token", "updated successfully"+token);
                                         } else {
                                             try {
 
