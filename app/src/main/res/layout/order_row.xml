@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >
@@ -103,7 +104,8 @@ android:background="@drawable/rounded_white_strock_primary"
             android:layout_marginStart="7dp"
             android:background="@drawable/circle_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lll">
+            app:layout_constraintTop_toBottomOf="@+id/lll"
+            tools:ignore="RtlCompat">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image"
@@ -368,7 +370,8 @@ android:background="@drawable/rounded_white_strock_primary"
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:visibility="@{(orderModel.status==1)?View.VISIBLE:View.GONE}"
+
+                android:visibility="@{(orderModel.status==1)?View.GONE:View.GONE}"
 
                 android:background="@drawable/btn_send"
                 android:paddingLeft="8dp"
